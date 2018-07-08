@@ -1,0 +1,32 @@
+@import 'src/assets/style/utils'
+
+$border-color: rgba(0,0,0,.1)
+$nav-height: 60px
+
+\:host
+  display: flex
+  justify-content: space-between
+  height: $nav-height
+  flex-basis: $nav-height
+  box-shadow: 0 0.3rem 0.5rem $border-color
+  z-index: 1
+
+.logo
+  display: flex
+  align-items: center
+  padding: 12px 16px
+
+  img
+    height: 36px
+    width: 168px
+
+.left
+  display: flex
+  flex-grow: 1
+
+.right
+  @include flex-xy-center()
+  margin-right: 20px
+
+  button:first-child
+    margin-right: 1rem
