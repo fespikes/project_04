@@ -1,6 +1,6 @@
 # ErpFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
 
@@ -54,16 +54,16 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 Please notice: when node dependances changed，you need to rebuild docker image, in project folder:
 
 ```
-docker build . -f ci/Dockerfile -t tcc/tdc-eco-ci
-docker tag tcc/tdc-eco-ci 172.16.1.99/frontend/tdc-eco-frontend/build/tdc-eco-ci:latest
-docker push 172.16.1.99/frontend/tdc-eco-frontend/build/tdc-eco-ci:latest
+docker build . -f ci/Dockerfile -t tdc/tdc-erp-ci
+docker tag tdc/tdc-erp-ci 172.16.1.99/frontend/tdc-erp-frontend/build/tdc-erp-ci:latest
+docker push 172.16.1.99/frontend/tdc-erp-frontend/build/tdc-erp-ci:latest
 ```
 
 ### Get the latest artifacts
 
 the same files like get by `npm run build`:
 ```
-http://172.16.1.41:10080/TDC/tdc-eco-frontend/-/jobs/artifacts/master/download?job=postcommit
+http://172.16.1.41:10080/TDC/tdc-erp-frontend/-/jobs/artifacts/master/download?job=postcommit
 ```
 
 ## Further help

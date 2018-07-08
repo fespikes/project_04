@@ -6,18 +6,18 @@ import {
   TranslateDeactivator,
   TranslateToken,
 } from './i18n';
-
+import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './components/layout/layout.component';
 
-const routes: Routes = [
+const appRoutes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
-      // {
-      //   path: 'login',
-      //   loadChildren: './login/customers.module#CustomersModule',
-      // },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
       {
         path: 'customers',
         loadChildren: './components/customers/customers.module#CustomersModule',
@@ -30,6 +30,14 @@ const routes: Routes = [
         path: 'businesses',
         loadChildren: './components/businesses/businesses.module#BusinessesModule',
       },
+      {
+        path: 'opportunities',
+        loadChildren: './components/opportunities/opportunities.module#OpportunitiesModule',
+      },
+      {
+        path: 'todos',
+        loadChildren: './components/todos/todos.module#TodosModule',
+      },
     ],
     resolve: [TranslateResolver],
     canDeactivate: [TranslateDeactivator],
@@ -37,7 +45,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
+  imports: [RouterModule.forRoot(appRoutes, {
     useHash: true,
     preloadingStrategy: PreloadAllModules,
   })],

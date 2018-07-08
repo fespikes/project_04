@@ -13,13 +13,12 @@ export class HeaderComponent implements OnInit {
   navs = ['customers', 'clients', 'businesses', 'opportunities', 'todos'].map((nav) => {
     return {
       link: '/' + nav,
-      name: `LAYOUT.${nav.toUpperCase()}`,
+      name: `layout.${nav}`,
     };
   });
 
   constructor(
     private translate: TranslateService,
-
   ) { }
 
   ngOnInit() {
