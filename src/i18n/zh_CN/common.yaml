@@ -1,6 +1,6 @@
-LAYOUT:
-  CUSTOMERS: 我的客户
-  CLIENTS: 下属客户
-  BUSINESSES: 我的商机
-  OPPORTUNITIES: 下属商机
-  TODOS: 代办事项
+layout:
+  customers: 我的客户
+  clients: 下属客户
+  businesses: 我的商机
+  opportunities: 下属商机
+  todos: 待办事项
