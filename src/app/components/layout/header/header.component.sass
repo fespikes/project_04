@@ -30,3 +30,28 @@ $nav-height: 60px
 
   button:first-child
     margin-right: 1rem
+
+
+ul
+  display: flex
+  align-items: center
+  height: 100%
+
+  li
+    position: relative
+    height: 100%
+    white-space: nowrap
+    z-index: 1
+
+  li a
+    @include flex-xy-center()
+    height: 100%
+    padding: 0 2rem
+    text-decoration: none
+
+    &:hover, &.active
+      color: white
+      background: $brand-primary
+
+    svg
+      margin-left: 0.25rem
