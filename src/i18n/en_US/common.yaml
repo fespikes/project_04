@@ -4,3 +4,7 @@ layout:
   businesses: Businesses Opportunities
   opportunities: Subordinate Opportunities
   todos: Todos
+login:
+  account: Account
+  password: Password
+  confirm: Confirm

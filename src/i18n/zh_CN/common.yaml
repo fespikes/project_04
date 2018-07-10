@@ -4,3 +4,7 @@ layout:
   businesses: 我的商机
   opportunities: 下属商机
   todos: 待办事项
+login:
+  account: 用户名
+  password: 密码
+  confirm: 登陆

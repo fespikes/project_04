@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 import { TuiModule, TuiMessageService } from 'tdc-ui';
 import {
@@ -18,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { LayoutModule } from './components/layout/layout.module';
-import { LayoutComponent} from './components/layout/layout.component';
+import { LayoutComponent } from './components/layout/layout.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -32,6 +33,7 @@ import { LoginComponent } from './components/login/login.component';
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
     TuiModule,
     I18nModule,
     IconModule,

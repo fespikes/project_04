@@ -1,7 +1,10 @@
 {
-  "/api": {
-    "target": "http://172.16.132.47:9099/",
+  "/api/v1": {
+    "target": "http://172.16.2.6:8088/",
     "secure": false,
-    "changeOrigin": true
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/v1": ""
+    }
   }
 }

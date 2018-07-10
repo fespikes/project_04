@@ -1,3 +1,14 @@
-<p>
-  login works!
-</p>
+<section>
+  <form #form="ngForm" tuiForm (ngSubmit)="login(form.value.username, form.value.password)">
+    <tui-form-item>
+      <tui-input prefix="ERP-icon_用户名" name="username" [placeholder]="'login.account' | translate" ngModel></tui-input>
+    </tui-form-item>
+    <tui-form-item>
+      <tui-input prefix="ERP-icon_密码" name="password" [placeholder]="'login.password' | translate" type="password" ngModel></tui-input>
+    </tui-form-item>
+    <tui-form-item>
+      <button tuiBtn="primary" [disabled]="form.invalid || process()">{{'login.confirm' | translate}}</button>
+    </tui-form-item>
+  </form>
+  {{status}}
+</section>
