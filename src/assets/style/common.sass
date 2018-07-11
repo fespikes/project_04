@@ -1,0 +1,169 @@
+
+// overwrite style
+\:host /deep/
+
+  // S: pagination
+  .tui-select, input[type="number"], .tui-btn
+    @include border-radius-15px
+    @include card-shadow
+    background: #fff
+
+  .tui-btn-group
+    .tui-icon
+      position: relative
+      bottom: 5px
+      background: #fff
+  .tui-btn-group .tui-btn
+    background: #fff
+    &:first-child
+      border-radius: 15px 0 0 15px
+      @include card-shadow
+    &:last-child
+      border-radius: 0 15px 15px 0
+      @include card-shadow
+
+  .page-node, .page-node.active
+    @include border-radius-15px
+    @include card-shadow
+    &.active, &:hover
+      background: $blue
+      @include border-radius-15px
+      @include card-shadow
+  // E: pagination
+
+
+// common style
+.white-btn
+  @include btn-shadow
+  @include border-radius-15px
+  @extend .pointer
+  font-size: $font-size
+  border: 0
+  background: #fff
+
+.blue-btn
+  @include blue-btn-shadow
+  @include border-radius-15px
+  @extend .pointer
+  border: 0
+  font-size: $font-size
+  background: $blue
+  color: #fff
+
+.pointer
+  cursor: pointer
+  &:focus
+    // outline: none
+
+.margin-left-16px
+  margin-left: 16px
+
+.icon-md, .add
+  width: 16px
+  height: 16px
+
+.title-big
+  font-size: 24px
+  color: #4d4d4d
+// E: common style
+
+
+
+.bread-crumb
+  height: $bread-crumb-height
+  display: flex
+  justify-content: space-between
+  align-items: center
+  .left
+    span
+      @extend .pointer
+      color: #999
+    .arrow
+      display: inline-block
+      width: 8px
+      height: 8px
+      border-top: 1px $font-color solid
+      border-right: 1px $font-color solid
+      transform: rotate(45deg)
+      margin: auto 8px auto 5px
+      cursor: default
+    .last
+      color: $font-color
+
+  .right
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .search
+      display: inline-block
+      width: 120px
+      height: 30px
+      position: relative
+      input
+        @include btn-shadow
+        display: inline-block
+        padding: 0 30px 0 8px
+        width: 120px
+        height: 30px
+        border: 1px #ddd solid
+        border-radius: 15px
+        &:focus
+          outline: none
+      .icon-md
+        position: absolute
+        right: 8px
+        top: 8px
+        fill: $gray
+        @extend .pointer
+      &.big
+        width: 200px
+        input
+          width: 200px
+    .create
+      fill: #fff
+      position: relative
+      top: 2px
+      right: 3px
+
+dl
+
+  dd
+    @include card-shadow
+    padding: 0 20px
+    height: 120px
+    margin-bottom: 20px
+    background: #fff
+    border-radius: 4px
+    position: relative
+    &:hover
+      box-shadow: none
+      transition: box-shadow .5s;
+
+    h3
+      height: 60px
+      line-height: 60px
+      margin-right: 100px
+      color: $font-color
+      font-size: $title-card
+      @extend .pointer
+    p
+      height: 22px
+      line-height: 22px
+      font-size: $font-size
+      color: $font-color
+    p.gray
+      color: #999
+    .trash, .reactivate
+      fill: $gray
+      position: absolute
+      top: 16px
+      right: 16px
+      @extend .pointer
+
+  .detail-ul
+    display: flex
+    justify-content: flex-start
+
+    li
+      list-style: none
+      flex: 0.2

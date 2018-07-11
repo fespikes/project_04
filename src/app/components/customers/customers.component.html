@@ -1,3 +1,45 @@
-<p>
-  customers works!
-</p>
+<section class="bread-crumb">
+  <div class="left">
+    <span>我的客户</span>
+  </div>
+  <div class="right">
+    <span class="search"> <!-- big-->
+      <input class="" />
+      <svg class="icon-md" tuiIcon="search" size="md"></svg>
+    </span>
+    <button class="margin-left-16px disabled-detail white-btn">查看作废客户</button>
+    <button class="margin-left-16px blue-btn">
+      <svg class="icon-md create" tuiIcon="create" size="md"></svg>
+      <span>新增客户</span>
+    </button>
+  </div>
+</section>
+
+<dl class="customers">
+  <dd class="customer">
+    <h3 class="title-big" (click)="toDetails($event)">中国石油化工</h3>
+    <ul class="detail-ul ">
+      <li>
+        <p class="gray ">客户类别</p>
+        <p>已合作客户</p>
+      </li>
+      <li>
+        <p class="gray ">客户级别</p>
+        <p>一级客户</p>
+      </li>
+      <li>
+        <p class="gray ">所属行业</p>
+        <p class="gray ">石油化工</p>
+      </li>
+    </ul>
+    <!--TODO: decide to show one of below-->
+    <button class="margin-left-16px reactivate white-btn">重新启用</button>
+    <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg>
+  </dd>
+</dl>
+
+<section class="pagination ">
+  <div class="amount ">共计:<span>3333</span>条</div>
+  <tui-pagination [(pagination)]=" pagination " (paginationChange)="fetchData() ">
+  </tui-pagination>
+</section>

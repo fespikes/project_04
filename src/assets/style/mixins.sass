@@ -1,0 +1,23 @@
+@mixin rounded-corners
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+  border-radius: 5px
+.notice
+  @include rounded-corners
+
+
+@mixin card-shadow
+  box-shadow: 0px 5px 12px 0px rgba(96, 102, 127, 0.07)
+
+@mixin btn-shadow
+  box-shadow: 0px 4px 10px 0px rgba(96, 102, 127, 0.15)
+
+@mixin blue-btn-shadow
+  box-shadow: 0px 5px 12px 0px rgba(72, 106, 255, 0.3)
+
+@mixin border-radius-15px
+  padding: 0 12px
+  height: 30px
+  line-height: 30px
+  border: 1px #ddd solid
+  border-radius: 15px

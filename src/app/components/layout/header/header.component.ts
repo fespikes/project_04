@@ -16,6 +16,8 @@ export class HeaderComponent implements OnInit {
       name: `layout.${nav}`,
     };
   });
+  todosAmount = 32;
+  name = 'Admin';
 
   constructor(
     private translate: TranslateService,
