@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ErpApiService, ApiConfig } from '../../shared';
+import { ErpApiService } from '../../shared';
+import { Router } from '@angular/router';
 
 enum Status {
   Init = 'INIT',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   status: Status = Status.Init;
 
-  constructor(private api: ErpApiService) { }
+  constructor(private api: ErpApiService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -29,8 +30,11 @@ export class LoginComponent implements OnInit {
       { name: user, password: password },
       { fullResponse: true })
       .subscribe(
-        value => { this.status = Status.Success; },
-        error => { this.status = Status.Fail; });
+        () => {
+          this.status = Status.Success;
+          this.router.navigate(['/']);
+        },
+        () => { this.status = Status.Fail; });
 
   }
 
