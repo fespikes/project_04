@@ -1,8 +1,15 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
+import { TuiModule, TuiMessageService } from 'tdc-ui';
+
 import { I18nModule } from '../i18n';
-import { TuiModule } from 'tdc-ui';
+
+
+import {
+  ImgSrcDirective,
+} from './components/';
 
 @NgModule({
   imports: [
@@ -14,13 +21,17 @@ import { TuiModule } from 'tdc-ui';
     TuiModule,
   ],
   declarations: [
+    ImgSrcDirective
     // ......
   ],
   providers: [
+    TuiMessageService
   ],
   exports: [
     // ....
-    I18nModule
+    TuiModule,
+    I18nModule,
+    ImgSrcDirective
   ],
   entryComponents: [
     // ...

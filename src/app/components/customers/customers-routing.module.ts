@@ -9,6 +9,7 @@ import {
 import { I18nModule, TranslateDeactivator, TranslateResolver, TranslateToken } from '../../i18n';
 
 import { CustomersComponent } from './customers.component';
+import { DetailsComponent } from './details/details.component';
 
 const customersRoutes: Routes = [
   {
@@ -16,6 +17,10 @@ const customersRoutes: Routes = [
     component: CustomersComponent,
     resolve: [TranslateResolver],
     canDeactivate: [TranslateDeactivator],
+  },
+  {
+    path: 'details/:id',
+    component: DetailsComponent
   }
 ];
 

@@ -38,6 +38,11 @@ const appRoutes: Routes = [
         path: 'todos',
         loadChildren: './components/todos/todos.module#TodosModule',
       },
+      {
+        path: '',
+        redirectTo: 'customers',
+        pathMatch: 'full',
+      },
     ],
     resolve: [TranslateResolver],
     canDeactivate: [TranslateDeactivator],

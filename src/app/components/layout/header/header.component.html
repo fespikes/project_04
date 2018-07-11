@@ -1,13 +1,14 @@
 <div class="left">
   <div class="logo">
-    <img erpImgSrc="logo.svg">
+    <img erpImgSrc="ERP.svg">
   </div>
   <ul>
     <li *ngFor="let item of navs">
       <a routerLink="{{item.link}}" routerLinkActive="active">{{item.name | translate}}</a>
     </li>
   </ul>
+  <span class="todos-amount">{{todosAmount}}</span>
 </div>
 <div class="right">
-
+  <span class="name">{{name}}</span>
 </div>

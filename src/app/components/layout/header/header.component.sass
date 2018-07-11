@@ -4,6 +4,7 @@ $border-color: rgba(0,0,0,.1)
 $nav-height: 60px
 
 \:host
+  padding: 0 20px
   display: flex
   justify-content: space-between
   height: $nav-height
@@ -14,11 +15,11 @@ $nav-height: 60px
 .logo
   display: flex
   align-items: center
-  padding: 12px 16px
+  padding: 18px 130px 17px 0
 
   img
-    height: 36px
-    width: 168px
+    height: 27px
+    width: 86px
 
 .left
   display: flex
@@ -26,11 +27,21 @@ $nav-height: 60px
 
 .right
   @include flex-xy-center()
-  margin-right: 20px
+  position: relative
+  .name
+    padding-right: 30px
+    color: $font-color
 
-  button:first-child
-    margin-right: 1rem
-
+    &:after
+      content: ''
+      width: 8px
+      height: 8px
+      border-bottom: 1px $font-color solid
+      border-right: 1px $font-color solid
+      transform: rotate(45deg)
+      position: absolute
+      right: 12px
+      top: 24px
 
 ul
   display: flex
@@ -48,10 +59,36 @@ ul
     height: 100%
     padding: 0 2rem
     text-decoration: none
+    position: relative
+    font-size: 16px
 
-    &:hover, &.active
-      color: white
+    &:hover:after, &.active:after
+      content: ''
+      display: inline-block
+      width: 60%
+      height: 4px
+      border: 0
+      border-radius: 2px
       background: $brand-primary
+      position: absolute
+      bottom: 0
+      left: 50%
+      margin-left: -38px
 
     svg
       margin-left: 0.25rem
+
+
+.todos-amount
+  padding: 0 8px
+  height: 18px
+  line-height: 18px
+  border-radius: 10px
+  border: none
+  background: #fe9f53
+  color: #fff
+  position: relative
+  left: -30px
+  top: 10px
+
+
