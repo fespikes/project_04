@@ -6,7 +6,7 @@
             <div id="form_1">
                 <form #form="ngForm" tuiForm (ngSubmit)="login(form.value.username, form.value.password)">
                     <tui-form-item>
-                        <tui-input prefix="ERP-icon_用户名" name="username" [placeholder]="'login.account' | translate" ngModel style="width: 320px; border-radius: 50px;"></tui-input>
+                        <tui-input prefix="ERP-icon_用户名" name="username" [placeholder]="'login.account' | translate" ngModel style="width: 320px;"></tui-input>
                     </tui-form-item>
                     <tui-form-item>
                         <tui-input id="password" prefix="ERP-icon_密码" name="password" [placeholder]="'login.password' | translate" type="password" ngModel style="width: 320px;"></tui-input>
