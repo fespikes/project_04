@@ -1,27 +1,28 @@
 <div id="login">
-    <img src="../../../assets/images/background.png">
-    <section>
-        <div id="form">
-            <img src="../../../assets/images/logo.png" id="logo">
-            <div id="form_1">
-                <form #form="ngForm" tuiForm (ngSubmit)="login(form.value.username, form.value.password)">
-                    <tui-form-item>
-                        <tui-input prefix="ERP-icon_用户名" name="username" [placeholder]="'login.account' | translate" ngModel style="width: 320px; border-radius: 50px;"></tui-input>
-                    </tui-form-item>
-                    <tui-form-item>
-                        <tui-input id="password" prefix="ERP-icon_密码" name="password" [placeholder]="'login.password' | translate" type="password" ngModel style="width: 320px;"></tui-input>
-                    </tui-form-item>
-                    <tui-form-item>
-                        <button tuiBtn="primary" [disabled]="form.invalid || process()" style="width: 320px;">{{'login.confirm' | translate}}</button>
-                    </tui-form-item>
-                </form>
-            </div>
-        </div>
-    </section>
-    <div id="font">
-        <p>追求卓越&nbsp;&nbsp;&nbsp;至诚至信<br>团结合作&nbsp;&nbsp;&nbsp;开放创新</p>
+  <img src="../../../assets/images/background.png">
+  <section>
+    <div id="form">
+      <img src="../../../assets/images/logo.png" id="logo">
+      <div id="form_1">
+        <form #form="ngForm" (ngSubmit)="login(form.value.username, form.value.password)">
+          <div>
+            <svg tuiIcon="ERP-icon_用户名"></svg>
+            <input name="username" [placeholder]="'login.account' | translate" ngModel style="width: 320px; border-radius: 50px;">
+          </div>
+          <div>
+            <svg tuiIcon="ERP-icon_密码"></svg>
+            <input id="password" name="password" [placeholder]="'login.password' | translate" type="password" ngModel style="width: 320px;">
+          </div>
+          <button [disabled]="form.invalid || process()" style="width: 320px;">{{'login.confirm' | translate}}</button>
+        </form>
+      </div>
     </div>
-    <div id="copy">
-        <p>Copyright &copy; TRANSWARP 2018 All Rights Reserved</p>
-    </div>
+  </section>
+  <div id="font">
+    <p>追求卓越&nbsp;&nbsp;&nbsp;至诚至信
+      <br>团结合作&nbsp;&nbsp;&nbsp;开放创新</p>
+  </div>
+  <div id="copy">
+    <p>Copyright &copy; TRANSWARP 2018 All Rights Reserved</p>
+  </div>
 </div>
