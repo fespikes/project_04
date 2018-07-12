@@ -11,13 +11,15 @@ import { LayoutComponent } from './components/layout/layout.component';
 
 const appRoutes: Routes = [
   {
+    path: 'login',
+    component: LoginComponent,
+    resolve: [TranslateResolver],
+    canDeactivate: [TranslateDeactivator],
+  },
+  {
     path: '',
     component: LayoutComponent,
     children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      },
       {
         path: 'customers',
         loadChildren: './components/customers/customers.module#CustomersModule',
