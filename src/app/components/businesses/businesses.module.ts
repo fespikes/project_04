@@ -6,6 +6,7 @@ import { SharedModule } from 'src/app/shared';
 
 import { BusinessesComponent } from './businesses.component';
 import { BusinessesRoutingModule } from './businesses-routing.module';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { BusinessesRoutingModule } from './businesses-routing.module';
     SharedModule,
     BusinessesRoutingModule
   ],
-  declarations: [BusinessesComponent],
+  declarations: [BusinessesComponent, DetailsComponent],
   providers: [
     TranslateService
   ]

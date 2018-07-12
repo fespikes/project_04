@@ -18,6 +18,7 @@ export class CustomersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.fetchData();
   }
 
   fetchDataApi(pagination?) {

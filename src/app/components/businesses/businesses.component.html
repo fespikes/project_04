@@ -1,3 +1,115 @@
-<p>
-  businesses works!
-</p>
+<section class="bread-crumb">
+  <div class="left">
+    <span>我的商机</span>
+  </div>
+  <div class="right">
+    <span class="search">
+      <!-- big-->
+      <input class="" />
+      <svg class="icon-md" tuiIcon="search" size="md"></svg>
+    </span>
+    <button class="margin-left-16px disabled-detail white-btn">查看已关闭商机</button>
+    <button class="margin-left-16px blue-btn">
+      <svg class="icon-md create" tuiIcon="create" size="md"></svg>
+      <span>新增商机</span>
+    </button>
+  </div>
+</section>
+
+<dl class="businesses">
+  <dd class="business">
+    <h3 class="title-big" (click)="toDetails($event)">
+      <span>中国石油化工</span>
+      <button class="feed-btn status">养单</button>
+    </h3>
+    <ul class="detail-ul ">
+      <li>
+        <p class="gray ">客户</p>
+        <p>中国石油化工集团公司</p>
+      </li>
+      <li>
+        <p class="gray ">销售负责人</p>
+        <p>张三</p>
+      </li>
+      <li>
+        <p class="gray ">状态</p>
+        <p class="">正常</p>
+      </li>
+    </ul>
+    <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg>
+  </dd>
+  <dd class="business">
+    <h3 class="title-big" (click)="toDetails($event)">
+      <span>中国石油化工</span>
+      <button class="follow-btn status">跟单</button>
+      <button class="state-btn status">已报备</button>
+    </h3>
+    <ul class="detail-ul ">
+      <li>
+        <p class="gray ">客户</p>
+        <p>中国石油化工集团公司</p>
+      </li>
+      <li>
+        <p class="gray ">销售负责人</p>
+        <p>张三</p>
+      </li>
+      <li>
+        <p class="gray ">状态</p>
+        <p class="">正常</p>
+      </li>
+    </ul>
+    <!--TODO: decide to show one of below-->
+    <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg>
+  </dd>
+  <dd class="business">
+    <h3 class="title-big" (click)="toDetails($event)">
+      <span>中国石油化工</span>
+      <button class="beat-btn status">打单</button>
+      <button class="state-btn status">已报备</button>
+    </h3>
+    <ul class="detail-ul ">
+      <li>
+        <p class="gray ">客户</p>
+        <p>中国石油化工集团公司</p>
+      </li>
+      <li>
+        <p class="gray ">销售负责人</p>
+        <p>张三</p>
+      </li>
+      <li>
+        <p class="gray ">状态</p>
+        <p class="">正常</p>
+      </li>
+    </ul>
+    <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg>
+  </dd>
+  <dd class="business">
+    <h3 class="title-big" (click)="toDetails($event)">
+      <span>中国石油化工</span>
+      <button class="deal-btn status">成单</button>
+      <button class="state-btn status">已报备</button>
+    </h3>
+    <ul class="detail-ul ">
+      <li>
+        <p class="gray ">客户</p>
+        <p>中国石油化工集团公司</p>
+      </li>
+      <li>
+        <p class="gray ">销售负责人</p>
+        <p>张三</p>
+      </li>
+      <li>
+        <p class="gray ">状态</p>
+        <p class="">正常</p>
+      </li>
+    </ul>
+    <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg>
+  </dd>
+</dl>
+
+<section class="pagination ">
+  <div class="amount ">共计:
+    <span>{{pagination.total}}</span>条</div>
+  <tui-pagination [(pagination)]=" pagination " (paginationChange)="fetchData() ">
+  </tui-pagination>
+</section>

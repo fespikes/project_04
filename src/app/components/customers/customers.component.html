@@ -7,7 +7,7 @@
       <input class="" />
       <svg class="icon-md" tuiIcon="search" size="md"></svg>
     </span>
-    <button class="margin-left-16px disabled-detail white-btn">查看作废客户</button>
+    <button class="margin-left-16px disabled-detail white-btn">查看已作废客户</button>
     <button class="margin-left-16px blue-btn">
       <svg class="icon-md create" tuiIcon="create" size="md"></svg>
       <span>新增客户</span>
@@ -39,7 +39,7 @@
 </dl>
 
 <section class="pagination ">
-  <div class="amount ">共计:<span>3333</span>条</div>
+  <div class="amount ">共计:<span>{{pagination.total}}</span>条</div>
   <tui-pagination [(pagination)]=" pagination " (paginationChange)="fetchData() ">
   </tui-pagination>
 </section>

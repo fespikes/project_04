@@ -1,0 +1,7 @@
+<ul class="bread-crumbs">
+  <li *ngFor="let item of data; let idx=index; ">
+    <a *ngIf="idx<data.length-1" [ngClass]="{'first': idx===0}" routerLink="{{item.href}}" class="anchor">{{item.text}}</a>
+    <a *ngIf="idx==data.length-1" [ngClass]="{'last': true}" class="anchor">{{item.text}}</a>
+    <span *ngIf="idx<data.length-1">></span>
+  </li>
+</ul>
