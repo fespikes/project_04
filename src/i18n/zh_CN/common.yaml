@@ -7,4 +7,4 @@ layout:
 login:
   account: 用户名
   password: 密码
-  confirm: 登陆
+  confirm: 登录
