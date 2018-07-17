@@ -6,11 +6,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { TuiMessageService  } from 'tdc-ui';
+import { TuiMessageService } from 'tdc-ui';
 import { PartialCollection } from '../models';
 
-export class ApiConfig {
-  fullResponse = false;
+export interface ApiConfig {
+  fullResponse: boolean;
 }
 
 @Injectable()
@@ -42,7 +42,7 @@ export class ErpApiService {
   }
 
   // TODO: deprecate Response and use pip
-  private formatResponse(res: Response, config = new ApiConfig()) {
+  private formatResponse(res: Response, config: ApiConfig = { fullResponse: false }) {
     const json = res.json();
     if (config.fullResponse) {
       return json;

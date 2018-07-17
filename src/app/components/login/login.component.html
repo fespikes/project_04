@@ -1,3 +1,29 @@
-<p>
-  login works!
-</p>
+<body id="login">
+    <img src="../../../assets/images/background.png">
+    <section>
+        <div id="form">
+            <img src="../../../assets/images/logo.png" id="logo">
+            <div id="form_1">
+                <form #form="ngForm" (ngSubmit)="login(form.value.username, form.value.password)">
+                    <div>
+                        <svg id="svg_username" tuiIcon="ERP-icon_用户名"></svg>
+                        <input id="username" name="username" [placeholder]="'login.account' | translate" type="text" ngModel>
+                    </div>
+                    <div>
+                        <svg id="svg_password" tuiIcon="ERP-icon_密码"></svg>
+                        <input id="password" name="password" [placeholder]="'login.password' | translate" type="password" ngModel>
+                    </div>
+                    <div>
+                        <button id="button" [disabled]="form.invalid || process()">{{'login.confirm' | translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <div id="font">
+        <p>追求卓越&nbsp;&nbsp;&nbsp;至诚至信<br/>团结合作&nbsp;&nbsp;&nbsp;开放创新</p>
+    </div>
+    <div id="copy">
+        <p>Copyright &copy; TRANSWARP 2018 All Rights Reserved</p>
+    </div>
+</body>
