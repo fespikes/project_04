@@ -55,12 +55,23 @@
   border: 0
   background: #fff
   color: #fff
-
+.btn-without-shadow
+  @extend .pointer
+  font-size: $font-size
+  border: 0
+  background: #fff
+  color: #fff
 .btn-without-outline
   @extend .btn
   @include border-radius-12px
   &:focus
     outline: none
+
+.no-shadow-btn
+  @extend .btn-without-shadow
+  @include border-radius-15px
+  background: #fff
+  color: $font-color
 .white-btn
   @extend .btn
   @include border-radius-15px
@@ -87,11 +98,19 @@
 .state-btn
   @extend .btn-without-outline
   background: #e9cf23
+.hover-btn
+  fill: $gray
+  &:hover, &.current
+    svg
+      fill: #738eea
+
 .no-padding
   padding: 0
   padding-bottom: 0
 .no-bolder
   border: none
+.no-shadow
+
 .ellipsis-two-lines
   overflow: hidden
   text-overflow: ellipsis
@@ -145,14 +164,14 @@
     align-items: center
     .search
       display: inline-block
-      width: 120px
+      width: 200px
       height: 30px
       position: relative
       input
         @include btn-shadow
         display: inline-block
         padding: 0 30px 0 8px
-        width: 120px
+        width: 200px
         height: 30px
         border: none
         border-radius: 15px
@@ -195,7 +214,6 @@ dl
       margin-right: 100px
       color: $font-color
       font-size: $title-card
-      @extend .pointer
       .status
         margin-left: 16px
     p
@@ -204,12 +222,24 @@ dl
       color: $font-color
     p.gray
       color: #999
-    .trash, .reactivate
-      fill: $gray
+
+    .view-details, .trash, .reactivate
+      padding-left: 30px
       position: absolute
       top: 16px
-      right: 16px
       @extend .pointer
+      @extend .hover-btn
+      svg
+        width: 16px
+        height: 16px
+        fill: $gray
+        position: absolute
+        left: 10px
+        top: 6px
+    .trash, .reactivate
+      right: 16px
+    .view-details
+      right: 136px
 
   .detail-ul
     display: flex
@@ -322,9 +352,12 @@ dl
     top: 20px
     right: 20px
     fill: $gray
+    &:hover, &.current
+      fill: #738eea
+
   ol>li
     padding: 0 20px
-    background: $bg
+    background: $light-bg
     position: relative
     margin-bottom: 10px
 

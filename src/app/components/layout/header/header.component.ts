@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { TranslateService } from 'src/app/i18n';
-
+import { TranslateService } from '../../../i18n';
 
 @Component({
   selector: 'erp-header',
@@ -17,13 +17,21 @@ export class HeaderComponent implements OnInit {
     };
   });
   todosAmount = 32;
-  name = 'Admin';
+  userName: string;
 
   constructor(
     private translate: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    const user = sessionStorage.getItem('erp:user');
+    if (user === null) {
+      this.router.navigate(['/login']);
+    } else {
+      const userData = JSON.parse(user);
+      this.userName = userData.name;
+    }
   }
 
 }

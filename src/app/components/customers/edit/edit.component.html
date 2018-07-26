@@ -1,0 +1,281 @@
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
+    <ul>
+      <li *ngIf="editType===editTypes['basic']">
+        <div [class.error]="!myForm.get('companyName').valid && myForm.get('companyName').touched">
+          <div class="field-box">
+            <label for="companyNameId"><span>*</span>公司全称</label>
+            <input class="field" type="text" placeholder="" id="companyNameId" autocomplete="off " [formControl]="myForm.controls['companyName']" />
+          </div>
+          <div *ngIf="myForm.controls['companyName'].hasError('required') && myForm.controls['companyName'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="companyAbbrId">公司简称</label>
+            <input class="field" type="text" placeholder="" id="companyAbbrId" autocomplete="off " [formControl]="myForm.controls['companyAbbr']" />
+          </div>
+        </div>
+        <div [class.error]="!myForm.get('country').valid && myForm.get('country').touched">
+          <!--TODO: options-->
+          <div class="field-box">
+            <label for="countryId"><span>*</span>国别</label>
+            <input class="field" type="text" placeholder="" id="countryId" autocomplete="off " [formControl]="myForm.controls['country']" />
+          </div>
+          <div *ngIf="myForm.controls['country'].hasError('required') && myForm.controls['country'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div>
+          <!--TODO: options-->
+          <div class="field-box">
+            <label for="cityId">城市</label>
+            <input class="field" type="text" placeholder="" id="cityId" autocomplete="off " [formControl]="myForm.controls['city']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="cityLeveId">城市级别</label>
+            <input class="field" type="text" placeholder="" id="cityLeveId" autocomplete="off " [formControl]="myForm.controls['cityLeve']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="provinceId">省份</label>
+            <input class="field" type="text" placeholder="" id="provinceId" autocomplete="off " [formControl]="myForm.controls['province']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="parentCompId">母公司</label>
+            <input class="field" type="text" placeholder="" id="parentCompId" autocomplete="off " [formControl]="myForm.controls['parentComp']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="companyProfileId">公司简介</label>
+            <textarea rows="3" cols="20" class="" placeholder="" id="companyProfileId" autocomplete="off " [formControl]="myForm.controls['companyProfile']"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <li *ngIf="editType===editTypes['status']">
+        <div [class.error]="!myForm.get('category').valid && myForm.get('category').touched">
+          <div class="field-box">
+            <!--TODO-->
+            <label for="categoryId"><span>*</span>客户类别</label>
+            <input class="field" type="text" placeholder="" id="categoryId" autocomplete="off " [formControl]="myForm.controls['category']" />
+          </div>
+          <div *ngIf="myForm.controls['category'].hasError('required') && myForm.controls['category'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('level').valid && myForm.get('level').touched">
+          <div class="field-box">
+            <!--TODO-->
+            <label for="levelId"><span>*</span>客户级别</label>
+            <input class="field" type="text" placeholder="" id="levelId" autocomplete="off " [formControl]="myForm.controls['level']" />
+          </div>
+          <div *ngIf="myForm.controls['level'].hasError('required') && myForm.controls['level'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="customerStatusId">客户状态</label>
+            <input class="field" type="text" id="customerStatusId" autocomplete="off " [formControl]="myForm.controls['customerStatus']" />
+          </div>
+        </div>
+        <div>
+          <!--TODO-->
+          <div class="field-box">
+            <label for="reasonId">原因</label>
+            <textarea rows="3" cols="20" class="" placeholder="" id="reasonId" autocomplete="off " [formControl]="myForm.controls['reason']">
+            </textarea>
+          </div>
+          <div *ngIf="myForm.controls['reason'].hasError('required') && myForm.controls['reason'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+      </li>
+
+      <li *ngIf="editType===editTypes['invoice']">
+        <div [class.error]="!myForm.get('invCustomerName').valid && myForm.get('invCustomerName').touched">
+          <div class="field-box">
+            <label for="invCustomerNameId">
+  <span>*</span>发票客户名称</label>
+            <input class="field" type="text" placeholder="" id="invCustomerNameId" autocomplete="off" [formControl]="myForm.controls['invCustomerName']" />
+          </div>
+          <div *ngIf="myForm.controls['invCustomerName'].hasError('required') && myForm.controls['invCustomerName'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="branchNameId">分公司名称</label>
+            <input class="field" type="text" placeholder="" id="branchNameId" autocomplete="off" [formControl]="myForm.controls['branchName']" />
+          </div>
+        </div>
+        <div [class.error]="!myForm.get('blNumber').valid && myForm.get('blNumber').touched">
+          <div class="field-box">
+            <label for="blNumberId">
+<span>*</span>营业执照号</label>
+            <input class="field" type="text" placeholder="" id="blNumberId" autocomplete="off" [formControl]="myForm.controls['blNumber']" />
+          </div>
+          <div *ngIf="myForm.controls['blNumber'].hasError('required') && myForm.controls['blNumber'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('taxReg').valid && myForm.get('taxReg').touched">
+          <div class="field-box">
+            <label for="taxRegId">
+<span>*</span>纳税登记号</label>
+            <input class="field" type="text" placeholder="" id="taxRegId" autocomplete="off" [formControl]="myForm.controls['taxReg']" />
+          </div>
+          <div *ngIf="myForm.controls['taxReg'].hasError('required') && myForm.controls['taxReg'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('bankName').valid && myForm.get('bankName').touched">
+          <div class="field-box">
+            <label for="bankNameId">
+<span>*</span>开户行</label>
+            <input class="field" type="text" placeholder="" id="bankNameId" autocomplete="off" [formControl]="myForm.controls['bankName']" />
+          </div>
+          <div *ngIf="myForm.controls['bankName'].hasError('required') && myForm.controls['bankName'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('accountBank').valid && myForm.get('accountBank').touched">
+          <div class="field-box">
+            <label for="accountBankId">
+<span>*</span>银行账号</label>
+            <input class="field" type="text" placeholder="" id="accountBankId" autocomplete="off" [formControl]="myForm.controls['accountBank']" />
+          </div>
+          <div *ngIf="myForm.controls['accountBank'].hasError('required') && myForm.controls['accountBank'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('regLocal').valid && myForm.get('regLocal').touched">
+          <div class="field-box">
+            <label for="regLocalId">
+<span>*</span>注册地</label>
+            <input class="field" type="text" placeholder="" id="regLocalId" autocomplete="off" [formControl]="myForm.controls['regLocal']" />
+          </div>
+          <div *ngIf="myForm.controls['regLocal'].hasError('required') && myForm.controls['regLocal'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('regPhone').valid && myForm.get('regPhone').touched">
+          <div class="field-box">
+            <label for="regPhoneId">
+<span>*</span>注册电话</label>
+            <input class="field" type="text" placeholder="" id="regPhoneId" autocomplete="off" [formControl]="myForm.controls['regPhone']" />
+          </div>
+          <div *ngIf="myForm.controls['regPhone'].hasError('required') && myForm.controls['regPhone'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+      </li>
+
+      <li *ngIf="editType===editTypes['contact']">
+        <div [class.error]="!myForm.get('name').valid && myForm.get('name').touched">
+          <div class="field-box">
+            <label for="nameId">
+<span>*</span>姓名</label>
+            <input class="field" type="text" placeholder="" id="nameId" autocomplete="off " [formControl]="myForm.controls['name']" />
+          </div>
+          <div *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('job').valid && myForm.get('job').touched">
+          <div class="field-box">
+            <label for="jobId">
+<span>*</span>职务</label>
+            <input class="field" type="text" placeholder="" id="jobId" autocomplete="off " [formControl]="myForm.controls['job']" />
+          </div>
+          <div *ngIf="myForm.controls['job'].hasError('required') && myForm.controls['job'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('dep').valid && myForm.get('dep').touched">
+          <div class="field-box">
+            <label for="depId">
+<span>*</span>部门</label>
+            <input class="field" type="text" placeholder="" id="depId" autocomplete="off " [formControl]="myForm.controls['dep']" />
+          </div>
+          <div *ngIf="myForm.controls['dep'].hasError('required') && myForm.controls['dep'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('landline').valid && myForm.get('landline').touched">
+          <div class="field-box">
+            <label for="landlineId">
+<span>*</span>电话</label>
+            <input class="field" type="text" placeholder="" id="landlineId" autocomplete="off " [formControl]="myForm.controls['landline']" />
+          </div>
+          <div *ngIf="myForm.controls['landline'].hasError('required') && myForm.controls['landline'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="phoneId">手机号</label>
+            <input class="field" type="text" placeholder="" id="phoneId" autocomplete="off " [formControl]="myForm.controls['phone']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="emailId">电子邮件</label>
+            <input class="field" type="text" placeholder="" id="emailId" autocomplete="off " [formControl]="myForm.controls['email']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="faxId">传真</label>
+            <input class="field" type="text" placeholder="" id="faxId" autocomplete="off " [formControl]="myForm.controls['fax']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="addressId">地址</label>
+            <input class="field" type="text" placeholder="" id="addressId" autocomplete="off " [formControl]="myForm.controls['address']" />
+          </div>
+        </div>
+      </li>
+
+      <li *ngIf="editType===editTypes['taker']">
+        <div [class.error]="!myForm.get('name').valid && myForm.get('name').touched">
+          <div class="field-box">
+            <label for="nameId">
+<span>*</span>收票人姓名</label>
+            <input class="field" type="text" placeholder="" id="nameId" autocomplete="off " [formControl]="myForm.controls['name']" />
+          </div>
+          <div *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div [class.error]="!myForm.get('phone').valid && myForm.get('phone').touched">
+          <div class="field-box">
+            <label for="phoneId">
+<span>*</span>收票人电话</label>
+            <input class="field" type="text" placeholder="" id="phoneId" autocomplete="off " [formControl]="myForm.controls['phone']" />
+          </div>
+          <div *ngIf="myForm.controls['phone'].hasError('required') && myForm.controls['phone'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="emailId">收票人邮箱</label>
+            <input class="field" type="text" placeholder="" id="emailId" autocomplete="off " [formControl]="myForm.controls['email']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="workingAddressId">收票人单位</label>
+            <input class="field" type="text" placeholder="" id="workingAddressId" autocomplete="off " [formControl]="myForm.controls['workingAddress']" />
+          </div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="addressId">收票人地址</label>
+            <input class="field" type="text" placeholder="" id="addressId" autocomplete="off " [formControl]="myForm.controls['address']" />
+          </div>
+        </div>
+      </li>
+
+      <li *ngIf="editType===editTypes['others']">
+        <div>
+          <div class="field-box">
+            <label for="lastContactDateId">最后联系日期</label>
+            <input class="field" type="text" placeholder="" id="lastContactDateId" autocomplete="off " [formControl]="myForm.controls['lastContactDate']" />
+          </div>
+        </div>
+        <div [class.error]="!myForm.get('nextContactTime').valid && myForm.get('nextContactTime').touched">
+          <div class="field-box">
+            <label for="nextContactTimeId"><span>*</span>下次联系日期</label>
+            <input class="field" type="text" placeholder="" id="nextContactTimeId" autocomplete="off " [formControl]="myForm.controls['nextContactTime']" />
+          </div>
+          <div *ngIf="myForm.controls['nextContactTime'].hasError('required') && myForm.controls['nextContactTime'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+        </div>
+        <div>
+          <div class="field-box">
+            <label for="commentId">备注</label>
+            <textarea rows="3" cols="20" class="" placeholder="" id="commentId" autocomplete="off" [formControl]="myForm.controls['comment']"></textarea>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="buttons ">
+      <button class="tui-btn-md tui-btn-primary tui-btn " type="submit" [disabled]="!myForm.valid ? 'disabled' : null">确定</button>
+      <button class="tui-btn-md tui-btn-default tui-btn " type="reset">取消</button>
+    </div>
+  </form>
+</div>

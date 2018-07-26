@@ -3,12 +3,16 @@
     <span>我的客户</span>
   </div>
   <div class="right">
-    <span class="search"> <!-- big-->
-      <input class="" />
+    <span class="search">
+      <input
+        [(ngModel)]="filter.name"
+        (ngModelChange)="fetchData(true)"
+        class=""
+      />
       <svg class="icon-md" tuiIcon="search" size="md"></svg>
     </span>
-    <button class="margin-left-16px disabled-detail white-btn">查看已作废客户</button>
-    <button class="margin-left-16px blue-btn">
+    <button (click)="swithStatus($event)" class="margin-left-16px disabled-detail" [ngClass]="{'white-btn': filter.status!=='INVALID', 'blue-btn': filter.status==='INVALID'}">查看已作废客户</button>
+    <button (click)="add()" class="margin-left-16px blue-btn">
       <svg class="icon-md create" tuiIcon="create" size="md"></svg>
       <span>新增客户</span>
     </button>
@@ -16,6 +20,36 @@
 </section>
 
 <dl class="customers">
+  <dd *ngFor="let item of list" class="customer">
+    <h3 class="title-big">{{item.name}}</h3>
+    <ul class="detail-ul ">
+      <li>
+        <p class="gray ">客户类别</p>
+        <p>{{item.category}}</p>
+      </li>
+      <li>
+        <p class="gray ">客户级别</p>
+        <p>{{item.level}}</p>
+      </li>
+      <li>
+        <p class="gray ">所属行业</p>
+        <p class="gray ">{{item.industry}}</p>
+      </li>
+    </ul>
+    <!--TODO: decide to show one of below-->
+    <a (click)="toDetails(item)" class="view-details no-shadow-btn">
+      <svg class="icon-md" tuiIcon="details" size="md"></svg>查看详情
+    </a>
+    <a *ngIf="item.status==='INVALID'" (click)="reactivate(item)" class="reactivate no-shadow-btn">
+      <svg class="icon-md" tuiIcon="reactivate" size="md"></svg>重新启用
+    </a>
+    <a *ngIf="item.status==='NORMAL'" (click)="cancel(item)" class="trash no-shadow-btn">
+      <!-- <svg class="icon-md trash " tuiIcon="trash" size="md "></svg>作废 -->
+      <svg class="icon-md" tuiIcon="ERP-icon_密码" size="md"></svg>作废
+    </a>
+  </dd>
+</dl>
+<!-- <dl class="customers">
   <dd class="customer">
     <h3 class="title-big" (click)="toDetails($event)">中国石油化工</h3>
     <ul class="detail-ul ">
@@ -32,12 +66,10 @@
         <p class="gray ">石油化工</p>
       </li>
     </ul>
-    <!--TODO: decide to show one of below-->
-    <button class="margin-left-16px reactivate white-btn">重新启用</button>
-    <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg>
+    <button (click)="reactivate()" class="margin-left-16px reactivate white-btn">重新启用</button>
+    <svg (click)="cancel() " class="icon-md trash " tuiIcon="trash " size="md "></svg>
   </dd>
-</dl>
-
+</dl> -->
 <section class="pagination ">
   <div class="amount ">共计:<span>{{pagination.total}}</span>条</div>
   <tui-pagination [(pagination)]=" pagination " (paginationChange)="fetchData() ">

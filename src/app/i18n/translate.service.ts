@@ -4,6 +4,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+
 import { Observable } from 'rxjs/Observable';
 import merge from 'lodash-es/merge';
 import 'rxjs/add/operator/map';
@@ -47,7 +49,7 @@ export class TranslateService {
   lang: string;
 
   constructor(
-    private http: Http,
+    private http: HttpClient,
     private i18nLang: I18nLangService,
   ) {
     // 因为TranslateService是单例运行，所以不需要对`i18nLang.current`做清理工作
@@ -77,7 +79,6 @@ export class TranslateService {
       // noop
     }
     return this.http.get(`${this.prefix}${this.lang}/${token}.json`)
-    .map((res: Response) => res.json())
     .map((json) => {
       this.loadedI18n[this.lang] = this.loadedI18n[this.lang] || {};
       this.loadedI18n[this.lang][token] = true;

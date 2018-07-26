@@ -1,1 +1,1 @@
-{"customers":null}
+{"customers":{"basic":"基本信息","status":"状态信息","invoice":"发票信息","others":"其他","contacts":"联系人","taker":"收票人"}}

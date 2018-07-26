@@ -1,116 +1,123 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Headers, Http, Response, URLSearchParams, ResponseContentType } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { TuiMessageService } from 'tdc-ui';
-import { PartialCollection } from '../models';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
-export interface ApiConfig {
-  fullResponse: boolean;
-}
+import { PartialCollection } from '../models';
 
 @Injectable()
 export class ErpApiService {
+  private handleError: HandleError;
+
   constructor(
-    private http: Http,
-    private message: TuiMessageService,
+    private http: HttpClient,
+    httpErrorHandler: HttpErrorHandler
   ) {
-    this.formatErrors = this.formatErrors.bind(this);
+    // TODO: make the service name
+    this.handleError = httpErrorHandler.createHandleError('');
   }
 
-  private get headers(): Headers {
-    return new Headers({
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json;charset=UTF-8',
+  private get headers(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'my-auth-token'
     });
   }
 
-  private formatErrors(error: any) {
-    let data;
-    try {
-      data = error.json();
-    } catch (err) {
-      data = { error: 'fail to parse' };
-    }
-
-    this.message.error(data.message);
-    return Observable.throw(data);
+  private set headers(param) {
+    this.headers = param;
   }
 
-  // TODO: deprecate Response and use pip
-  private formatResponse(res: Response, config: ApiConfig = { fullResponse: false }) {
-    const json = res.json();
-    if (config.fullResponse) {
-      return json;
-    } else {
-      return json.data;
+  private get httpOptions(): any {
+    return {
+      headers: this.headers
+    };
+  }
+
+  getParams(p, all?: boolean) {
+    const obj: any = {
+      params: new HttpParams()
+    };
+    if (p) {
+      for (const key in p) {
+        if (p.hasOwnProperty(key)) {
+          const element = p[key];
+          obj.params = obj.params.set(key, element);
+        } else {
+          continue;
+        }
+      }
     }
+    if (!!all) {
+      obj.observe = 'response';
+    }
+    return obj;
   }
 
   makeUrl(url) {
-    return location.origin + environment.apiUrl + url;
+    return location.origin + environment.apiUrl + '/' + url;
   }
 
-  getInRoot(url: string, params: Object = {}, config?: ApiConfig): Observable<any> {
-    return this.http.get(url, { headers: this.headers, search: params })
-      .catch(this.formatErrors)
-      .map((res: Response) => this.formatResponse(res, config));
+  get(url: string, params?: any): Observable<any> {
+    // const options = params && params.status ? { params: new HttpParams().set('status', params.status).set('fuck', '4') } : {};
+    const options = this.getParams(params);
+    return this.http.get(this.makeUrl(url), options)
+      .pipe(
+        // retry(3),
+        catchError(this.handleError<any>('searchHeroes', []))
+      );
   }
 
-  get(url: string, params: Object = {}, config?: ApiConfig): Observable<any> {
-    return this.http.get(this.makeUrl(url), { headers: this.headers, search: params })
-      .catch(this.formatErrors)
-      .map((res: Response) => this.formatResponse(res, config));
-  }
-
-  getAll(url: string, params: Object = {}, config?: ApiConfig): Observable<PartialCollection> {
+  getAll(url: string, params: Object = {}): Observable<PartialCollection> {
     params['size'] = Math.pow(2, 31) - 1;
     params['page'] = 1;
-    return this.get(url, params, config);
-  }
-
-  getFile(url: string, params = {}, config?: ApiConfig): Observable<any> {
-    return this.http.get(
-      this.makeUrl(url),
-      {
-        headers: this.headers,
-        search: params,
-        responseType: ResponseContentType.Blob,
-      })
-      .map((res) => res.blob())
-      .catch(this.formatErrors);
+    return this.http.get(this.makeUrl(url), this.getParams(params, true))
+      .pipe(
+        // retry(3),
+        catchError(this.handleError<any>('searchHeroes', []))
+      );
   }
 
   put(url: string, body: Object = {}): Observable<any> {
+    // this.headers = this.headers.set('Authorization', 'my-new-auth-token');
     return this.http.put(
       this.makeUrl(url),
       JSON.stringify(body),
-      { headers: this.headers },
-    )
-      .catch(this.formatErrors)
-      .map((res: Response) => this.formatResponse(res));
+      this.httpOptions,
+    ).pipe(
+      catchError(this.handleError<any>('put', []))
+    );
   }
 
-  post(url: string, body: Object = {}, config?: ApiConfig): Observable<any> {
+  post(url: string, body: Object = {}, observe?: boolean): Observable<any> {
+    const httpOptions = this.httpOptions;
+    if (observe) {
+      httpOptions.observe = 'response';
+    }
+
     return this.http.post(
       this.makeUrl(url),
       JSON.stringify(body),
-      { headers: this.headers },
-    )
-      .catch(this.formatErrors)
-      .map((res: Response) => this.formatResponse(res, config));
+      this.httpOptions,
+    ).pipe(
+      catchError(this.handleError<any>('put', []))
+    );
   }
 
   delete(url): Observable<any> {
     return this.http.delete(
       this.makeUrl(url),
-      { headers: this.headers },
-    )
-      .catch(this.formatErrors)
-      .map((res: Response) => this.formatResponse(res));
+      this.httpOptions,
+    ).pipe(
+      catchError(this.handleError<any>('put', []))
+    );
   }
 }

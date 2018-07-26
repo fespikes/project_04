@@ -4,7 +4,7 @@ import { TranslateService } from './translate.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-import { TranslateToken } from '../i18n/translate-token';
+import { TranslateToken } from './translate-token';
 
 @Injectable()
 export class TranslateResolver implements Resolve<Observable<Object>> {

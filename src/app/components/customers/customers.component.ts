@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { of } from 'rxjs';
-import { Pagination } from 'tdc-ui';
+import { TuiModalService, Pagination } from 'tdc-ui';
+import { TranslateService } from '../../i18n';
+
+import { CustomersService } from './customers.service';
+import { AddComponent } from './add/add.component';
+import { CancelComponent } from './cancel/cancel.component';
+import { ActivateComponent } from './activate/activate.component';
+import { Customer, CustomerFilter } from './customers.model';
 
 @Component({
   selector: 'erp-customers',
@@ -11,43 +17,71 @@ import { Pagination } from 'tdc-ui';
 })
 export class CustomersComponent implements OnInit {
   pagination: Pagination = new Pagination();
-  filter: any;
+  filter = new CustomerFilter();
+  list: Customer[];
 
   constructor(
-    private router: Router
+    private modalService: TuiModalService,
+    private router: Router,
+    private service: CustomersService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
     this.fetchData();
   }
 
-  fetchDataApi(pagination?) {
-    return of({
-      data: [],
-      pagination: {
-        page: 1,
-        size: 10,
-        ...pagination,
-        total: 205,
-      },
-    });
+  fetchData() { // TODO: 需要在查看客户里面提供”是否作废“的字段
+    this.filter.pageNum = this.pagination.page;
+    this.filter.pageSize = this.pagination.size;
+
+    this.service.getCustomers(this.filter)
+      .subscribe((res) => {
+        this.pagination = res.pagination;
+        this.list = res.data;
+      });
   }
 
-  fetchData() {
-    this.fetchDataApi(this.pagination)
-      .subscribe((data) => {
-        this.pagination = data.pagination;
-      });
+  add(size = 'md') { // TODO
+    return this.modalService.open(AddComponent, {
+      title: this.translateService.translateKey('新增客户'),
+      size,
+    })
+      .subscribe((word: string) => { });
+  }
+
+  cancel(size = 'md') {// TODO
+    return this.modalService.open(CancelComponent, {
+      title: this.translateService.translateKey('作废客户'),
+      size,
+    })
+      .subscribe((word: string) => { });
+  }
+
+  swithStatus($event) {
+    // TODO: button status change
+    if (this.filter.status !== 'INVALID') {
+      this.filter.status = 'INVALID';
+    } else {
+      this.filter.status = 'NORMAL';
+    }
+    this.fetchData();
   }
 
   toDetails(item?) {
     console.log(item);
-    const id = 'llllll'; // TODO: get the id from item
     // TODO: if canceled
-    this.router.navigate([`/customers/details/${id}`], { queryParams: { canceled: true/* this.filter.canceled */ } });
+    this.router.navigate([`/customers/details/${item.id}`], { queryParams: { status: item.status } });
   }
 
-  remove(item?) {
-    console.log(item);
+  reactivate(size = 'md') {  // TODO
+    return this.modalService.open(ActivateComponent, {
+      title: this.translateService.translateKey('重新启用'),
+      size,
+    })
+      .subscribe((word: string) => { });  }
+
+  createCustomer(customer: Customer) {  // TODO
+    return this.service.createCustomer(customer);
   }
 }

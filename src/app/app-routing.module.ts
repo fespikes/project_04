@@ -8,17 +8,18 @@ import {
 } from './i18n';
 import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuardService } from './auth-guard.service';
 
 const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    resolve: [TranslateResolver],
-    canDeactivate: [TranslateDeactivator],
   },
   {
     path: '',
     component: LayoutComponent,
+    canActivateChild: [AuthGuardService],
     children: [
       {
         path: 'customers',
@@ -46,18 +47,28 @@ const appRoutes: Routes = [
         pathMatch: 'full',
       },
     ],
-    resolve: [TranslateResolver],
-    canDeactivate: [TranslateDeactivator],
-  }
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, {
+  imports: [RouterModule.forRoot([
+  {
+      path: '',
+      resolve: [TranslateResolver],
+      canDeactivate: [TranslateDeactivator],
+      children: appRoutes,
+    },
+  ], {
     useHash: true,
     preloadingStrategy: PreloadAllModules,
   })],
   exports: [RouterModule],
   providers: [
+    AuthGuardService,
     TranslateResolver,
     TranslateDeactivator,
     {

@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ErpApiService } from '../../shared';
 import { Router } from '@angular/router';
 
-enum Status {
-  Init = 'INIT',
-  Process = 'PROCESS',
-  Success = 'SUCCESS',
-  Fail = 'FAIL'
-}
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'erp-login',
@@ -16,30 +10,34 @@ enum Status {
 })
 export class LoginComponent implements OnInit {
 
-  status: Status = Status.Init;
-
-  constructor(private api: ErpApiService, private router: Router) { }
+  constructor(
+    private service: LoginService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   login(user: string, password: string): void {
-    this.status = Status.Process;
-    this.api.post(
-      '/free-authentication/authentication',
-      { name: user, password: password },
-      { fullResponse: true })
-      .subscribe(
-        () => {
-          this.status = Status.Success;
-          this.router.navigate(['/']);
-        },
-        () => { this.status = Status.Fail; });
+    this.service.login({
+      name: user,
+      password: password
+    }).subscribe(
+      (res) => {
+        if (this.service.isLoggedIn) {
+          // Get the redirect URL from our auth service
+          const redirect = this.service.redirectUrl;
+          this.router.navigate([redirect]);
+        }
 
+        this.service.storeLoggedIn(res.user);
+        this.router.navigate(['/']);
+      },
+      _ => _);
   }
 
-  process() {
-    return this.status === Status.Process;
+  logout() {
+    this.service.logout();
   }
 
 }

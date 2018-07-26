@@ -1,1 +1,7 @@
 customers:
+  basic: General Information
+  status: Status Information
+  invoice: Invoice Information
+  others: Others
+  contact: Contact Information
+  taker: Ticket Taker

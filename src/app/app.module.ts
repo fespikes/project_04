@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TuiModule, TuiMessageService } from 'tdc-ui';
 import {
@@ -22,17 +23,21 @@ import { LayoutModule } from './components/layout/layout.module';
 import { LayoutComponent } from './components/layout/layout.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { LoginComponent } from './components/login/login.component';
+import { LoginService } from './components/login/login.service';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule,
     TuiModule,
     I18nModule,
@@ -46,6 +51,7 @@ import { LoginComponent } from './components/login/login.component';
     I18nLangService,
     TuiMessageService,
     TranslateService,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,15 +2,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-
 import { TuiModule, TuiMessageService } from 'tdc-ui';
 
 import { I18nModule } from '../i18n';
 
-
+import { HttpErrorHandler } from './services';
 import {
   ImgSrcDirective,
-} from './components/';
+} from './components';
 import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.component';
 
 @NgModule({
@@ -29,14 +28,18 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
     // ......
   ],
   providers: [
-    TuiMessageService
+    TuiMessageService,
+    HttpErrorHandler,
   ],
   exports: [
     // ....
     TuiModule,
     I18nModule,
+    FormsModule,
     ImgSrcDirective,
-    BreadCrumbsComponent
+    BreadCrumbsComponent,
+    ReactiveFormsModule,
+
   ],
   entryComponents: [
     // ...

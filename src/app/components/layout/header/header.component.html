@@ -1,7 +1,8 @@
 <div class="left">
-  <div class="logo">
+  <a class="logo" routerLink="/" routerLinkActive="active">
     <img erpImgSrc="ERP.svg">
-  </div>
+  </a>
+
   <ul>
     <li *ngFor="let item of navs">
       <a routerLink="{{item.link}}" routerLinkActive="active">{{item.name | translate}}</a>
@@ -10,5 +11,5 @@
   <span class="todos-amount">{{todosAmount}}</span>
 </div>
 <div class="right">
-  <span class="name">{{name}}</span>
+  <span class="user-name">{{userName}}</span>
 </div>
