@@ -1,17 +1,18 @@
 <div class="container">
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
-    <div [class.error]="!myForm.get('username').valid && myForm.get('username').touched">
-      <div class="field-box">
-        <label for="usernameId">
-          <span>*</span>原因
-        </label>
-        <input class="field" type="text" placeholder="" id="usernameId" autocomplete="off " [formControl]="myForm.controls['username']" />
-      </div>
-      <div *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
-    </div>
-    <div class="buttons ">
-      <button class="tui-btn-md tui-btn-primary tui-btn " type="submit" [disabled]="!myForm.valid ? 'disabled' : null">确定</button>
-      <button class="tui-btn-md tui-btn-default tui-btn " type="reset">取消</button>
-    </div>
-  </form>
-</div>
+  
+  <p class="paragrapy">
+    {{'form.sure_sentence' | translate}}
+    <span>fweefw</span>
+  </p>
+  <div class="buttons ">
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn "
+      type="submit"
+      (click)="submit()"
+    >确定</button>
+    <button 
+      class="tui-btn-md tui-btn-default tui-btn " type="reset"
+      (click)="exit()"
+    >取消</button>
+  </div>
+  </div>

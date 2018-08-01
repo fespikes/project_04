@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { TuiModalRef } from 'tdc-ui';
+import { Component, OnInit, Inject } from '@angular/core';
+
+import { TranslateService } from 'src/app/i18n';
+import { TuiModalRef, TuiMessageService, TUI_MODAL_DATA } from 'tdc-ui';
 import { CustomersService } from '../customers.service';
 
 @Component({
@@ -12,28 +9,33 @@ import { CustomersService } from '../customers.service';
   templateUrl: './activate.component.html',
   styleUrls: ['./activate.component.sass']
 })
-export class ActivateComponent implements OnInit {
-  myForm: FormGroup;
+export class ActivateComponent {
+  customer: any = {};
+  tipMessage: string;
 
   constructor(
-    fb: FormBuilder,
+    @Inject(TUI_MODAL_DATA) data,
     private modal: TuiModalRef,
-    private customersService: CustomersService,
+    private service: CustomersService,
+    private message: TuiMessageService,
+    private translateService: TranslateService
   ) {
-    this.myForm = fb.group({
-      'username': ['', Validators.required],
-      'fullName': ['', Validators.required],
-      'email': [
-        '',
-        Validators.compose([
-          Validators.required,
-        ]),
-      ],
-      'deletable': ['true', Validators.required],
-    });
+    this.customer = data.customer;
+    this.tipMessage = `确定重新启用${this.customer.name || ''}吗？`;
   }
 
-  ngOnInit() {
+  submit(value: {[s: string]: string}) {
+    const val: any = {...value};
+
+    this.service.reactivate(this.customer)
+      .subscribe(res => {
+        this.message.success(this.translateService.translateKey('form.succeed'));
+        this.modal.close('closed');
+      });
+  }
+
+  exit() {
+    this.modal.close('closed');
   }
 
 }

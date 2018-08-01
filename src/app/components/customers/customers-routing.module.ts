@@ -16,7 +16,7 @@ const customersRoutes: Routes = [
     path: '',
     component: CustomersComponent,
     resolve: [TranslateResolver],
-    canDeactivate: [TranslateDeactivator],
+    canDeactivate: [TranslateDeactivator]
   },
   {
     path: 'details/:id',

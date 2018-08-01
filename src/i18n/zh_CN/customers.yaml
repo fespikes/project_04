@@ -2,6 +2,11 @@ customers:
   basic: 基本信息
   status: 状态信息
   invoice: 发票信息
-  others: 其他
+  other: 其他
   contact: 联系人
   taker: 收票人
+form:
+  required: 必填项
+  invalid: 出错了，请重填
+  succeed: 操作成功
+  sure_sentence: 确定重新启用

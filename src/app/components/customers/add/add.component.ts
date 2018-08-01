@@ -5,8 +5,10 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { TuiModalRef } from 'tdc-ui';
+import { TranslateService } from 'src/app/i18n';
+import { TuiModalRef, TuiMessageService } from 'tdc-ui';
 import { CustomersService } from '../customers.service';
+import { storageKeys } from 'src/app/shared';
 
 @Component({
   selector: 'erp-add',
@@ -15,27 +17,44 @@ import { CustomersService } from '../customers.service';
 })
 export class AddComponent implements OnInit {
   myForm: FormGroup;
+  customerLevels: any[] = [];
+  customerCategories: any[] = [];
 
   constructor(
     fb: FormBuilder,
     private modal: TuiModalRef,
-    private customersService: CustomersService,
+    private service: CustomersService,
+    private message: TuiMessageService,
+    private translateService: TranslateService
   ) {
     this.myForm = fb.group({
-      'username': ['', Validators.required],
-      'fullName': ['', Validators.required],
-      'email': [
-        '',
+      'name': ['', Validators.required],
+      'abbreviation': ['', Validators.required],
+      'level': [this.customerLevels[0], Validators.required],
+      'category': [
+        this.customerCategories[0],
         Validators.compose([
           Validators.required,
         ]),
       ],
-      'deletable': ['true', Validators.required],
     });
   }
 
-
   ngOnInit() {
+    const enums = this.service.getCustomerEnums();
+    this.customerLevels = JSON.parse(enums.levels);
+    this.customerCategories = JSON.parse(enums.categorys);
+  }
+
+  onSubmit(value: {[s: string]: string}) {
+    const val: any = {...value};
+    // val.deletable = (value.deletable.indexOf('true') > -1 ? true : false);
+
+    this.service.createCustomer(val)
+      .subscribe(res => {
+        this.message.success(this.translateService.translateKey('form.succeed'));
+        this.modal.close('closed');
+      });
   }
 
 }

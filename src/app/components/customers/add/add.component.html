@@ -1,40 +1,50 @@
 <div class="container">
   <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
-    <div [class.error]="!myForm.get('username').valid && myForm.get('username').touched">
+    <div [class.error]="!myForm.get('name').valid && myForm.get('name').touched">
       <div class="field-box">
-        <label for="usernameId">
-          <span>*</span>公司全称
-        </label>
-        <input class="field" type="text" placeholder="" id="usernameId" autocomplete="off " [formControl]="myForm.controls['username']" />
+        <label for="nameId"><span>*</span>公司全称</label>
+        <input class="field" type="text" placeholder="" id="nameId" autocomplete="off " [formControl]="myForm.controls['name']" />
       </div>
-      <div *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+      <div *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched" class="message ">{{'form.required' | translate}}</div>
     </div>
-    <div [class.error]="!myForm.get('username').valid && myForm.get('username').touched">
+    <div [class.error]="!myForm.get('abbreviation').valid && myForm.get('abbreviation').touched">
       <div class="field-box">
-        <label for="usernameId">
-          <span>*</span>公司全称
-        </label>
-        <input class="field" type="text" placeholder="" id="usernameId" autocomplete="off " [formControl]="myForm.controls['username']" />
+        <label for="abbreviationId">公司简称</label>
+        <input class="field" type="text" placeholder="" id="abbreviationId" autocomplete="off " [formControl]="myForm.controls['abbreviation']" />
       </div>
-      <div *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+      <div *ngIf="myForm.controls['abbreviation'].hasError('required') && myForm.controls['abbreviation'].touched" class="message ">{{'form.required' | translate}}</div>
     </div>
-    <div [class.error]="!myForm.get('username').valid && myForm.get('username').touched">
+    <div [class.error]="!myForm.get('level').valid && myForm.get('level').touched">
       <div class="field-box">
-        <label for="usernameId">
-          <span>*</span>公司全称
+        <label for="levelId">
+          <span>*</span>客户级别
         </label>
-        <input class="field" type="text" placeholder="" id="usernameId" autocomplete="off " [formControl]="myForm.controls['username']" />
+        <tui-select
+          placeholder="Please select"
+          [formControl]="myForm.controls['level']"
+        >
+          <tui-select-option *ngFor="let option of customerLevels" [value]="option">
+            {{option}}
+          </tui-select-option>
+        </tui-select>
       </div>
-      <div *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+      <div *ngIf="myForm.controls['level'].hasError('required') && myForm.controls['level'].touched" class="message ">{{'form.required' | translate}}</div>
     </div>
-    <div [class.error]="!myForm.get('username').valid && myForm.get('username').touched">
+    <div [class.error]="!myForm.get('category').valid && myForm.get('category').touched">
       <div class="field-box">
-        <label for="usernameId">
-          <span>*</span>公司全称
+        <label for="categoryId">
+          <span>*</span>客户类别
         </label>
-        <input class="field" type="text" placeholder="" id="usernameId" autocomplete="off " [formControl]="myForm.controls['username']" />
+        <tui-select
+          placeholder="Please select"
+          [formControl]="myForm.controls['category']"
+        >
+          <tui-select-option *ngFor="let option of customerCategories" [value]="option">
+            {{option | tuiDefault }}
+          </tui-select-option>
+        </tui-select>
       </div>
-      <div *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+      <div *ngIf="myForm.controls['category'].hasError('required') && myForm.controls['category'].touched" class="message ">{{'form.required' | translate}}</div>
     </div>
 
     <div class="buttons ">

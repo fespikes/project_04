@@ -2,6 +2,11 @@ customers:
   basic: General Information
   status: Status Information
   invoice: Invoice Information
-  others: Others
+  other: Other
   contact: Contact Information
   taker: Ticket Taker
+form:
+  required: This field is required
+  invalid: It's invalid
+  succeed: Succeed
+  sure_sentence: Sure to reactivate

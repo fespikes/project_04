@@ -6,7 +6,7 @@ import { TranslateService } from '../../../i18n';
 
 import { CustomersService } from '../customers.service';
 import { EditComponent } from '../edit/edit.component';
-import { editTypes, Customer } from '../customers.model';
+import { editTypes, Customer, Invoice } from '../customers.model';
 import { Contact } from '../../../shared';
 
 @Component({
@@ -21,6 +21,7 @@ export class DetailsComponent implements OnInit {
   status: 'NORMAL' | 'INVALID'; // 客户状态
   customer = new Customer();
   contacts: Contact[] = [];
+  invoices: Invoice[] = [];
 
   constructor(
     private modalService: TuiModalService,
@@ -47,28 +48,47 @@ export class DetailsComponent implements OnInit {
         } else {
           this.message.warning('no ticket details found'); // TODO:i18n
         }
-      });
-    }
+      }
+    );
+  }
 
-    fetchCustomerDetails() {
-      this.service.getTheCustomer(this.id).subscribe(res => {
-        console.log(res);
-        this.contacts = res.contacts;
-        this.customer = res;
+  fetchCustomerDetails() {
+    this.service.getTheCustomer(this.id).subscribe(res => {
+      console.log(res);
+      this.contacts = res.contacts;
+      this.customer = res;
+      this.invoices = res.invoices;
+    });
+  }
+
+  fetchCustomerContacts() {
+    this.service.getCustomerContacts(this.id).subscribe(res => {
+      console.log(res);
+      this.contacts = res.result;
+    });
+  }
+
+  fetchCustomerInvoices() {
+    this.service.getCustomerInvoice(this.id).subscribe(res => {
+      console.log(res);
+      this.contacts = res.result;
     });
   }
 
   edit(type, size = 'lg') {
-    const title = Customer.getModelTitle(type);
+    const titleKey = Customer.getModelTitle(type);
     return this.modalService.open(EditComponent, {
-      title: this.translateService.translateKey(title),
+      title: this.translateService.translateKey(titleKey),
       size,
       data: {
         editType: type,
-        customer: this.customer
+        customer: this.customer,
+        id: this.customer.id
       },
     })
-      .subscribe((word: string) => { });
+      .subscribe((word: string) => {
+        this.fetchCustomerDetails();
+      });
   }
 
   addContact() {

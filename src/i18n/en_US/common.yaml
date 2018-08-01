@@ -8,6 +8,3 @@ login:
   account: Account
   password: Password
   confirm: Confirm
-form:
-  required: This field is required
-  invalid: It's invalid

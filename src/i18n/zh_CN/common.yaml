@@ -8,6 +8,3 @@ login:
   account: 用户名
   password: 密码
   confirm: 登录
-form:
-  required: This field is required
-  invalid: It's invalid

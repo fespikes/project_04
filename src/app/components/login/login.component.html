@@ -8,7 +8,7 @@
     <input id="password" name="password" [placeholder]="'login.password' | translate" type="password" ngModel>
   </div>
   <div>
-    <button id="button" [disabled]="form.invalid || process()">{{'login.confirm' | translate}}</button>
+    <button id="button" [disabled]="form.invalid">{{'login.confirm' | translate}}</button>
   </div>
 </form>
 <div id="slogan">

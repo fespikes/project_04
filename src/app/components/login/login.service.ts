@@ -12,6 +12,9 @@ export class LoginService {
   redirectUrl = '/customers';  // get it from auth-guard-service
   get isLoggedIn() {
     const userString = sessionStorage.getItem(this.loginKey);
+    if (userString === 'undefined') {
+      return false;
+    }
     const user = JSON.parse(userString);
     return !!(userString && user);
   }

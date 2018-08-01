@@ -29,6 +29,7 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit() {
     this.fetchData();
+    this.service.fetchCustomerEnums();
   }
 
   fetchData() { // TODO: 需要在查看客户里面提供”是否作废“的字段
@@ -42,24 +43,28 @@ export class CustomersComponent implements OnInit {
       });
   }
 
-  add(size = 'md') { // TODO
+  add(size = 'lg') {
     return this.modalService.open(AddComponent, {
       title: this.translateService.translateKey('新增客户'),
-      size,
-    })
-      .subscribe((word: string) => { });
+      size
+    }).subscribe((word: string) => {
+        this.fetchData();
+      });
   }
 
-  cancel(size = 'md') {// TODO
+  cancel(customer: Customer) {
     return this.modalService.open(CancelComponent, {
       title: this.translateService.translateKey('作废客户'),
-      size,
-    })
-      .subscribe((word: string) => { });
+      size: 'lg',
+      data: {
+        customer: customer
+      }
+    }).subscribe((word: string) => {
+        this.fetchData();
+      });
   }
 
   swithStatus($event) {
-    // TODO: button status change
     if (this.filter.status !== 'INVALID') {
       this.filter.status = 'INVALID';
     } else {
@@ -74,14 +79,21 @@ export class CustomersComponent implements OnInit {
     this.router.navigate([`/customers/details/${item.id}`], { queryParams: { status: item.status } });
   }
 
-  reactivate(size = 'md') {  // TODO
+  reactivate(customer: Customer) {
     return this.modalService.open(ActivateComponent, {
       title: this.translateService.translateKey('重新启用'),
-      size,
-    })
-      .subscribe((word: string) => { });  }
+      size: 'lg',
+      data: {
+        customer: customer
+      }
+    }).subscribe((word: string) => {
+      this.fetchData();
+    });
+  }
 
-  createCustomer(customer: Customer) {  // TODO
-    return this.service.createCustomer(customer);
+  createCustomer(customer: Customer) {
+    return this.service.createCustomer(customer).subscribe((word: string) => {
+      this.fetchData();
+    });
   }
 }

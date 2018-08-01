@@ -1,13 +1,12 @@
 <div class="container">
   <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
-    <div [class.error]="!myForm.get('username').valid && myForm.get('username').touched">
+    <div [class.error]="!myForm.get('reason').valid && myForm.get('reason').touched">
       <div class="field-box">
-        <label for="usernameId">
-          <span>*</span>原因
-        </label>
-        <input class="field" type="text" placeholder="" id="usernameId" autocomplete="off " [formControl]="myForm.controls['username']" />
+        <label for="reasonId"><span>*</span>原因</label>
+        <textarea class="textarea" type="text" placeholder="" id="reasonId" autocomplete="off " [formControl]="myForm.controls['reason']">
+        </textarea>
       </div>
-      <div *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched" class="message ">{{'ADMINISTRATORS.NAME_TIP' | translate}}</div>
+      <div *ngIf="myForm.controls['reason'].hasError('required') && myForm.controls['reason'].touched" class="message ">{{'form.required' | translate}}</div>
     </div>
     <div class="buttons ">
       <button class="tui-btn-md tui-btn-primary tui-btn " type="submit" [disabled]="!myForm.valid ? 'disabled' : null">确定</button>

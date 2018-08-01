@@ -5,47 +5,59 @@ import { Validators } from '@angular/forms';
 export enum editTypes {
   basic = 'basic',
   status = 'status',
-  invoice = 'invoice',
-  contact = 'contact',
+  invoice = 'invoice',  // 收票人
+  contact = 'contact',  // 客户联系人信息
   taker = 'taker',
-  others = 'others'
+  other = 'other',
+  reEnable = 're-enable',
+  voided = 'voided'
 }
 
-// export const customerStatus =
+export class Invoice {
+  address?; // 收票人地址 ,
+  customerId?; // (integer, optional): 客户编号 ,
+  email?; // 收票人邮箱 ,
+  id?; // (integer, optional): id ,
+  name?; // 收票人姓名 ,
+  phone?; // 收票人电话 ,
+  workingAddress?; // 收票人单位
+}
 
 export class Customer {
-  abbreviation: string; // 公司简称 ,
-  bank?: string; // 开户行 ,
-  bankAccount?: string; // 银行账号 ,
-  businessLicense ?: string; // 营业执照号 ,
-  branchOffice ?: string; // 分公司名称 ,
+  abbreviation: string; // 公司简称
+  bank?: string; // 开户行
+  bankAccount?: string; // 银行账号
+  branchOffice ?: string; // 分公司名称
+  businessLicense ?: string; // 营业执照号
   businesses?: Business[];
   category?: 'OPPORTUNITY' | 'COOPERATION'; // 客户类别
-  city?: string; // 城市 ,
-  cityLeve?: string; // 城市级别 ,
-  comment?: string; // 备注 ,
-  contacts?: Contact[];
-  country?: string; // 国别 ,
-  createTime ?: string; // 创建日期 ,
-  creator?: string; // 创建人 ,
+  city?: string; // 城市  api:enum
+  cityLevel?: string; // 城市级别
+  comment?: string; // 备注
+  contacts?: Contact[]; // 客户联系人信
+  country?: string; // 国别 api:enum
+  createTime ?: string; // 创建日期
+  creator?: string; // 创建人
   id?: number; //
   industry?: string; // 所属行业
-  invoice?: string; // 发票客户名称 ,
-  lastContactTime?: string; // 最后联系日期 ,
+  invoice?: string; // 发票客户名称
+  invoices?: Invoice[]; // Array[CustomerInvoice] 客户收票人信息
+  lastContactTime?: string; // 最后联系日期
   level: 'L1' | 'L2' | 'L3' | 'L4' | 'L5'; // 客户级别
-  modify?: string; // 上次修改人 ,
-  modifyTime?: string; // 上次修改日期 ,
-  name?: string; // 公司名称 ,
+  // L1(一级客户),L2(二级客户),L3(三级客户),L4(四级客户),L5(五级客户)
+  modify?: string; // 上次修改人
+  modifyTime?: string; // 上次修改日期
+  name?: string; // 公司名称
   newOrOld: 'NEW' | 'OLD'; //
-  nextContactTime?: string; // 下次联系日期 ,
-  parent?: string; // 母公司 ,
-  profile?: string; // 公司简介 ,
-  province?: string; // 省份 ,
-  reason?: string; // 作废原因 ,
-  registrationLocation?: string; // 注册地 ,
-  registrationPhone?: string; // 注册电话 ,
-  sales?: string; // 销售负责人 ,
-  status?: 'NORMAL' |'INVALID'; //
+  nextContactTime?: string; // 下次联系日期
+  parent?: string; // 母公司
+  profile?: string; // 公司简介
+  province?: string; // 省份
+  reason?: string; // 作废原因
+  registrationLocation?: string; // 注册地
+  registrationPhone?: string; // 注册电话
+  sales?: string; // 销售负责人
+  status?: 'NORMAL' |'INVALID'; // 客户状态:NORMAL(正常),INVALID(作废)
   taxRegistration?: string; // 纳税登记号
 
   static getFormObj(type) {
@@ -54,25 +66,25 @@ export class Customer {
     switch (editType) {
       case editTypes['basic']:
         modelObj = {
-          'companyName': ['', Validators.required],
-          'companyAbbr': [''],
+          'name': ['', Validators.required],
+          'abbreviation': [''],
           'country': [        // TODO: options
             '', Validators.compose([
               Validators.required,
             ]),
           ],
           'city': [''],  // TODO: options
-          'cityLeve': [''], // TODO: options
+          'cityLevel': [''], // TODO: options
           'province': [''],
-          'parentComp': [''],
-          'companyProfile': [''],
+          'parent': [''],
+          'profile': [''],
         };
         break;
       case editTypes['status']:
         modelObj = {
           'category': ['', Validators.required],
           'level': ['', Validators.required],
-          'customerStatus': [ // read only
+          'status': [ // read only
             // TODO: to be determin
             '', Validators.compose([
               Validators.required,
@@ -83,25 +95,25 @@ export class Customer {
         break;
       case editTypes['invoice']:
         modelObj = {
-          'invCustomerName': ['', Validators.required],
-          'branchName': [''],
-          'blNumber': [
+          'invoice': ['', Validators.required],
+          'branchOffice': [''],
+          'businessLicense': [
             '', Validators.compose([
               Validators.required,
             ]),
           ],
-          'taxReg': ['', Validators.required],
-          'bankName': ['', Validators.required],
-          'accountBank': ['', Validators.required],
-          'regLocal': ['', Validators.required],
-          'regPhone': ['', Validators.required]
+          'taxRegistration': ['', Validators.required],
+          'bank': ['', Validators.required],
+          'bankAccount': ['', Validators.required],
+          'registrationLocation': ['', Validators.required],
+          'registrationPhone': ['', Validators.required]
         };
         break;
       case editTypes['contact']:
         modelObj = {
           'name': ['', Validators.required],
-          'job': ['', Validators.required],
-          'dep': [
+          'post': ['', Validators.required],
+          'department': [
             '', Validators.compose([
               Validators.required,
             ]),
@@ -122,9 +134,9 @@ export class Customer {
           'address': [''] // textarea
         };
         break;
-      case editTypes['others']:
+      case editTypes['other']:
         modelObj = {
-          'lastContactDate': [''],  // read only
+          'lastContactTime': [''],  // read only
           // TODO: to be determin
           'nextContactTime': ['', Validators.required],
           'comment': [''],  // textarea
@@ -155,8 +167,8 @@ export class Customer {
       case editTypes.taker:
         title = 'customers.taker';
         break;
-      case editTypes.others:
-        title = 'customers.others';
+      case editTypes.other:
+        title = 'customers.other';
         break;
       default:
         console.log('no type exists');
