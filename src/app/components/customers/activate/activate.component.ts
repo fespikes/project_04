@@ -12,6 +12,7 @@ import { CustomersService } from '../customers.service';
 export class ActivateComponent {
   customer: any = {};
   tipMessage: string;
+  callback: any = function() {};
 
   constructor(
     @Inject(TUI_MODAL_DATA) data,
@@ -21,6 +22,7 @@ export class ActivateComponent {
     private translateService: TranslateService
   ) {
     this.customer = data.customer;
+    this.callback = data.callback || this.callback;
     this.tipMessage = `确定重新启用${this.customer.name || ''}吗？`;
   }
 
@@ -31,6 +33,7 @@ export class ActivateComponent {
       .subscribe(res => {
         this.message.success(this.translateService.translateKey('form.succeed'));
         this.modal.close('closed');
+        this.callback();
       });
   }
 

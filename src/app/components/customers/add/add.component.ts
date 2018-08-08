@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,9 +6,9 @@ import {
 } from '@angular/forms';
 
 import { TranslateService } from 'src/app/i18n';
-import { TuiModalRef, TuiMessageService } from 'tdc-ui';
+import { TuiModalRef, TuiMessageService, TUI_MODAL_DATA } from 'tdc-ui';
 import { CustomersService } from '../customers.service';
-import { storageKeys } from 'src/app/shared';
+import { editTypes, Customer } from '../customers.model';
 
 @Component({
   selector: 'erp-add',
@@ -19,25 +19,37 @@ export class AddComponent implements OnInit {
   myForm: FormGroup;
   customerLevels: any[] = [];
   customerCategories: any[] = [];
+  customerId: any;  // only get from data when adding: contact, taker.
+  editType: any = false;
+  editTypes = editTypes;
 
   constructor(
+    @Inject(TUI_MODAL_DATA) data,
     fb: FormBuilder,
     private modal: TuiModalRef,
     private service: CustomersService,
     private message: TuiMessageService,
     private translateService: TranslateService
   ) {
-    this.myForm = fb.group({
-      'name': ['', Validators.required],
-      'abbreviation': ['', Validators.required],
-      'level': [this.customerLevels[0], Validators.required],
-      'category': [
-        this.customerCategories[0],
-        Validators.compose([
-          Validators.required,
-        ]),
-      ],
-    });
+    this.customerId = data.id;
+    if (data.editType ) {
+      this.editType = data.editType;
+      this.myForm = fb.group(Customer.getAddControlGroup(data.editType));
+    } else {
+      this.editType = '';
+      this.myForm = fb.group({
+        'name': ['', Validators.required],
+        'abbreviation': ['', Validators.required],
+        'level': [this.customerLevels[0], Validators.required],
+        'category': [
+          this.customerCategories[0],
+          Validators.compose([
+            Validators.required,
+          ]),
+        ],
+      });
+    }
+
   }
 
   ngOnInit() {
@@ -49,12 +61,21 @@ export class AddComponent implements OnInit {
   onSubmit(value: {[s: string]: string}) {
     const val: any = {...value};
     // val.deletable = (value.deletable.indexOf('true') > -1 ? true : false);
+    const succeed = ( ) => {
+      this.message.success(this.translateService.translateKey('form.succeed'));
+      this.modal.close('closed');
+    };
 
-    this.service.createCustomer(val)
-      .subscribe(res => {
-        this.message.success(this.translateService.translateKey('form.succeed'));
-        this.modal.close('closed');
-      });
+    if (this.editType === '') {
+      this.service.createCustomer(val)
+        .subscribe(succeed);
+    } else if (this.editType === editTypes['contact']) {
+      this.service.addCustomerContact(this.customerId, val)
+        .subscribe(succeed);
+    } else if (this.editType === editTypes['taker']) {
+      this.service.addCustomerTaker(this.customerId, val)
+        .subscribe(succeed);
+    }
   }
 
 }

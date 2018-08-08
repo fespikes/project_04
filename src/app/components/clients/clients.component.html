@@ -1,3 +1,44 @@
-<p>
-  clients works!
-</p>
+<section class="bread-crumb">
+    <div class="left">
+      <span>下属客户</span>
+    </div>
+    <div class="right">
+      <span class="search">
+        <input
+          class=""
+        />
+        <svg class="icon-md" tuiIcon="search" size="md"></svg>
+      </span>
+      <button class="margin-left-16px disabled-detail" [ngClass]="{'white-btn': filter.status!=='INVALID', 'blue-btn': filter.status==='INVALID'}">查看已作废客户</button>
+      <button  class="margin-left-16px blue-btn">
+        <svg class="icon-md create" tuiIcon="create" size="md"></svg>
+        <span>新增客户</span>
+      </button>
+    </div>
+  </section>
+  
+  <dl class="customers">
+    <dd *ngFor="let item of list" class="customer">
+      <h3 class="title-big">item.name</h3>
+      <ul class="detail-ul ">
+        <li>
+          <p class="gray ">客户类别</p>
+          <p>item.category</p>
+        </li>
+        <li>
+          <p class="gray ">客户级别</p>
+          <p>item.level</p>
+        </li>
+        <li>
+          <p class="gray ">所属行业</p>
+          <p class="gray ">item.industry</p>
+        </li>
+      </ul>
+    </dd>
+  </dl>
+<!-- 
+  <section class="pagination ">
+    <div class="amount ">共计:<span>pagination.total</span>条</div>
+    <tui-pagination [(pagination)]=" pagination " (paginationChange)="fetchData() ">
+    </tui-pagination>
+  </section> -->

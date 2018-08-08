@@ -30,6 +30,7 @@ export class ErpApiService {
       'Content-Type': 'application/json',
       'Authorization': 'my-auth-token'
     });
+    // httpOptions.headers = httpOptions.headers.set('Authorization', 'my-new-auth-token');
   }
 
   private set headers(param) {

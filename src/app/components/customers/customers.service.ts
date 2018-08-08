@@ -70,7 +70,7 @@ export class CustomersService {
 
   createCustomer(customer: Customer) {
     console.log(customer);
-    return this.api.post('/customer', {customer: customer});
+    return this.api.post('customer', { ...customer});
   }
 
   getTheCustomer(id: number): Observable<any> {
@@ -81,8 +81,12 @@ export class CustomersService {
     return this.api.get(`customer/${customerId}/contacts`);
   }
 
-  addCustomerContact(customerId: any): Observable<any> {
-    return this.api.get(`customer/${customerId}/contacts`);
+  addCustomerContact(customerId: any, param): Observable<any> {
+    return this.api.post(`customer/${customerId}/contacts`, { ...param});
+  }
+
+  addCustomerTaker(customerId: any, param): Observable<any> {
+    return this.api.post(`customer/${customerId}/invoice`, { ...param});
   }
 
   getCustomerInvoice(customerId: any): Observable<any> {
@@ -103,10 +107,35 @@ export class CustomersService {
     return this.updateCustomer(customer, editTypes['reEnable']);
   }
 
-  editCustomer(customer: Customer, editType: string) {
-    const id = customer.id;
-    const url = !!editType ? `customer/${id}/${editType}` : `customer/${id}`;
-    return this.api.put(url, { ...customer});
+  editCustomer(instance: any, customerId: string, editType: string) {
+    const id = instance.id;
+    let url = '';
+
+    switch (editType) {
+      case editTypes.basic:
+      case editTypes.invoice:
+      case editTypes.status:
+      case editTypes.reEnable:
+      case editTypes.other:
+        url = `customer/${customerId}/${editType}`;
+        break;
+      case editTypes.contact:
+        url = `customer/${customerId}/contacts/${id}`; // TODO: get contactId
+        break;
+      case editTypes.taker:
+        url = `customer/${customerId}/invoice/${id}`;
+        break;
+      default:
+    }
+
+    return this.api.put(url, { ...instance});
+  }
+
+  getCustomerRootRoute() {
+    return {
+      text: '我的客户',
+      href: '/customers'
+    };
   }
 
 }

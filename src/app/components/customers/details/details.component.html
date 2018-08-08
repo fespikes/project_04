@@ -1,13 +1,24 @@
 <section class="bread-crumb">
   <div class="left">
-    <span>我的客户</span>
-    <span class="arrow"></span>
-    <span class="last">中国石油化工集团公司</span>
+    <!-- 
+      <span>我的客户</span>
+      <span class="arrow"></span>
+      <span class="last">中国石油化工集团公司</span>
+    -->
+    <erp-bread-crumbs [data]="breadCrumbs"></erp-bread-crumbs>
   </div>
   <div class="right">
     <!--TODO:-->
-    <button *ngIf="status!=='INVALID'" class="margin-left-16px disabled-detail white-btn">作废</button>
-    <button *ngIf="status==='INVALID'" class="margin-left-16px blue-btn">重新启用</button>
+    <button 
+      (click)="cancel()"
+      *ngIf="status!=='INVALID'" 
+      class="margin-left-16px disabled-detail white-btn"
+    >作废</button>
+    <button 
+      (click)="reactivate()"
+      *ngIf="status==='INVALID'" 
+      class="margin-left-16px blue-btn"
+    >重新启用</button>
   </div>
 </section>
 
@@ -51,7 +62,7 @@
     </div>
     <div class="invoice white-bg-items">
       <h3 class="special">发票信息</h3>
-      <svg (click)="edit(editTypes['invoice'])" class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
+      <svg (click)="edit(editTypes['invoice'], customer)" class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
       <ul>
         <li>
           <h4>发票客户名称</h4>
@@ -89,10 +100,10 @@
     </div>
     <div class="contact-list white-bg-items ">
       <h3 class="special">联系人</h3>
-      <svg (click)="addContact()" class="icon-md" tuiIcon="plus-thin" size="md"></svg>
+      <svg (click)="add(editTypes['contact'])" class="icon-md" tuiIcon="plus-thin" size="md"></svg>
       <ol>
         <li *ngFor="let contact of contacts">
-          <svg (click)="edit(editTypes['contact'])" class="icon-md" tuiIcon="pencil" size="md"></svg>
+          <svg (click)="edit(editTypes['contact'], contact)" class="icon-md" tuiIcon="pencil" size="md"></svg>
           <h3 class="">{{contact.name}}</h3>
           <ul>
             <li>
@@ -181,18 +192,25 @@
           <p>{{customer.status}}</p>
         </li>
       </ul>
-      <h4>原因</h4>
-      <p class="description">{{customer.reason}}</p>
+      <h4 *ngIf="customer.status==='INVALID'">作废原因</h4>
+      <p
+        *ngIf="customer.status==='INVALID'"
+        class="description"
+      >{{customer.reason}}</p>
     </div>
 
     <div class="white-bg-items ">
       <h3 class="special">收票人</h3>
       <!--TODO: 5.客户详情内缺少“收票人”板块所需字段； -->
-      <svg class="icon-md" tuiIcon="plus-thin" size="md"></svg>
+      <svg
+        (click)="add(editTypes['taker'])"
+        class="icon-md"
+        tuiIcon="plus-thin" size="md"
+      ></svg>
       <ol>
         <li *ngFor="let invoice of invoices">
           <h3 class="">{{invoice.name}}</h3>
-          <svg (click)="edit(editTypes['taker'])" class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
+          <svg (click)="edit(editTypes['taker'], invoice)" class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
           <ul>
             <li>
               <h4>电话</h4>
@@ -239,11 +257,11 @@
       <ul>
         <li>
           <h4>最后联系日期</h4>
-          <p>{{customer.lastContactTime}}</p>
+          <p>{{customer.lastContactTime | date:'yyyy / MM / dd'}}</p>
         </li>
         <li>
           <h4>下次联系日期</h4>
-          <p>{{customer.nextContactTime}}</p>
+          <p>{{customer.nextContactTime | date:'yyyy / MM / dd'}}</p>
         </li>
       </ul>
       <h4>备注</h4>

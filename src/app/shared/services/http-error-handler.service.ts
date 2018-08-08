@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { TuiMessageService } from 'tdc-ui';
+import { storageKeys } from 'src/app/shared/models';
 
 /** Type of the handleError function returned by HttpErrorHandler.createHandleError */
 export type HandleError =
@@ -12,7 +13,9 @@ export type HandleError =
 /** Handles HttpClient errors */
 @Injectable()
 export class HttpErrorHandler {
-  constructor(private messageService: TuiMessageService) { }
+  constructor(
+    private messageService: TuiMessageService
+  ) { }
 
   /** Create curried handleError function that already knows the service name */
   createHandleError = (serviceName = '') => <T>
@@ -29,7 +32,9 @@ export class HttpErrorHandler {
 
     return (error: HttpErrorResponse): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      if (error.status === 401 && error.statusText === 'Unauthorized') {
+        sessionStorage.removeItem(storageKeys.user);
+      }
 
       const message = (error.error instanceof ErrorEvent) ?
         error.error.message :

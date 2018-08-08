@@ -49,7 +49,7 @@ export class Customer {
   modifyTime?: string; // 上次修改日期
   name?: string; // 公司名称
   newOrOld: 'NEW' | 'OLD'; //
-  nextContactTime?: string; // 下次联系日期
+  nextContactTime?: number; // 下次联系日期
   parent?: string; // 母公司
   profile?: string; // 公司简介
   province?: string; // 省份
@@ -60,72 +60,26 @@ export class Customer {
   status?: 'NORMAL' |'INVALID'; // 客户状态:NORMAL(正常),INVALID(作废)
   taxRegistration?: string; // 纳税登记号
 
-  static getFormObj(type) {
-    const editType = type || editTypes['basic'];
+  static getAddControlGroup(editType) {
     let modelObj = {};
     switch (editType) {
-      case editTypes['basic']:
-        modelObj = {
-          'name': ['', Validators.required],
-          'abbreviation': [''],
-          'country': [        // TODO: options
-            '', Validators.compose([
-              Validators.required,
-            ]),
-          ],
-          'city': [''],  // TODO: options
-          'cityLevel': [''], // TODO: options
-          'province': [''],
-          'parent': [''],
-          'profile': [''],
-        };
-        break;
-      case editTypes['status']:
-        modelObj = {
-          'category': ['', Validators.required],
-          'level': ['', Validators.required],
-          'status': [ // read only
-            // TODO: to be determin
-            '', Validators.compose([
-              Validators.required,
-            ]),
-          ],
-          'reason': ['']
-        };
-        break;
-      case editTypes['invoice']:
-        modelObj = {
-          'invoice': ['', Validators.required],
-          'branchOffice': [''],
-          'businessLicense': [
-            '', Validators.compose([
-              Validators.required,
-            ]),
-          ],
-          'taxRegistration': ['', Validators.required],
-          'bank': ['', Validators.required],
-          'bankAccount': ['', Validators.required],
-          'registrationLocation': ['', Validators.required],
-          'registrationPhone': ['', Validators.required]
-        };
-        break;
       case editTypes['contact']:
         modelObj = {
-          'name': ['', Validators.required],
-          'post': ['', Validators.required],
+          'name': [ '', Validators.required],
+          'post': [ '', Validators.required],
           'department': [
             '', Validators.compose([
               Validators.required,
             ]),
           ],
-          'landline': ['', Validators.required],
+          'landline': [ '', Validators.required],
           'phone': [''],
           'email': [''],
           'fax': [''],
           'address': ['']
         };
         break;
-      case editTypes['taker']:
+      case editTypes['taker']:  // 收票人
         modelObj = {
           'name': ['', Validators.required],
           'phone': ['', Validators.required],
@@ -134,12 +88,92 @@ export class Customer {
           'address': [''] // textarea
         };
         break;
+      default:
+        break;
+    }
+    return modelObj;
+  }
+
+  static getEditFormObj(type, obj: any) {
+    const editType = type || editTypes['basic'];
+    let modelObj = {};
+    switch (editType) {
+      case editTypes['basic']:
+        modelObj = {
+          'name': [ obj.name || '', Validators.required],
+          'abbreviation': [ obj.abbreviation || '' ],
+          'country': [        // TODO: options
+            obj.country || '' , Validators.compose([
+              Validators.required,
+            ]),
+          ],
+          'city': [obj.city || '' ],  // TODO: options
+          'cityLevel': [ obj.cityLevel || '' ], // TODO: options
+          'province': [ obj.province || '' ],
+          'parent': [ obj.parent || '' ],
+          'profile': [ obj.profile || ''],
+        };
+        break;
+      case editTypes['status']:
+        modelObj = {
+          'category': [ obj.category || '', Validators.required],
+          'level': [ obj.level || '', Validators.required],
+          'status': [ // read only
+            // TODO: to be determin
+            obj.status || '', Validators.compose([
+              Validators.required,
+            ]),
+          ],
+          'reason': [obj.reason || '']
+        };
+        break;
+      case editTypes['invoice']:  // 发票信息
+        modelObj = {
+          'invoice': [obj.invoice || '', Validators.required],
+          'branchOffice': [obj.branchOffice || ''],
+          'businessLicense': [
+            obj.businessLicense || '', Validators.compose([
+              Validators.required,
+            ]),
+          ],
+          'taxRegistration': [obj.taxRegistration || '', Validators.required],
+          'bank': [obj.bank || '', Validators.required],
+          'bankAccount': [obj.bankAccount || '', Validators.required],
+          'registrationLocation': [obj.registrationLocation || '', Validators.required],
+          'registrationPhone': [obj.registrationPhone || '', Validators.required]
+        };
+        break;
+      case editTypes['contact']:
+        modelObj = {
+          'name': [obj.name || '', Validators.required],
+          'post': [obj.post || '', Validators.required],
+          'department': [
+            obj.department || '', Validators.compose([
+              Validators.required,
+            ]),
+          ],
+          'landline': [obj.landline || '', Validators.required],
+          'phone': [obj.phone || ''],
+          'email': [obj.email || ''],
+          'fax': [obj.fax || ''],
+          'address': [obj.address || '']
+        };
+        break;
+      case editTypes['taker']:  // 收票人
+        modelObj = {
+          'name': [obj.name || '', Validators.required],
+          'phone': [obj.phone || '', Validators.required],
+          'email': [obj.email || ''],
+          'workingAddress': [obj.workingAddress || ''],
+          'address': [obj.address || ''] // textarea
+        };
+        break;
       case editTypes['other']:
         modelObj = {
-          'lastContactTime': [''],  // read only
-          // TODO: to be determin
-          'nextContactTime': ['', Validators.required],
-          'comment': [''],  // textarea
+          // 'lastContactTime': [obj.lastContactTime || ''],  // read only
+          'nextContactTime': [
+            obj.nextContactTime ? new Date(obj.nextContactTime) : new Date(), Validators.required],
+          'comment': [obj.comment || ''],  // textarea
         };
         break;
 

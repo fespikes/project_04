@@ -93,8 +93,7 @@
       <li *ngIf="editType===editTypes['invoice']">
         <div [class.error]="!myForm.get('invoice').valid && myForm.get('invoice').touched">
           <div class="field-box">
-            <label for="invoiceId">
-  <span>*</span>发票客户名称</label>
+            <label for="invoiceId"><span>*</span>发票客户名称</label>
             <input class="field" type="text" placeholder="" id="invoiceId" autocomplete="off" [formControl]="myForm.controls['invoice']" />
           </div>
           <div *ngIf="myForm.controls['invoice'].hasError('required') && myForm.controls['invoice'].touched" class="message ">{{'form.required' | translate}}</div>
@@ -107,48 +106,42 @@
         </div>
         <div [class.error]="!myForm.get('businessLicense').valid && myForm.get('businessLicense').touched">
           <div class="field-box">
-            <label for="businessLicenseId">
-<span>*</span>营业执照号</label>
+            <label for="businessLicenseId"><span>*</span>营业执照号</label>
             <input class="field" type="text" placeholder="" id="businessLicenseId" autocomplete="off" [formControl]="myForm.controls['businessLicense']" />
           </div>
           <div *ngIf="myForm.controls['businessLicense'].hasError('required') && myForm.controls['businessLicense'].touched" class="message ">{{'form.required' | translate}}</div>
         </div>
         <div [class.error]="!myForm.get('taxRegistration').valid && myForm.get('taxRegistration').touched">
           <div class="field-box">
-            <label for="taxRegistrationId">
-<span>*</span>纳税登记号</label>
+            <label for="taxRegistrationId"><span>*</span>纳税登记号</label>
             <input class="field" type="text" placeholder="" id="taxRegistrationId" autocomplete="off" [formControl]="myForm.controls['taxRegistration']" />
           </div>
           <div *ngIf="myForm.controls['taxRegistration'].hasError('required') && myForm.controls['taxRegistration'].touched" class="message ">{{'form.required' | translate}}</div>
         </div>
         <div [class.error]="!myForm.get('bank').valid && myForm.get('bank').touched">
           <div class="field-box">
-            <label for="bankId">
-<span>*</span>开户行</label>
+            <label for="bankId"><span>*</span>开户行</label>
             <input class="field" type="text" placeholder="" id="bankId" autocomplete="off" [formControl]="myForm.controls['bank']" />
           </div>
           <div *ngIf="myForm.controls['bank'].hasError('required') && myForm.controls['bank'].touched" class="message ">{{'form.required' | translate}}</div>
         </div>
         <div [class.error]="!myForm.get('bankAccount').valid && myForm.get('bankAccount').touched">
           <div class="field-box">
-            <label for="bankAccountId">
-<span>*</span>银行账号</label>
+            <label for="bankAccountId"><span>*</span>银行账号</label>
             <input class="field" type="text" placeholder="" id="bankAccountId" autocomplete="off" [formControl]="myForm.controls['bankAccount']" />
           </div>
           <div *ngIf="myForm.controls['bankAccount'].hasError('required') && myForm.controls['bankAccount'].touched" class="message ">{{'form.required' | translate}}</div>
         </div>
         <div [class.error]="!myForm.get('registrationLocation').valid && myForm.get('registrationLocation').touched">
           <div class="field-box">
-            <label for="registrationLocationId">
-<span>*</span>注册地</label>
+            <label for="registrationLocationId"><span>*</span>注册地</label>
             <input class="field" type="text" placeholder="" id="registrationLocationId" autocomplete="off" [formControl]="myForm.controls['registrationLocation']" />
           </div>
           <div *ngIf="myForm.controls['registrationLocation'].hasError('required') && myForm.controls['registrationLocation'].touched" class="message ">{{'form.required' | translate}}</div>
         </div>
         <div [class.error]="!myForm.get('registrationPhone').valid && myForm.get('registrationPhone').touched">
           <div class="field-box">
-            <label for="registrationPhoneId">
-<span>*</span>注册电话</label>
+            <label for="registrationPhoneId"><span>*</span>注册电话</label>
             <input class="field" type="text" placeholder="" id="registrationPhoneId" autocomplete="off" [formControl]="myForm.controls['registrationPhone']" />
           </div>
           <div *ngIf="myForm.controls['registrationPhone'].hasError('required') && myForm.controls['registrationPhone'].touched" class="message ">{{'form.required' | translate}}</div>
@@ -249,13 +242,20 @@
         <div>
           <div class="field-box">
             <label for="lastContactTimeId">最后联系日期</label>
-            <input class="field" type="text" placeholder="" id="lastContactTimeId" autocomplete="off " [formControl]="myForm.controls['lastContactTime']" />
+            <span>{{ instance.lastContactTime| date:'yyyy / MM / dd'}}</span>
           </div>
         </div>
         <div [class.error]="!myForm.get('nextContactTime').valid && myForm.get('nextContactTime').touched">
           <div class="field-box">
             <label for="nextContactTimeId"><span>*</span>下次联系日期</label>
-            <input class="field" type="text" placeholder="" id="nextContactTimeId" autocomplete="off " [formControl]="myForm.controls['nextContactTime']" />
+            <tui-datepicker-input
+              [datepicker]="picker"
+              placeholder="Date"
+              [formControl]="myForm.controls['nextContactTime']"
+              [min]="minDate"
+              required
+            ></tui-datepicker-input>
+            <tui-datepicker #picker></tui-datepicker>
           </div>
           <div *ngIf="myForm.controls['nextContactTime'].hasError('required') && myForm.controls['nextContactTime'].touched" class="message ">{{'form.required' | translate}}</div>
         </div>

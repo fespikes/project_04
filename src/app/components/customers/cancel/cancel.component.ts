@@ -17,6 +17,7 @@ import { CustomersService } from '../customers.service';
 export class CancelComponent {
   myForm: FormGroup;
   customer: any;
+  callback: any = function() {};
 
   constructor(
     @Inject(TUI_MODAL_DATA) data,
@@ -27,6 +28,7 @@ export class CancelComponent {
     private translateService: TranslateService
   ) {
     this.customer = data.customer;
+    this.callback = data.callback || this.callback;
     this.myForm = fb.group({
       'reason': ['', Validators.required],
     });
@@ -38,6 +40,7 @@ export class CancelComponent {
       .subscribe(res => {
         this.message.success(this.translateService.translateKey('form.succeed'));
         this.modal.close('closed');
+        this.callback();
       });
   }
 }
