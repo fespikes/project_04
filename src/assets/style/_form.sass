@@ -1,4 +1,5 @@
 @import 'src/assets/style/variables'
+
 .border-radius-15px
   border-radius: 15px
 
@@ -37,6 +38,9 @@ form.form-specific
     display: flex
     flex-direction: row
     padding-bottom: 30px
+    &.columns
+      .tui-select
+        width: 310px
     span
       line-height: 32px
 
@@ -69,6 +73,18 @@ form.form-specific
   .textarea
     @extend .field
     height: 94px
+  
+  .btn-right
+    @extend .border-radius-15px
+    height: 32px
+    line-height: 32px
+    flex-basis: 98px
+    border: 1px #d3dceb solid
+    margin-left: 10px
+    background: #fff
+    text-align: center
+    color: $font-color
+    cursor: pointer
 
   .radio-wrapper
 

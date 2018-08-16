@@ -1,0 +1,100 @@
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
+    <ul>
+      <li *ngIf="editType===''">
+        <div [class.error]="!myForm.get('name').valid && myForm.get('name').touched">
+          <div class="field-box">
+            <label for="nameId"><span>*</span>商机名称</label>
+            <input class="field" type="text" placeholder="" id="nameId" autocomplete="off " [formControl]="myForm.controls['name']" />
+          </div>
+          <div *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched" class="message ">{{'form.required' | translate}}</div>
+        </div>
+        
+        <div [class.error]="!myForm.get('customerId').valid && myForm.get('customerId').touched">
+          <div class="field-box columns">
+            <label for="customerIdId"><span>*</span>客户</label>
+            <tui-select
+              id="customerIdId"
+              placeholder="Please select"
+              [formControl]="myForm.controls['customerId']"
+            >
+              <tui-select-option *ngFor="let option of customers" [value]="option.id" [label]="option.name">
+                {{option.name}}
+              </tui-select-option>
+            </tui-select>
+            <a 
+              class="btn-right"
+              (click)="createCustomer()"
+            >新建客户</a>
+          </div>
+          <div *ngIf="myForm.controls['customerId'].hasError('required') && myForm.controls['customerId'].touched" class="message ">{{'form.required' | translate}}</div>
+        </div>
+
+        <div [class.error]="!myForm.get('contractTime').valid && myForm.get('contractTime').touched">
+          <div class="field-box">
+            <label for="levelId">
+              <span>*</span>预计签约日期
+            </label>
+            <tui-datepicker-input
+              [datepicker]="picker"
+              placeholder="Date"
+              [formControl]="myForm.controls['contractTime']"
+              [min]="minDate"
+              required
+            ></tui-datepicker-input>
+            <tui-datepicker #picker></tui-datepicker>
+          </div>
+          <div *ngIf="myForm.controls['contractTime'].hasError('required') && myForm.controls['contractTime'].touched" class="message ">{{'form.required' | translate}}</div>
+        </div>
+
+        <div>
+          <div class="field-box">
+            <label for="preSignedContractTypeId">预签合同类型</label>
+            <tui-select
+              placeholder="Please select"
+              [formControl]="myForm.controls['preSignedContractType']"
+            >
+              <tui-select-option *ngFor="let option of contractTypes" [value]="option">
+                {{option | tuiDefault }}
+              </tui-select-option>
+            </tui-select>
+          </div>
+        </div>
+        
+        <div>
+          <div class="field-box">
+            <label for="contractAmountId">预计签约合同金额</label>
+            <input class="field" type="text" placeholder="" id="nameId" autocomplete="off " [formControl]="myForm.controls['name']" />
+          </div>
+        </div>
+        
+        <!--TODO: have no this one till now-->
+        <!-- <div [class.error]="!myForm.get('--TODO').valid && myForm.get('--TODO').touched">
+          <div class="field-box">
+            <label for="--TODOId">预计签约净合同额</label>
+            <input class="field" type="text" placeholder="" id="--TODOId" autocomplete="off " [formControl]="myForm.controls['--TODO']" />
+          </div>
+        </div> -->
+        <div>
+          <div class="field-box">
+            <label for="nextContactTimeId">下次联系日期</label>
+            <tui-datepicker-input
+              [datepicker]="nextContactTimePicker"
+              placeholder="Date"
+              [formControl]="myForm.controls['nextContactTime']"
+              [min]="minDate"
+              id="nextContactTimeId"
+            ></tui-datepicker-input>
+            <tui-datepicker #nextContactTimePicker></tui-datepicker>
+          </div>
+        </div>
+        
+      </li>
+    </ul>
+
+    <div class="buttons ">
+      <button class="tui-btn-md tui-btn-primary tui-btn " type="submit" [disabled]="!myForm.valid ? 'disabled' : null">确定</button>
+      <button class="tui-btn-md tui-btn-default tui-btn " type="reset">取消</button>
+    </div>
+  </form>
+</div>

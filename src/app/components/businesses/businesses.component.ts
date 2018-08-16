@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TuiModalService, Pagination } from 'tdc-ui';
 
-import { of } from 'rxjs';
-import { Pagination } from 'tdc-ui';
+import { BusinessesService } from './businesses.service';
+import { TranslateService } from '../../i18n';
+import { BusinessDetails, BusinessFilter } from './businesses.model';
+import { AddComponent } from './add/add.component';
+import { ActivateComponent } from './activate/activate.component';
 
 @Component({
   selector: 'erp-businesses',
@@ -11,44 +15,65 @@ import { Pagination } from 'tdc-ui';
 })
 export class BusinessesComponent implements OnInit {
   pagination: Pagination = new Pagination();
-  filter: any;
+  filter: any = new BusinessFilter();
+  list: Array<BusinessDetails> = [];
 
   constructor(
-    private router: Router
-  ) { }
+    private modalService: TuiModalService,
+    private router: Router,
+    private service: BusinessesService,
+    private translateService: TranslateService
+  ) {
+  }
 
   ngOnInit() {
     this.fetchData();
-  }
-
-  fetchDataApi(pagination?) {
-    return of({
-      data: [],
-      pagination: {
-        page: 1,
-        size: 10,
-        ...pagination,
-        total: 205,
-      },
-    });
+    this.service.fetchBusinessesEnums();
   }
 
   fetchData() {
-    this.fetchDataApi(this.pagination)
-      .subscribe((data) => {
-        this.pagination = data.pagination;
+    this.filter.pageNum = this.pagination.page;
+    this.filter.pageSize = this.pagination.size;
+
+    this.service.getBusinesses(this.filter)
+      .subscribe((res) => {
+        this.pagination = res.pagination;
+        this.list = res.data;
+      });
+  }
+
+  swithStatus() {
+    // here need to have api "status" ready.
+    this.filter.status = !this.filter.status;
+    this.fetchData();
+  }
+
+  add(size = 'lg') {
+    return this.modalService.open(AddComponent, {
+      title: this.translateService.translateKey('新增商机'),
+      size
+    }).subscribe((word: string) => {
+        this.fetchData();
       });
   }
 
   toDetails(item?) {
-    console.log(item);
-    const id = 'llllll'; // TODO: get the id from item
-    // TODO: if canceled
-    this.router.navigate([`/businesses/details/${id}`], { queryParams: { canceled: true/* this.filter.canceled */ } });
+    this.router.navigate([`/businesses/details/${item.id}`], { queryParams: {} });
   }
 
   remove(item?) {
     console.log(item);
   }
 
+  reactivate(business: BusinessDetails) {
+    return this.modalService.open(ActivateComponent, {
+      title: this.translateService.translateKey('重新启用'),
+      size: 'lg',
+      data: {
+        customer: business
+      }
+    }).subscribe((word: string) => {
+      this.fetchData();
+    });
+  }
 }

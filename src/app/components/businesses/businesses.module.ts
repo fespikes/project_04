@@ -7,6 +7,9 @@ import { SharedModule } from '../../shared';
 import { BusinessesComponent } from './businesses.component';
 import { BusinessesRoutingModule } from './businesses-routing.module';
 import { DetailsComponent } from './details/details.component';
+import { BusinessesService } from './businesses.service';
+import { AddComponent } from './add/add.component';
+import { ActivateComponent } from './activate/activate.component';
 
 @NgModule({
   imports: [
@@ -15,9 +18,20 @@ import { DetailsComponent } from './details/details.component';
     SharedModule,
     BusinessesRoutingModule
   ],
-  declarations: [BusinessesComponent, DetailsComponent],
+  declarations: [
+    BusinessesComponent,
+    DetailsComponent,
+    AddComponent,
+    ActivateComponent,
+
+  ],
   providers: [
+    BusinessesService,
     TranslateService
+  ],
+  entryComponents: [
+    AddComponent,
+    ActivateComponent
   ]
 })
 export class BusinessesModule { }

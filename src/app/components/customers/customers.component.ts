@@ -32,7 +32,7 @@ export class CustomersComponent implements OnInit {
     this.service.fetchCustomerEnums();
   }
 
-  fetchData() { // TODO: 需要在查看客户里面提供”是否作废“的字段
+  fetchData() {
     this.filter.pageNum = this.pagination.page;
     this.filter.pageSize = this.pagination.size;
 
@@ -73,9 +73,8 @@ export class CustomersComponent implements OnInit {
     this.fetchData();
   }
 
-  toDetails(item?) {
+  toDetails(item?) { // (click)="toDetails($event)"
     console.log(item);
-    // TODO: if canceled
     this.router.navigate([`/customers/details/${item.id}`], { queryParams: { status: item.status } });
   }
 

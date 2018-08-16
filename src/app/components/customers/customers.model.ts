@@ -1,4 +1,4 @@
-import { Business } from '../businesses/businesses.model';
+import { BusinessDetails } from '../businesses/businesses.model';
 import { Contact } from '../../shared';
 import { Validators } from '@angular/forms';
 
@@ -29,7 +29,7 @@ export class Customer {
   bankAccount?: string; // 银行账号
   branchOffice ?: string; // 分公司名称
   businessLicense ?: string; // 营业执照号
-  businesses?: Business[];
+  businesses?: BusinessDetails[];
   category?: 'OPPORTUNITY' | 'COOPERATION'; // 客户类别
   city?: string; // 城市  api:enum
   cityLevel?: string; // 城市级别
