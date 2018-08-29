@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { TuiModalService } from 'tdc-ui';
@@ -17,7 +16,6 @@ import { EditComponent } from './edit/edit.component';
 
 @NgModule({
   imports: [
-    CommonModule,
     SharedModule,
     HttpClientModule,
     CustomersRoutingModule

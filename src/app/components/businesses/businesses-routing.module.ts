@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { I18nModule, TranslateDeactivator, TranslateResolver, TranslateToken } from '../../i18n';
 import { BusinessesComponent } from './businesses.component';
 import { DetailsComponent } from './details/details.component';
+import { ProgressComponent } from './progress/progress.component';
 
 const businessesRoutes: Routes = [
   {
@@ -16,6 +17,10 @@ const businessesRoutes: Routes = [
   {
     path: 'details/:id',
     component: DetailsComponent
+  },
+  {
+    path: 'progress/:id',
+    component: ProgressComponent
   }
 ];
 

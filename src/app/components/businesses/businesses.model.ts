@@ -1,5 +1,12 @@
 import { Validators } from '@angular/forms';
 
+export enum statusEnum {
+  normal = 'NORMAL',
+  lose = 'LOSE',
+  discard = 'DISCARD',
+  review = 'REVIEW'
+}
+
 export class BusinessDetails {
   application: string; // 客户应用 ,
   applicationSupplier: string; // 应用厂商 ,
@@ -47,8 +54,8 @@ export class BusinessDetails {
   sales: string; // 销售负责人 ,
   salesName: string; // 销售负责人 ,
   softwareInput: number; // 近两年IT投入平均金额 ,
-  stage: string; // 阶段 ,
-  status: string; // 状态 ,
+  stage: 'YANG'|'GEN'|'DA'|'CHENG'; // 阶段 ,YANG(养单),GEN(跟单),DA(打单),CHENG(成单), = ['YANG', 'GEN', 'DA', 'CHENG'],
+  status: 'NORMAL'|'LOSE'|'DISCARD'|'REVIEW'; // 状态 ,NORMAL(正常),LOSE(丢单),DISCARD(弃单),REVIEW(进入合同评审)
   strategic: string; // 战略意义 ,
   successRate: number; // 预计成功率 ,
   suggest: string; // 建议及说明 ,
@@ -85,7 +92,7 @@ export class BusinessFilter {
   pageSize: number;
   name?: string;
   mode?: string;
-  status?: string;
+  open = true;
 }
 
 export enum editTypes {
@@ -97,4 +104,62 @@ export enum editTypes {
 
   rival = 'rival',
   business = 'business'
+}
+
+export enum operationTypes {
+  'auth-presale' = 'auth-presale',
+  'project-backup' = 'project-backup',
+  'apply-architect' = 'apply-architect',
+  'apply-poc' = 'apply-poc',
+  'upload-record' = 'upload-record',
+  'upload-meetingMinutes' = 'upload-meetingMinutes',
+  'close-business' = 'close-business'
+}
+
+export const operations = [
+  // TODO: get the texts translated.
+  {
+    operationType: operationTypes['auth-presale'],
+    icon: 'operate-auth-presale',
+    text: '指派售前'
+  },
+  {
+    operationType: operationTypes['project-backup'],
+    icon: 'operate-project-backup',
+    text: '项目报备'
+  },
+  {
+    operationType: operationTypes['apply-architect'],
+    icon: 'operate-apply-architect',
+    text: '申请架构师'
+  },
+  {
+    operationType: operationTypes['apply-poc'],
+    icon: 'operate-apply-poc',
+    text: '申请POC'
+  },
+  {
+    operationType: operationTypes['upload-record'],
+    icon: 'operate-upload-record',
+    text: '上传拜访记录'
+  },
+  {
+    operationType: operationTypes['upload-meetingMinutes'],
+    icon: 'operate-upload-meetingMinutes',
+    text: '上传会议纪要'
+  },
+  {
+    operationType: operationTypes['close-business'],
+    icon: 'operate-close-business',
+    text: '关闭商机'
+  }
+];
+
+export enum progressTypes {
+  // TODO: match the types in api
+  all = 'all',
+  poc = 'poc',
+  architect = 'architect',
+  visits = 'visit-resords',
+  records = 'meeting-minutes'
 }

@@ -11,6 +11,7 @@
     <button 
       (click)="swithStatus()"
       class="margin-left-16px disabled-detail white-btn"
+      [ngClass]="{'white-btn': !!filter.open, 'blue-btn': !filter.open }"
     >查看已关闭商机</button>
     <button
       (click)="add()"
@@ -29,7 +30,8 @@
   >
     <h3 class="title-big">
       <span>{{item.name}}</span>
-      <button class="feed-btn status">{{item.stage}}</button>
+      <!--corresponding class name in: /abcrock/erp-frontend/src/assets/style/common.sass -->
+      <button class="{{(item.stage + '').toLowerCase() + '-btn'}} status">{{item.stageAlias}}</button>
     </h3>
     <ul class="detail-ul ">
       <li>
@@ -42,16 +44,16 @@
       </li>
       <li>
         <p class="gray ">状态</p>
-        <p class="">{{item.status}}</p>
+        <p class="">{{item.statusAlias}}</p>
       </li>
     </ul>
     <a (click)="toDetails(item)" class="view-details no-shadow-btn">
       <svg class="icon-md" tuiIcon="details" size="md"></svg>查看详情
     </a>
-    <a *ngIf="item.status==='INVALID'" (click)="reactivate(item)" class="reactivate no-shadow-btn">
+    <a *ngIf="!isNormal(item.status)" (click)="reactivate(item)" class="reactivate no-shadow-btn">
       <svg class="icon-md" tuiIcon="reactivate" size="md"></svg>重新启用
     </a>
-    <a *ngIf="item.status==='NORMAL'" (click)="cancel(item)" class="trash no-shadow-btn">
+    <a *ngIf="isNormal(item.status)" (click)="cancel(item)" class="trash no-shadow-btn">
       <svg class="icon-md" tuiIcon="ERP-icon_密码" size="md"></svg>作废
     </a>
     <!-- <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg> -->

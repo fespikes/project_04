@@ -60,4 +60,13 @@ export class BusinessesService {
     return this.api.get(`customer`, filter);
   }
 
+  editBusiness() {
+
+  }
+
+  getProgressInformation(businessId, type): Observable<any> {
+    console.log('getProgressInformation:', businessId);
+    return this.api.get('');
+  }
+
 }

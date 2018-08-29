@@ -1,0 +1,132 @@
+@import 'src/assets/style/utils'
+@import 'src/assets/style/common'
+
+.progress-wrapper
+  display: block
+  position: relative
+  &:before
+    content: ''
+    display: inline-block
+    width: 0
+    height: 100%
+    border-left: 1px #d3dceb solid
+    position: absolute
+    left: 36px
+
+  h3
+    margin-left: 96px
+    height: 56px
+    line-height: 48px
+    font-size: 24px
+    button
+      position: relative
+      top: -3px
+
+  ol
+    margin-left: 96px
+    &>li
+      @include card-shadow
+      border-radius: 4px
+      margin-bottom: 20px
+      position: relative
+      background: #fff
+
+      &:before
+        content: ''
+        width: 0
+        height: 0
+        padding: 8px
+        position: absolute
+        background: #fff
+        left: -8px
+        top: 24px
+        transform: rotate(45deg)
+        z-index: 0
+
+  .icon-wrapper
+    display: inline-block
+    width: 64px
+    height: 64px
+    border-radius: 32px
+    position: absolute
+    left: -92px
+    background: #fff
+    .icon
+      width: 32px
+      height: 32px
+      margin-left: 16px
+      margin-top: 16px
+
+  .content
+    z-index: 1
+    padding-right: 20px
+    h4
+      font-size: 16px
+      padding: 20px
+      padding-right: 0
+      z-index: 1
+      position: relative
+      .date
+        margin-right: 8px
+      .by
+        float: right
+        font-weight: 300
+        color: #999
+
+    ul
+      display: flex
+      flex-wrap: wrap
+      li
+        padding-left: 20px
+        padding-bottom: 20px
+        font-size: 14px
+        line-height: 24px
+        p
+          color: #999
+
+        // &:nth-child(3n)
+        //   background: #ddd
+
+      li.flex-3-1
+        flex: 1
+        min-width: 33.33%
+        max-width: 33.33%
+
+      li.flex-3-2
+        flex: 2
+        height: auto
+        min-width: 66.66%
+        max-width: 66.66%
+
+      li.flex-2-1
+        padding-right: 100px
+        flex: 1
+        min-width: 50%
+        max-width: 50%
+      li.flex-6-1
+        flex: 1
+        min-width: 16.66%
+        max-width: 16.66%
+      li.flex-6-2
+        flex: 1
+        min-width: 33.33%
+        max-width: 33.33%
+      .padding-right-100px
+        padding-right: 100px
+
+    .result
+      padding: 0 20px
+      display: flex
+      height: 50px
+      line-height: 50px
+      background: #fafbfc
+      .posi
+        position: relative
+        top: 12px
+        margin-right: 12px
+      .date
+        @extend .margin-left-16px
+      .approver
+        position: absolute
+        right: 20px
+        color: #999

@@ -4,7 +4,7 @@ import { TuiModalService, Pagination } from 'tdc-ui';
 
 import { BusinessesService } from './businesses.service';
 import { TranslateService } from '../../i18n';
-import { BusinessDetails, BusinessFilter } from './businesses.model';
+import { BusinessDetails, BusinessFilter, statusEnum } from './businesses.model';
 import { AddComponent } from './add/add.component';
 import { ActivateComponent } from './activate/activate.component';
 
@@ -17,6 +17,10 @@ export class BusinessesComponent implements OnInit {
   pagination: Pagination = new Pagination();
   filter: any = new BusinessFilter();
   list: Array<BusinessDetails> = [];
+
+  isNormal(status): boolean {
+    return status === statusEnum['normal'] || status === statusEnum['review'];
+  }
 
   constructor(
     private modalService: TuiModalService,
@@ -43,8 +47,7 @@ export class BusinessesComponent implements OnInit {
   }
 
   swithStatus() {
-    // here need to have api "status" ready.
-    this.filter.status = !this.filter.status;
+    this.filter.open = !this.filter.open;
     this.fetchData();
   }
 

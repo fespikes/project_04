@@ -66,7 +66,6 @@
   @include border-radius-12px
   &:focus
     outline: none
-
 .no-shadow-btn
   @extend .btn-without-shadow
   @include border-radius-15px
@@ -85,26 +84,38 @@
   border: none
   background: $blue
 
-.feed-btn
+  // corresponding dom class name in: /abcrock/erp-frontend/src/app/components/businesses/businesses.component.html
+.yang-btn
   @extend .btn-without-outline
   background: #998ffd
-.follow-btn
+.gen-btn
   @extend .btn-without-outline
   background: #6aa4f3
-.beat-btn
+.da-btn
   @extend .btn-without-outline
   background: #5bd1df
-.deal-btn
+.cheng-btn
   @extend .btn-without-outline
   background: #71d26d
 .state-btn
   @extend .btn-without-outline
   background: #e9cf23
+.processing-btn
+  @extend .btn-without-outline
+  background: #ebf0f7
+  color: #999
+.start-btn, .end-btn
+  @extend .btn-without-outline
+  background: #46c9f9
+.agree-btn
+  @extend .btn-without-outline
+  background: #7bdc5d
 .hover-btn
   fill: $gray
   &:hover, &.current
     svg
       fill: #738eea
+
 
 .no-padding
   padding: 0
@@ -135,6 +146,21 @@
 .title-big
   font-size: 24px
   color: #4d4d4d
+
+.dropdown-item
+  line-height: 22px
+  width: 160px
+  .icon-md
+    position: relative
+    left: -3px
+    top: 3px
+  &.disable
+    span
+      color: #ddd
+
+.align-left
+  text-align: left
+
 // E: common style
 
 
@@ -194,6 +220,44 @@
       position: relative
       top: 2px
       right: 3px
+    .operate
+      width: 120px
+      .down
+        fill: #fff
+        margin-left: 8px
+        margin-bottom: -2px
+      .disable
+        fill: #eee
+    // deprecated: already in fill of svg
+    .operate-auth-presale
+      fill: #6281e7
+    .operate-project-backup
+      fill: #e1c719
+    .operate-apply-architect
+      fill: #6add77
+    .operate-apply-poc
+      fill: #4bcaf9
+    .operate-upload-record
+      fill: #c593e8
+    .operate-upload-meetingMinutes
+      fill: #eead74
+    .operate-close-business
+      fill: #ff7878
+
+
+.not-finished
+  border: 1px #ff9898 solid
+  border-radius: 4px
+  height: 48px
+  line-height: 48px
+  margin-bottom: 20px
+  .tip
+    fill: #ff9e9e
+    margin: 0 6px -3px 15px
+  .anchor
+    padding-right: 3px
+    color: $blue
+    font-weight: 600
 
 // S: list
 dl

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { TuiMessageService } from 'tdc-ui';
@@ -14,7 +14,8 @@ export type HandleError =
 @Injectable()
 export class HttpErrorHandler {
   constructor(
-    private messageService: TuiMessageService
+    private messageService: TuiMessageService,
+    private router: Router
   ) { }
 
   /** Create curried handleError function that already knows the service name */
@@ -34,6 +35,8 @@ export class HttpErrorHandler {
       // TODO: send the error to remote logging infrastructure
       if (error.status === 401 && error.statusText === 'Unauthorized') {
         sessionStorage.removeItem(storageKeys.user);
+        this.router.navigate(['/login']);
+        return ;
       }
 
       const message = (error.error instanceof ErrorEvent) ?

@@ -6,105 +6,142 @@
     <erp-bread-crumbs [data]="breadCrumbs"></erp-bread-crumbs>
   </div>
   <div class="right">
-    <!--TODO:-->
-    <button class="margin-left-16px blue-btn">重新启用</button>
+    <button class="blue-btn operate" [tuiDropdownTrigger]="operate">
+      操作
+      <svg class="down" tuiIcon="angle-down" size="sm"></svg>
+    </button>
+
+    <tui-dropdown #operate [direction]="dropdownDirection" [caret]="true">
+      <tui-dropdown-item
+        class="dropdown-item align-left"
+        *ngFor="let item of operations"
+        [ngClass]="{ disable: true }"
+      >
+        <svg class="icon-md" tuiIcon="{{item.icon}}" size="md"></svg>
+        <!-- <img class="icon-img" tecImgSrc="{{entrancesTemp[item.name] + '.svg'}}" tecImgPrefix="/assets/svg" /> -->
+        <span (click)="operation(item.operationType)">
+          {{item.text}}
+        </span>
+      </tui-dropdown-item>
+    </tui-dropdown>
+    
   </div>
+</section>
+
+<section *ngIf="!!showNoFinished" class="not-finished">
+  <svg class="icon-md tip" tuiIcon="exclamation-circle" size="md"></svg>
+  <span>应用信息，合作伙伴信息</span> 未完善，完善之后才能进行申请POC、申请架构师等操作。
 </section>
 
 <section class="details">
   <div class="left">
     <div class="first white-bg-items no-padding">
       <h3 class="title-big name">
-        中石化大数据项目
-        <button class="beat-btn status">打单</button>
+        {{business.name}}
+        <button class="{{(business.stage + '').toLowerCase() + '-btn'}} status">打单</button>
         <button class="state-btn status">已报备</button>
       </h3>
       <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
       <ul class="info">
         <li>
           <h4>状态</h4>
-          <p>正常</p>
+          <p>{{business.statusAlias || ''}}</p>
         </li>
         <li>
           <h4>预计成功率</h4>
-          <p>80%</p>
+          <p>{{business.successRate}}</p>
         </li>
         <li>
           <h4>预签合同类型</h4>
-          <p>中国石油化工集团公司</p>
+          <p>{{business.preSignedContractType}}</p>
         </li>
         <li>
           <h4>预计签约日期</h4>
-          <p>2018-06-13</p>
+          <p>{{business.contractTime | date:'yyyy / MM / dd'}}</p>
         </li>
         <li>
           <h4>预计收入金额</h4>
-          <p>1221424</p>
+          <p>{{business.revenueAmount}}</p>
         </li>
         <li>
           <h4>预计签约合同金额</h4>
-          <p>23232322</p>
+          <p>{{business.contractAmount}}</p>
         </li>
         <li>
           <h4>预计总节点数</h4>
-          <p>223</p>
+          <p>{{business.nodeCount}}</p>
         </li>
         <li>
           <h4>售前</h4>
-          <p>李四</p>
+          <p>{{business.preSales}}</p>
         </li>
         <li class="flex3">
           <h4>意向产品</h4>
-          <p class="ellipsis-two-lines">Transwarp Data Hub、Transwarp Inceptor、Transwarp Operating System、Transwarp Sophon、Transwarp Data Cloud</p>
+          <p class="ellipsis-two-lines">{{business.product}}</p>
         </li>
         <li>
           <h4>销售负责人</h4>
-          <p>李2四</p>
+          <p>{{business.salesName}}</p>
         </li>
       </ul>
       <h4>项目进展</h4>
       <dl>
         <dd>
-          <div class="pointer">
+          <div
+            (click)="toProgresses(progressTypes['all'])"
+            class="pointer"
+          >
             <img class="records" erpImgSrc="records.svg" />
             <div>
-              <p>232</p>
+              <p>{{business.record}}</p>
               <label>全部记录</label>
             </div>
           </div>
         </dd>
         <dd>
-          <div class="pointer">
-            <img class="poc" erpImgSrc="poc.svg" />
+          <div
+            (click)="toProgresses(progressTypes['poc'])"
+            class="pointer"
+          >
+            <img class="poc" erpImgSrc="poc.svg" /><!--TODO: optimization of unify the icons with operation-***  icons -->
             <div>
-              <p>23</p>
+              <p>{{business.poc}}</p>
               <label>POC</label>
             </div>
           </div>
         </dd>
         <dd>
-          <div class="pointer">
+          <div
+            (click)="toProgresses(progressTypes['architect'])"
+            class="pointer"
+          >
             <img class="architect" erpImgSrc="architect.svg" />
             <div>
-              <p>2</p>
+              <p>{{business.architect}}</p>
               <label>架构师</label>
             </div>
           </div>
         </dd>
         <dd>
-          <div class="pointer">
+          <div
+            (click)="toProgresses(progressTypes['visits'])"
+            class="pointer"
+          >
             <img class="visits" erpImgSrc="visits.svg" />
             <div>
-              <p>3</p>
+              <p>{{business.visitRecord}}</p>
               <label>拜访记录</label>
             </div>
           </div>
         </dd>
         <dd>
-          <div class="pointer">
+          <div
+            (click)="toProgresses(progressTypes['records'])"
+            class="pointer"
+          >
             <img class="meetings" erpImgSrc="meetings.svg" />
             <div>
-              <p>5</p>
+              <p>{{business.meeting}}</p>
               <label>会议纪要</label>
             </div>
           </div>
@@ -117,27 +154,27 @@
       <ul>
         <li>
           <h4>客户应用</h4>
-          <p>Transwarp Cloud Console</p>
+          <p>{{business.application}}</p>
         </li>
         <li>
           <h4>是否应用迁移</h4>
-          <p>是</p>
+          <p>{{business.needMigration}}</p>
         </li>
         <li>
           <h4>是否应用开发</h4>
-          <p>是</p>
+          <p>{{business.needDev}}</p>
         </li>
         <li>
           <h4>战略意义</h4>
-          <p>行业标杆</p>
+          <p>{{business.strategic}}</p>
         </li>
         <li class="flex2 ">
           <h4>应用厂商</h4>
-          <p>中国徐汇分行</p>
+          <p>{{business.applicationSupplier }}</p>
         </li>
         <li class="flex2">
           <h4>对其他厂商反馈意见</h4>
-          <p>可靠</p>
+          <p>{{'TODO, api no key'}}</p>
         </li>
       </ul>
     </div>
@@ -147,31 +184,31 @@
       <ul>
         <li>
           <h4>下次联系日期</h4>
-          <p>2018-06-06</p>
+          <p>{{business.nextContactTime }}</p>
         </li>
         <li>
           <h4>最后联系日期</h4>
-          <p>2018-06-06</p>
+          <p>{{business.lastContactTime }}</p>
         </li>
         <li>
           <h4>发生日期</h4>
-          <p>2018-06-06</p>
+          <p>{{business.createTime }}</p>
         </li>
         <li>
           <h4>未联系时间</h4>
-          <p>2018-06-06</p>
+          <p>{{business.noContactDuration }}</p>
         </li>
         <li class="flex2 ">
           <h4>项目所属公司</h4>
-          <p>星环上海</p>
+          <p>{{business.company }}</p>
         </li>
         <li class="flex2">
           <h4>PL毛利核算表</h4>
-          <p>55%</p>
+          <p>{{business.plGrossProfitCheck }}</p>
         </li>
       </ul>
       <h4>建议及说明</h4>
-      <p class="description">增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访次数增加拜访</p>
+      <p class="description">{{business.suggest}}</p>
     </div>
   </div>
 
@@ -182,57 +219,60 @@
       <ul>
         <li>
           <h4>最终用户</h4>
-          <p>中国石油化工集团公司</p>
+          <p>{{business.customerName}}</p>
         </li>
         <li>
           <h4>最终用户联系人</h4>
-          <p>张三</p>
+          <p>{{business.customerContactsName}}</p>
         </li>
         <li>
           <h4>最终用户职位</h4>
-          <p>销售总监</p>
+          <p>{{business.customerContactsPost}}</p>
         </li>
         <li>
           <h4>近2年IT投入平均金额</h4>
-          <p>5000000</p>
+          <p>{{business.itInput}}</p>
         </li>
         <li>
           <h4>近2年软件投入平均金额</h4>
-          <p>2000000</p>
+          <p>{{business.softwareInput}}</p>
         </li>
       </ul>
     </div>
-    <div class="white-bg-items">
+    <div
+      class="white-bg-items"
+      *ngIf="true"
+    >
       <h3 class="special">合作伙伴信息</h3>
       <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
       <ul>
         <li>
           <h4>合作伙伴</h4>
-          <p>中国石油化工集团公司</p>
+          <p>{{business.partnerName}}</p>
         </li>
         <li>
           <h4>合作伙伴联系人</h4>
-          <p>张三</p>
+          <p>{{business.partnerContactsName}}</p>
         </li>
         <li>
           <h4>合作伙伴职位</h4>
-          <p>销售经理</p>
+          <p>{{business.partnerContactsPost}}</p>
         </li>
         <li>
           <h4>合作伙伴所属行业</h4>
-          <p>石油化工</p>
+          <p>{{business.partnerIndustry}}</p>
         </li>
         <li>
           <h4>合作伙伴细分市场</h4>
-          <p>新能源</p>
+          <p>{{business.partnerSubdivisionMarket}}</p>
         </li>
         <li>
           <h4>合作伙伴主营业务</h4>
-          <p>新能源</p>
+          <p>{{business.partnerBusiness}}</p>
         </li>
         <li>
           <h4>合作伙伴所属行业市场占有率</h4>
-          <p>55%</p>
+          <p>{{business.partnerMarketShare}}</p>
         </li>
       </ul>
     </div>
@@ -240,7 +280,28 @@
       <h3 class="special">竞争厂商</h3>
       <svg class="icon-md" tuiIcon="plus-thin" size="md"></svg>
       <ol>
-        <li class="padding-top">
+        <li
+          class="padding-top"
+          *ngFor="let rival of rivalList"
+        >
+          <ul>
+            <li>
+              <h4>竞争对手客户名</h4>
+              <p>{{rival.name}}</p>
+            </li>
+            <li>
+              <h4>对手报价</h4>
+              <p>{{rival.quote}}</p>
+            </li>
+            <li class="flex2">
+              <h4>原因</h4>
+              <p>{{rival.reason}}</p>
+            </li>
+          </ul>
+          <h4>竞争对手信息</h4>
+          <p class="description">{{rival.info}}</p>
+        </li>
+        <!-- <li class="padding-top">
           <ul>
             <li>
               <h4>竞争对手客户名</h4>
@@ -257,25 +318,7 @@
           </ul>
           <h4>竞争对手信息</h4>
           <p class="description">黑龙江省齐齐哈尔市梅里斯达斡尔族区虹漕路888号越虹广场A做333号.</p>
-        </li>
-        <li class="padding-top">
-          <ul>
-            <li>
-              <h4>竞争对手客户名</h4>
-              <p>华为科技</p>
-            </li>
-            <li>
-              <h4>对手报价</h4>
-              <p>1000000</p>
-            </li>
-            <li class="flex2">
-              <h4>原因</h4>
-              <p>低价竞争</p>
-            </li>
-          </ul>
-          <h4>竞争对手信息</h4>
-          <p class="description">黑龙江省齐齐哈尔市梅里斯达斡尔族区虹漕路888号越虹广场A做333号.</p>
-        </li>
+        </li> -->
       </ol>
     </div>
   </div>

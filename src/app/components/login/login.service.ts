@@ -24,7 +24,7 @@ export class LoginService {
 
   login(params) {
     return this.api.post(
-      '/free-authentication/authentication',
+      'free-authentication/authentication',
       { ...params}
     );
   }

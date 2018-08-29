@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, NavigationExtras } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { TuiModalService, TuiMessageService } from 'tdc-ui';
 import { TranslateService } from '../../../i18n';
 
 import { BusinessesService } from '../businesses.service';
-import { BusinessDetails, BusinessFilter } from '../businesses.model';
+import { BusinessDetails, BusinessFilter, statusEnum, Rival, operations, progressTypes } from '../businesses.model';
 
 @Component({
   selector: 'erp-details',
@@ -15,9 +15,14 @@ import { BusinessDetails, BusinessFilter } from '../businesses.model';
 export class DetailsComponent implements OnInit {
   id: number;
   business: BusinessDetails = new BusinessDetails();
+  showNoFinished = true;
   breadCrumbs: any;
-  status: any;
+  status: any;  // is available or not
   filter: BusinessFilter = new BusinessFilter();
+  rivalList: Rival[];
+  operations: any[];
+  dropdownDirection = 'bottomCenter';
+  progressTypes: object = progressTypes;
 
   constructor(
     private modalService: TuiModalService,
@@ -26,7 +31,10 @@ export class DetailsComponent implements OnInit {
     private router: Router,
     private message: TuiMessageService,
     private service: BusinessesService
-  ) { }
+  ) {
+    this.operations = operations;
+    // TODO: the condition of operations avariable.
+  }
 
   ngOnInit() {
     const promises = [
@@ -35,7 +43,6 @@ export class DetailsComponent implements OnInit {
     ];
     combineLatest(promises)
       .subscribe(([pathParams, queryParams]) => {
-        console.log('.... you ');
         this.id = pathParams['id'];
         // TODO: only one time
         if (!!this.id) {
@@ -50,17 +57,20 @@ export class DetailsComponent implements OnInit {
   }
 
   swithStatus($event) {
-    if (this.filter.status !== 'INVALID') {
-      this.filter.status = 'INVALID';
-    } else {
-      this.filter.status = 'NORMAL';
-    }
+    this.filter.open = !this.filter.open ;
     this.fetchBusinessDetails();
   }
 
   fetchBusinessDetails() {
     this.service.getTheBusiness(this.id).subscribe(res => {
       this.business = res;
+      this.status = (res.status === statusEnum['normal'] || res.status === statusEnum['review']);
+      this.rivalList = res.rivalList;
+
+      // TODO: get the available operation types
+      setTimeout(_ => {
+        this.showNoFinished = false;
+      }, 3000);
 
       this.breadCrumbs = [
         {
@@ -72,6 +82,29 @@ export class DetailsComponent implements OnInit {
         }
       ];
     });
+  }
+
+  edit() {
+  }
+
+  addRival() {
+
+  }
+
+  operation(type) {
+    console.log(type);
+
+  }
+
+  toProgresses(type) {
+    const business = {...this.business};
+
+    this.router.navigate([`/businesses/progress/${this.id}` ], { queryParams: {
+      name: business.name || 'test',  // TODO: remove
+      type: type,
+      status: this.status
+    } });
+
   }
 
 }

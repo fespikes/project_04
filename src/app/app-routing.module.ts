@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    canActivateChild: [AuthGuardService],
+    // canActivateChild: [AuthGuardService],
     children: [
       {
         path: 'customers',

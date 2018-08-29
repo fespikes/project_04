@@ -1,0 +1,374 @@
+<section class="bread-crumb">
+  <div class="left">
+    <!-- <span>我的客户</span>
+    <span class="arrow"></span>
+    <span class="last">中石化大数据项目</span> -->
+    <!-- <erp-bread-crumbs [data]="breadCrumbs"></erp-bread-crumbs> -->
+  </div>
+  <div class="right">
+    <!-- placeholder="all" -->
+    <tui-select
+      [(ngModel)]="type"
+      (ngModelChange)="putout(type)"
+    >
+      <tui-select-option
+        *ngFor="let option of objectOptions"
+        [value]="option.value"
+        [label]="option.label"
+      >
+        <svg class="icon-md" tuiIcon="{{option.icon}}" size="md"></svg>
+        {{option.label | tuiDefault }}
+      </tui-select-option>
+    </tui-select>
+
+    <div>{{type}}</div>
+
+    <button class="blue-btn operate" [tuiDropdownTrigger]="operate">
+      操作
+      <svg class="down" tuiIcon="angle-down" size="sm"></svg>
+    </button>
+
+    <tui-dropdown #operate [direction]="dropdownDirection" [caret]="true">
+      <tui-dropdown-item
+        class="dropdown-item align-left"
+        *ngFor="let item of operations"
+        [ngClass]="{ disable: true }"
+      >
+        <svg class="icon-md" tuiIcon="{{item.icon}}" size="md"></svg>
+        <!-- <img class="icon-img" tecImgSrc="{{entrancesTemp[item.name] + '.svg'}}" tecImgPrefix="/assets/svg" /> -->
+        <span (click)="operation(item.operationType)">
+          {{item.text}}
+        </span>
+      </tui-dropdown-item>
+    </tui-dropdown>
+    
+  </div>
+</section>
+
+<section class="progress-wrapper">
+  <h3>
+    中石化大数据项目
+    <!--business.stage-->
+    <button class="{{('yang').toLowerCase() + '-btn'}} margin-left-16px">养单</button>
+    <button class="state-btn margin-left-16px">已报备</button>
+  </h3>
+  <ol>
+    <li>
+      <div class="icon-wrapper">
+        <!-- <svg class="icon" tuiIcon="operate-apply-architect"></svg> -->
+        <img class="meetings icon" erpImgSrc="meetings.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>会议纪要
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-3-1">
+            <p>参与人</p>
+            <div class="txt">张三、李四</div>
+          </li>
+          <li class="flex-3-2">
+            <p>当前状态</p>
+            <div class="txt">状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本</div>
+          </li>
+          <li class="flex-3-1">
+            <p>项目关键信息</p>
+            <div class="txt">关键信息文本关键信息文本关键信息文本</div>
+          </li>
+          <li class="flex-3-1">
+            <p>客户倾向性</p>
+            <div class="txt">客户倾向性客户倾向性客户倾向性客户倾向性客户倾向性</div>
+          </li>
+          <li class="flex-3-1">
+            <p>后续计划</p>
+            <div class="txt">后续计划文本后续计划文本后续计划文本后续计划文本</div>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <div class="icon-wrapper">
+        <img class="poc icon" erpImgSrc="poc.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>POC 申请
+          <button class="start-btn margin-left-16px">开始</button>
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-2-1">
+            <p>交流时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流地点</p>
+            <div class="txt">虹漕路192号</div>
+          </li>
+          <li class="flex-2-1">
+            <p>客户诉求</p>
+            <div class="txt">投诉往往涉及广大客户切身利益，处理客户投诉时要学会换位思考，要切实贯彻“你用电、我用心”服务理念，要以客户利益为重、以客户期盼为念，坚持思想上尊重群众、感情上贴近群众、工作上依靠群众，着力解决好人民最关心最直接最现实的利益问题。把客户的投诉做为提升工作的原动力，妥善圆满解决客户投诉。</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流目的</p>
+            <div class="txt">人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。 人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。</div>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <div class="icon-wrapper">
+        <img class="poc icon" erpImgSrc="poc.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>POC 申请
+          <button class="processing-btn margin-left-16px">处理中</button>
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-2-1">
+            <p>交流时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流地点</p>
+            <div class="txt">虹漕路192号</div>
+          </li>
+          <li class="flex-2-1">
+            <p>客户诉求</p>
+            <div class="txt">投诉往往涉及广大客户切身利益，处理客户投诉时要学会换位思考，要切实贯彻“你用电、我用心”服务理念，要以客户利益为重、以客户期盼为念，坚持思想上尊重群众、感情上贴近群众、工作上依靠群众，着力解决好人民最关心最直接最现实的利益问题。把客户的投诉做为提升工作的原动力，妥善圆满解决客户投诉。</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流目的</p>
+            <div class="txt">人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。 人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。</div>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <div class="icon-wrapper">
+        <img class="poc icon" erpImgSrc="poc.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>POC 执行
+          <button class="end-btn margin-left-16px">结束</button>
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-2-1">
+            <p>交流时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流地点</p>
+            <div class="txt">虹漕路192号</div>
+          </li>
+          <li class="flex-2-1">
+            <p>客户诉求</p>
+            <div class="txt">投诉往往涉及广大客户切身利益，处理客户投诉时要学会换位思考，要切实贯彻“你用电、我用心”服务理念，要以客户利益为重、以客户期盼为念，坚持思想上尊重群众、感情上贴近群众、工作上依靠群众，着力解决好人民最关心最直接最现实的利益问题。把客户的投诉做为提升工作的原动力，妥善圆满解决客户投诉。</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流目的</p>
+            <div class="txt">人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。 人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。</div>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <div class="icon-wrapper">
+        <img class="poc icon" erpImgSrc="poc.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>POC 申请
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-2-1">
+            <p>交流时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流地点</p>
+            <div class="txt">虹漕路192号</div>
+          </li>
+          <li class="flex-2-1">
+            <p>客户诉求</p>
+            <div class="txt">投诉往往涉及广大客户切身利益，处理客户投诉时要学会换位思考，要切实贯彻“你用电、我用心”服务理念，要以客户利益为重、以客户期盼为念，坚持思想上尊重群众、感情上贴近群众、工作上依靠群众，着力解决好人民最关心最直接最现实的利益问题。把客户的投诉做为提升工作的原动力，妥善圆满解决客户投诉。</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流目的</p>
+            <div class="txt">人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。 人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。</div>
+          </li>
+        </ul>
+        <div class="result">
+          处理结果：
+          <button class="agree-btn margin-left-16px posi">同意</button>
+          已指派架构师
+          <span>赵云</span>
+          <span class="date">2018/07/21</span>
+          <span class="approver">审批人：李四</span>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="icon-wrapper">
+        <img class="poc icon" erpImgSrc="poc.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>POC 申请
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-2-1">
+            <p>交流时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流地点</p>
+            <div class="txt">虹漕路192号</div>
+          </li>
+          <li class="flex-2-1">
+            <p>客户诉求</p>
+            <div class="txt">POC</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流目的</p>
+            <div class="txt">POC</div>
+          </li>
+        </ul>
+        <div class="result">
+          处理结果：
+          <button class="agree-btn margin-left-16px posi">同意</button>
+          已指派架构师
+          <span>赵云</span>
+          <span class="date">2018/07/21</span>
+          <span class="approver">审批人：李四</span>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="icon-wrapper">
+        <img class="architect icon" erpImgSrc="architect.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>申请架构师
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-2-1">
+            <p>交流时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流地点</p>
+            <div class="txt">虹漕路192号</div>
+          </li>
+          <li class="flex-2-1">
+            <p>客户诉求</p>
+            <div class="txt">POC</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流目的</p>
+            <div class="txt">POC</div>
+          </li>
+        </ul>
+        <div class="result">
+          处理结果：
+          <button class="agree-btn margin-left-16px posi">同意</button>
+          已指派架构师
+          <span>赵云</span>
+          <span class="date">2018/07/21</span>
+          <span class="approver">审批人：李四</span>
+        </div>
+      </div>
+    </li>
+<!--     <li>
+      <div class="icon-wrapper">
+        <img class="poc icon" erpImgSrc="poc.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>项目报备
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-2-1">
+            <p>交流时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流地点</p>
+            <div class="txt">虹漕路192号</div>
+          </li>
+          <li class="flex-2-1">
+            <p>客户诉求</p>
+            <div class="txt">POC</div>
+          </li>
+          <li class="flex-2-1">
+            <p>交流目的</p>
+            <div class="txt">POC</div>
+          </li>
+        </ul>
+        <div class="result">
+          处理结果：
+          <button class="agree-btn margin-left-16px posi">同意</button>
+          已指派架构师
+          <span>赵云</span>
+          <span class="date">2018/07/21</span>
+          <span class="approver">审批人：李四</span>
+        </div>
+      </div>
+    </li> -->
+    <li>
+      <div class="icon-wrapper">
+        <img class="visits icon" erpImgSrc="visits.svg" />
+      </div>
+      <div class="content meeting-minutes">
+        <h4>
+          <span class="date">2018/04/23</span>拜访记录
+          <span class="by">by 张三</span>
+        </h4>
+        <ul>
+          <li class="flex-6-1">
+            <p>拜访时间</p>
+            <div class="txt">2018/04/20 10:30</div>
+          </li>
+          <li class="flex-6-1">
+            <p>随行人员</p>
+            <div class="txt">张三、李四</div>
+          </li>
+          <li class="flex-6-1">
+            <p>受访人</p>
+            <div class="txt">rock, robin</div>
+          </li>
+          <li class="flex-6-1">
+            <p>进展情况</p>
+            <div class="txt">进行中</div>
+          </li>
+          <li class="flex-6-2">
+            <p>对方反馈</p>
+            <div class="txt">有进一步合作意向</div>
+          </li>
+          <li class="flex-6-2 padding-right-100px">
+            <p>事由</p>
+            <div class="txt">了解客户需求，并进行下一步沟通合作</div>
+          </li>
+          <li class="flex-6-2 padding-right-100px">
+            <p>下一步计划</p>
+            <div class="txt">下一步计划文本下一步计划文本下一步计划文本下一步计划文本下一步计划文本下一步计划文本下一步计划文本</div>
+          </li>
+          <li class="flex-6-2 padding-right-100px">
+            <p>预计时间</p>
+            <div class="txt">2018/03/21</div>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ol>
+</section>

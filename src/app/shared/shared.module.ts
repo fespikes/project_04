@@ -32,7 +32,7 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
     HttpErrorHandler,
   ],
   exports: [
-    // ....
+    CommonModule,
     TuiModule,
     I18nModule,
     FormsModule,
