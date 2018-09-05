@@ -9,6 +9,8 @@ import { BusinessesService } from './businesses.service';
 import { AddComponent } from './add/add.component';
 import { ActivateComponent } from './activate/activate.component';
 import { ProgressComponent } from './progress/progress.component';
+import { EditComponent } from './edit/edit.component';
+import { OperationComponent } from './operation/operation.component';
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import { ProgressComponent } from './progress/progress.component';
     AddComponent,
     ActivateComponent,
     ProgressComponent,
-
+    EditComponent,
+    OperationComponent,
   ],
   providers: [
     BusinessesService,
@@ -30,7 +33,9 @@ import { ProgressComponent } from './progress/progress.component';
   ],
   entryComponents: [
     AddComponent,
-    ActivateComponent
+    ActivateComponent,
+    EditComponent,
+    OperationComponent,
   ]
 })
 export class BusinessesModule { }

@@ -36,7 +36,7 @@ const customersRoutes: Routes = [
     {
       provide: TranslateToken,
       useValue: 'customers',
-    },
+    }
   ]
 })
 export class CustomersRoutingModule { }

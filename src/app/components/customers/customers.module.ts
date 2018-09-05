@@ -9,7 +9,7 @@ import { CustomersRoutingModule } from './customers-routing.module';
 import { CustomersComponent } from './customers.component';
 import { DetailsComponent } from './details/details.component';
 import { CustomersService } from './customers.service';
-import { AddComponent } from './add/add.component';
+// import { AddComponent } from './add/add.component';
 import { CancelComponent } from './cancel/cancel.component';
 import { ActivateComponent } from './activate/activate.component';
 import { EditComponent } from './edit/edit.component';
@@ -23,7 +23,7 @@ import { EditComponent } from './edit/edit.component';
   declarations: [
     CustomersComponent,
     DetailsComponent,
-    AddComponent,
+    // AddComponent,
     CancelComponent,
     ActivateComponent,
     EditComponent
@@ -34,7 +34,7 @@ import { EditComponent } from './edit/edit.component';
     CustomersService,
   ],
   entryComponents: [
-    AddComponent,
+    // AddComponent,
     CancelComponent,
     ActivateComponent,
     EditComponent

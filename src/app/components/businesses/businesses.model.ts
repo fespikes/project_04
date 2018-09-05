@@ -1,4 +1,5 @@
 import { Validators } from '@angular/forms';
+import { validate } from 'tdc-ui';
 
 export enum statusEnum {
   normal = 'NORMAL',
@@ -76,6 +77,94 @@ export class BusinessDetails {
     }
     return modelObj;
   }
+
+  static getEditControlGroup(editType) {
+    let modelObj = {};
+
+    switch (editType) {
+      case editTypes['voided']:
+        modelObj = {
+          'status': '',
+          'reason': ['', Validators.required],
+          'rival': null
+        };
+        break;
+      default:
+        break;
+    }
+    return modelObj;
+  }
+
+  static getOperationGroup(operationType) {
+    let modelObj = {};
+
+    switch (operationType) {
+      case operationTypes['auth-presale']:
+        modelObj = {
+          userId: ['', Validators.required]
+        };
+        break;
+      case operationTypes['project-filing']:
+        modelObj = {
+          // "businessId": 0, // TODO
+          entryTime: ['' ],
+          estimatedTime: ['', Validators.required],
+          explain: [''],
+          procurementMode: ['', Validators.required],
+          projectName: [''],
+          signingMode: ['', Validators.required],
+          stage: ['']
+        };
+        break;
+      case operationTypes['apply-architect']:
+        modelObj = {
+          // businessId: ['', Validators.required]
+          demandReportId: [ [], Validators.required],
+          estimateTime: ['', Validators.required],
+          place: ['', Validators.required],
+          testCaseId: ['', Validators.required]
+        };
+        break;
+      case operationTypes['apply-poc']:
+        modelObj = {
+          // "businessId": 0,
+          demandReportId: ['', Validators.required],
+          estimateTime: [ '', Validators.required],
+          place: [ '', Validators.required],
+          testCaseId: [  [], Validators.required]
+        };
+        break;
+      case operationTypes['upload-record']:
+        modelObj = {
+          // createTime: ['', Validators.required],  must be now
+          estimatedTime: ['', Validators.required], // *预计时间
+          feedback: ['', Validators.required],  // *对方反馈
+          fellowStaff: [''],  // 随行人员
+          plan: ['', Validators.required],  // *下一步工作计划
+          progress: ['', Validators.required],  // 进展情况
+          respondent: ['', Validators.required],  // *受访人
+          subject: ['', Validators.required], // *事由
+          visitTime: ['', Validators.required]  // *拜访时间
+        };
+        break;
+      case operationTypes['upload-meetingMinutes']:
+        modelObj = {
+          // creator: ['', Validators.required],
+          info: ['', Validators.required],  // *项目关键信息
+          orientation: [''], // 客户倾向性
+          participants: ['', Validators.required],  // *参与人
+          plan: [''],      // 后续计划
+          status: [''],  // 当前状态
+          // time: ['', Validators.required]
+        };
+        break;
+      // covered by edit
+      // case operationTypes['close-business']:
+      default:
+        break;
+    }
+    return modelObj;
+  }
 }
 
 export class Rival {
@@ -100,6 +189,8 @@ export enum editTypes {
   application = 'application',
   customer = 'customer',
   partner = 'partner',
+  voided = 'voided',
+  reEnable = 're-enable',
   other = 'other',
 
   rival = 'rival',
@@ -108,7 +199,7 @@ export enum editTypes {
 
 export enum operationTypes {
   'auth-presale' = 'auth-presale',
-  'project-backup' = 'project-backup',
+  'project-filing' = 'project-filing',
   'apply-architect' = 'apply-architect',
   'apply-poc' = 'apply-poc',
   'upload-record' = 'upload-record',
@@ -121,37 +212,44 @@ export const operations = [
   {
     operationType: operationTypes['auth-presale'],
     icon: 'operate-auth-presale',
-    text: '指派售前'
+    text: '指派售前',
+    disabled: false
   },
   {
-    operationType: operationTypes['project-backup'],
-    icon: 'operate-project-backup',
-    text: '项目报备'
+    operationType: operationTypes['project-filing'],
+    icon: 'operate-project-filing',
+    text: '项目报备',
+    disabled: false
   },
   {
     operationType: operationTypes['apply-architect'],
     icon: 'operate-apply-architect',
-    text: '申请架构师'
+    text: '申请架构师',
+    disabled: false
   },
   {
     operationType: operationTypes['apply-poc'],
     icon: 'operate-apply-poc',
-    text: '申请POC'
+    text: '申请POC',
+    disabled: false
   },
   {
     operationType: operationTypes['upload-record'],
     icon: 'operate-upload-record',
-    text: '上传拜访记录'
+    text: '上传拜访记录',
+    disabled: false
   },
   {
     operationType: operationTypes['upload-meetingMinutes'],
     icon: 'operate-upload-meetingMinutes',
-    text: '上传会议纪要'
+    text: '上传会议纪要',
+    disabled: false
   },
   {
     operationType: operationTypes['close-business'],
     icon: 'operate-close-business',
-    text: '关闭商机'
+    text: '关闭商机',
+    disabled: false
   }
 ];
 
@@ -162,4 +260,33 @@ export enum progressTypes {
   architect = 'architect',
   visits = 'visit-resords',
   records = 'meeting-minutes'
+}
+
+// presales
+export class User {
+  base: string; // BASE地:SHANGHAI(上海),BEIJING(北京), = ['SHANGHAI', 'BEIJING'],
+  buddy: number; // Buddy ,
+  email: string; // 电子邮箱，通常为key@transwarp.io ,
+  gender: string; // 性别:MALE(男性),FEMALE(女性), = ['MALE', 'FEMALE'],
+  id: number; //  ID ,
+  key: string; // Key，通常为拼音，名.姓 ,
+  manager: number; //  Manager ,
+  name: string; // 姓名 ,
+  officeLocation: string; // 办公地 ,
+  phone: string; // 手机号 ,
+  /**
+   * 岗位:BD(商务拓展),TME(技术市场工程师),MANAGEMENT(管理),TECHNICAL(技术),
+   * ARCHITECT(架构师),PRE_SALES(售前工程师),SALES(销售),OPERATIONS(运营),
+   * ASSISTANT(助理), =
+   * ['BD', 'TME', 'MANAGEMENT', 'TECHNICAL', 'ARCHITECT', 'PRE_SALES', 'SALES', 'OPERATIONS', 'ASSISTANT'],
+  **/
+  post: string;
+  /**
+   * 状态:FORMAL(正式员工),PROBATION(试用期员工),INTERNSHIP(实习员工),DISABLE(离职员工),PREPARE_FORMAL(待入职正式员工),
+   * PREPARE_INTERNSHIP(待入职实习员工),CANCEL(取消入职), = ['FORMAL', 'PROBATION',
+   * 'INTERNSHIP', 'DISABLE', 'PREPARE_FORMAL', 'PREPARE_INTERNSHIP', 'CANCEL'],
+   */
+  status: string;
+  travelApproval: number; //  差旅审批人 ,
+  workNumber: string; // 工号
 }

@@ -32,6 +32,7 @@
       <span>{{item.name}}</span>
       <!--corresponding class name in: /abcrock/erp-frontend/src/assets/style/common.sass -->
       <button class="{{(item.stage + '').toLowerCase() + '-btn'}} status">{{item.stageAlias}}</button>
+      <button *ngIf="!!item.fillingStatus" class="state-btn status">{{item.fillingStatus}}</button>
     </h3>
     <ul class="detail-ul ">
       <li>
@@ -53,10 +54,9 @@
     <a *ngIf="!isNormal(item.status)" (click)="reactivate(item)" class="reactivate no-shadow-btn">
       <svg class="icon-md" tuiIcon="reactivate" size="md"></svg>重新启用
     </a>
-    <a *ngIf="isNormal(item.status)" (click)="cancel(item)" class="trash no-shadow-btn">
-      <svg class="icon-md" tuiIcon="ERP-icon_密码" size="md"></svg>作废
+    <a *ngIf="isNormal(item.status)" (click)="close(item)" class="trash no-shadow-btn">
+      <svg class="icon-md" tuiIcon="ERP-icon_密码" size="md"></svg>关闭商机
     </a>
-    <!-- <svg (click)="remove() " class="icon-md trash " tuiIcon="trash " size="md "></svg> -->
   </dd>
   
 </dl>

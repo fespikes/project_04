@@ -12,6 +12,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 import { PartialCollection } from '../models';
+import { EnumMap } from '../';
 
 @Injectable()
 export class ErpApiService {
@@ -121,4 +122,5 @@ export class ErpApiService {
       catchError(this.handleError<any>('put', []))
     );
   }
+
 }

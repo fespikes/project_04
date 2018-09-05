@@ -10,27 +10,31 @@
       操作
       <svg class="down" tuiIcon="angle-down" size="sm"></svg>
     </button>
-
-    <tui-dropdown #operate [direction]="dropdownDirection" [caret]="true">
+    <tui-dropdown
+      #operate 
+      [direction]="dropdownDirection" 
+      [caret]="true"
+    >
       <tui-dropdown-item
         class="dropdown-item align-left"
         *ngFor="let item of operations"
-        [ngClass]="{ disable: true }"
+        [ngClass]="{ disable: item.disabled }"
       >
         <svg class="icon-md" tuiIcon="{{item.icon}}" size="md"></svg>
         <!-- <img class="icon-img" tecImgSrc="{{entrancesTemp[item.name] + '.svg'}}" tecImgPrefix="/assets/svg" /> -->
-        <span (click)="operation(item.operationType)">
+        <span (click)="operation(item)">
           {{item.text}}
         </span>
       </tui-dropdown-item>
     </tui-dropdown>
-    
+
   </div>
 </section>
 
 <section *ngIf="!!showNoFinished" class="not-finished">
   <svg class="icon-md tip" tuiIcon="exclamation-circle" size="md"></svg>
-  <span>应用信息，合作伙伴信息</span> 未完善，完善之后才能进行申请POC、申请架构师等操作。
+  <span class="anchor">应用信息，合作伙伴信息</span>
+    未完善，完善之后才能进行"申请POC"、"申请架构师"等操作。
 </section>
 
 <section class="details">
@@ -38,8 +42,11 @@
     <div class="first white-bg-items no-padding">
       <h3 class="title-big name">
         {{business.name}}
-        <button class="{{(business.stage + '').toLowerCase() + '-btn'}} status">打单</button>
-        <button class="state-btn status">已报备</button>
+        <button class="{{(business.stage + '').toLowerCase() + '-btn'}} status">{{business.stageAlias}}</button>
+        <button
+          class="state-btn status"
+          *ngIf="!!business.fillingStatus"
+        >{{business.fillingStatus || '已报备'}}</button><!--TODO-->
       </h3>
       <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
       <ul class="info">
@@ -53,7 +60,7 @@
         </li>
         <li>
           <h4>预签合同类型</h4>
-          <p>{{business.preSignedContractType}}</p>
+          <p>{{business.preSignedContractTypeAlias}}</p>
         </li>
         <li>
           <h4>预计签约日期</h4>
@@ -81,6 +88,10 @@
         </li>
         <li>
           <h4>销售负责人</h4>
+          <!--
+            http://172.16.1.168:8090/pages/viewpage.action?pageId=18678310
+            sales为key，后面可以准备做超链接的，显示只需要使用salesName。
+          -->
           <p>{{business.salesName}}</p>
         </li>
       </ul>
@@ -174,7 +185,7 @@
         </li>
         <li class="flex2">
           <h4>对其他厂商反馈意见</h4>
-          <p>{{'TODO, api no key'}}</p>
+          <p>{{business.supplierSuggest || '  '}}</p>
         </li>
       </ul>
     </div>

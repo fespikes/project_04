@@ -5,7 +5,14 @@ import { TuiModalService, TuiMessageService } from 'tdc-ui';
 import { TranslateService } from '../../../i18n';
 
 import { BusinessesService } from '../businesses.service';
-import { BusinessDetails, BusinessFilter, statusEnum, Rival, operations, progressTypes } from '../businesses.model';
+import { BusinessDetails, BusinessFilter,
+  statusEnum, Rival,
+  operations, progressTypes,
+  operationTypes
+} from '../businesses.model';
+import { OperationComponent } from '../operation/operation.component';
+import { BusinessesComponent } from '../businesses.component';
+import { EditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'erp-details',
@@ -15,7 +22,7 @@ import { BusinessDetails, BusinessFilter, statusEnum, Rival, operations, progres
 export class DetailsComponent implements OnInit {
   id: number;
   business: BusinessDetails = new BusinessDetails();
-  showNoFinished = true;
+  showNoFinished = false;
   breadCrumbs: any;
   status: any;  // is available or not
   filter: BusinessFilter = new BusinessFilter();
@@ -23,6 +30,12 @@ export class DetailsComponent implements OnInit {
   operations: any[];
   dropdownDirection = 'bottomCenter';
   progressTypes: object = progressTypes;
+  /**
+   * intro: if lenght>0, forbidden the two options:
+   * 申请架构师 ;
+   * 申请POC.
+   */
+  unfinished: any[];
 
   constructor(
     private modalService: TuiModalService,
@@ -66,11 +79,11 @@ export class DetailsComponent implements OnInit {
       this.business = res;
       this.status = (res.status === statusEnum['normal'] || res.status === statusEnum['review']);
       this.rivalList = res.rivalList;
+      this.unfinished = res.unfinished;
+      this.flushUnfinished();
 
       // TODO: get the available operation types
-      setTimeout(_ => {
-        this.showNoFinished = false;
-      }, 3000);
+      // this.showNoFinished = false;
 
       this.breadCrumbs = [
         {
@@ -84,6 +97,20 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  flushUnfinished() {
+    this.showNoFinished = this.unfinished.length > 0;
+
+    if (this.showNoFinished) {
+      this.operations.forEach(item => {
+        if (item.operationType === operationTypes['apply-architect'] ||
+          item.operationType === operationTypes['apply-poc']
+        ) {
+          item.disabled = true;
+        }
+      });
+    }
+  }
+
   edit() {
   }
 
@@ -91,9 +118,54 @@ export class DetailsComponent implements OnInit {
 
   }
 
-  operation(type) {
-    console.log(type);
+  operation(operation, size = 'lg') {
+    if (operation.disabled) {
+      return false;
+    } // operationType
 
+    let title;
+    switch (operation.operationType) {
+      case operationTypes['auth-presale']:
+        title = this.translateService.translateKey('指派售前');
+        break;
+      case operationTypes['project-filing']:
+        title = this.translateService.translateKey('项目报备');
+        break;
+      case operationTypes['apply-architect']:
+        title = this.translateService.translateKey('申请架构师');
+        break;
+      case operationTypes['apply-poc']:
+        title = this.translateService.translateKey('申请POC');
+        break;
+      case operationTypes['upload-record']:
+        title = this.translateService.translateKey('上传拜访记录');
+        break;
+      case operationTypes['upload-meetingMinutes']:
+        title = this.translateService.translateKey('上传会议纪要');
+        break;
+      case operationTypes['close-business']:
+        title = this.translateService.translateKey('关闭商机');
+        break;
+      default:
+      title = '';
+        console.error('no title');
+        break;
+    }
+
+    if (operationTypes['close-business'] === operation.operationType) {
+      this.service.closeBusiness(this.business, EditComponent);
+    } else {
+      return this.modalService.open(OperationComponent, {
+        title: title,
+        size,
+        data: {
+          operationType: operation.operationType,
+          business: this.business
+        }
+      }).subscribe((word: string) => {
+          this.fetchBusinessDetails();
+        });
+    }
   }
 
   toProgresses(type) {

@@ -14,6 +14,9 @@ import {
 } from './i18n';
 import { IconModule } from '../assets/icons/icon.module';
 import { ErpApiService } from './shared';
+import {
+  AddComponent as AddCustomerComponent,
+} from './components/customers/add/add.component';
 
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +28,7 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginService } from './components/login/login.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { CustomersService } from './components/customers/customers.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     LayoutComponent,
     HeaderComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AddCustomerComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +56,12 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     I18nLangService,
     TuiMessageService,
     TranslateService,
-    LoginService
+    LoginService,
+    CustomersService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AddCustomerComponent
+  ]
 })
 export class AppModule { }

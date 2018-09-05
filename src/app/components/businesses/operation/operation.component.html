@@ -1,0 +1,289 @@
+<div class="container">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
+      <ul>
+        <li *ngIf="operationType===operationTypes['auth-presale']">
+          <div [class.error]="!myForm.get('userId').valid && myForm.get('userId').touched">
+            <div class="field-box">
+              <label for="userIdId"><span>*</span>指派售前</label>
+              <tui-select
+                id="userIdId"
+                placeholder="Please select"
+                [formControl]="myForm.controls['userId']"
+              >
+                <tui-select-option *ngFor="let option of users"
+                  [value]="option.id" 
+                  [label]="option.name"
+                >
+                  {{option.name}}
+                </tui-select-option>
+              </tui-select>
+            </div>
+          </div>
+          <div *ngIf="myForm.controls['userId'].hasError('required') && myForm.controls['userId'].touched" class="message ">{{'form.required' | translate}}</div>
+        </li>
+        
+        <li *ngIf="operationType===operationTypes['project-filing']">
+          <div [class.error]="!myForm.get('projectName').valid && myForm.get('projectName').touched">
+            <div class="field-box">
+              <label for="projectNameId">项目名称</label>
+              <span>{{business.name}}</span>
+            </div>
+          </div>
+          <div [class.error]="!myForm.get('signingMode').valid && myForm.get('signingMode').touched">
+            <div class="field-box">
+              <label for="signingModeId"><span>*</span>签约方式</label>
+              <tui-select
+                id="signingModeId"
+                placeholder="Please select"
+                [formControl]="myForm.controls['signingMode']"
+              >
+                <tui-select-option *ngFor="let option of contractTypeEnum" [value]="option.key" [label]="option.value">
+                  {{option.value}}
+                </tui-select-option>
+              </tui-select>
+            </div>
+            <div *ngIf="myForm.controls['signingMode'].hasError('required') && myForm.controls['signingMode'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+
+          <div [class.error]="!myForm.get('stage').valid && myForm.get('stage').touched">
+            <div class="field-box">
+              <label for="stageId">项目阶段</label>
+              <span>{{business.stageAlias}}</span>
+            </div>
+          </div>
+          <div [class.error]="!myForm.get('projectName').valid && myForm.get('projectName').touched">
+            <div class="field-box">
+              <label for="projectNameId">销售立项日期</label>
+              <span>{{business.createTime | date:'yyyy / MM / dd' }}</span>
+            </div>
+          </div>
+          <div [class.error]="!myForm.get('procurementMode').valid && myForm.get('procurementMode').touched">
+            <div class="field-box">
+              <label for="procurementModeId"><span>*</span>采购方式</label>
+              <input class="field" type="text" placeholder="" id="procurementModeId" autocomplete="off " [formControl]="myForm.controls['procurementMode']" />
+            </div>
+            <div *ngIf="myForm.controls['procurementMode'].hasError('required') && myForm.controls['procurementMode'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('estimatedTime').valid && myForm.get('estimatedTime').touched">
+            <div class="field-box">
+              <label for="estimatedTimeId"><span>*</span>预计采购时间</label>
+              <tui-datepicker-input
+                [datepicker]="estimatedTimePicker"
+                placeholder="   "
+                [formControl]="myForm.controls['estimatedTime']"
+                [min]="minDate"
+                required
+              ></tui-datepicker-input>
+              <tui-datepicker #estimatedTimePicker></tui-datepicker>
+            </div>
+            <div *ngIf="myForm.controls['estimatedTime'].hasError('required') && myForm.controls['estimatedTime'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('explain').valid && myForm.get('explain').touched">
+            <div class="field-box">
+              <label for="explainId">项目说明</label>
+              <textarea class="textarea" id="explainId" autocomplete="off" [formControl]="myForm.controls['explain']"></textarea>
+            </div>
+            <div *ngIf="myForm.controls['explain'].hasError('required') && myForm.controls['explain'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+        </li>
+        <li *ngIf="operationType===operationTypes['apply-architect']">
+
+          <!-- <div [class.error]="!myForm.get('explain').valid && myForm.get('explain').touched">
+            <div class="field-box">
+              <label for="explainId">客户诉求</label>
+              <textarea class="textarea" id="explainId" autocomplete="off" [formControl]="myForm.controls['explain']"></textarea>
+            </div>
+            <div *ngIf="myForm.controls['explain'].hasError('required') && myForm.controls['explain'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('explain').valid && myForm.get('explain').touched">
+            <div class="field-box">
+              <label for="explainId">交流目的</label>
+              <textarea class="textarea" id="explainId" autocomplete="off" [formControl]="myForm.controls['explain']"></textarea>
+            </div>
+            <div *ngIf="myForm.controls['explain'].hasError('required') && myForm.controls['explain'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div> -->
+          <div [class.error]="!myForm.get('estimateTime').valid && myForm.get('estimateTime').touched">
+            <div class="field-box">
+              <label for="estimateTimeId"><span>*</span>预计交流时间</label>
+              <tui-datepicker-input
+                [datepicker]="estimateTimePicker"
+                placeholder="   "
+                [formControl]="myForm.controls['estimateTime']"
+                [min]="minDate"
+                required
+              ></tui-datepicker-input>
+              <tui-datepicker #estimateTimePicker></tui-datepicker>
+            </div>
+            <div *ngIf="myForm.controls['estimateTime'].hasError('required') && myForm.controls['estimateTime'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('place').valid && myForm.get('place').touched">
+            <div class="field-box">
+              <label for="placeId"><span>*</span>交流地点</label>
+              <input class="field" type="text" placeholder="" id="placeId" autocomplete="off " [formControl]="myForm.controls['place']" />
+            </div>
+            <div *ngIf="myForm.controls['place'].hasError('required') && myForm.controls['place'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+        </li>
+        <li *ngIf="operationType===operationTypes['apply-poc']">
+          <div [class.error]="!myForm.get('estimateTime').valid && myForm.get('estimateTime').touched">
+            <div class="field-box">
+              <label for=""><span>*</span>预计交流时间</label>
+              <tui-datepicker-input
+                [datepicker]="estimateTimePicker"
+                placeholder="   "
+                [formControl]="myForm.controls['estimateTime']"
+                [min]="minDate"
+                required
+              ></tui-datepicker-input>
+              <tui-datepicker #estimateTimePicker></tui-datepicker>
+            </div>
+            <div *ngIf="myForm.controls['estimateTime'].hasError('required') && myForm.controls['estimateTime'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('place').valid && myForm.get('place').touched">
+            <div class="field-box">
+              <label for="placeId"><span>*</span>交流地点</label>
+              <input class="field" type="text" placeholder="" id="placeId" autocomplete="off " [formControl]="myForm.controls['place']" />
+            </div>
+            <div *ngIf="myForm.controls['place'].hasError('required') && myForm.controls['place'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('demandReportId').valid && myForm.get('demandReportId').touched">
+            <div class="field-box files-wrapper">
+              <label for="demandReportIdId">需求收集文档</label>
+              <div class="upload">
+                <a class="btn" (click)="uploadDemandFiles()">上传</a>
+                <p>text1.txt</p>
+                <p>text2.txt</p>
+              </div>
+            </div>
+          </div>
+          <div [class.error]="!myForm.get('testCaseId').valid && myForm.get('testCaseId').touched">
+            <div class="field-box files-wrapper">
+              <label for="testCaseIdId">测试案例文档</label>
+              <div class="upload">
+                <a class="btn" (click)="uploadDemandFiles()">上传</a>
+                <p>text1.txt</p>
+                <p>text2.txt</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li *ngIf="operationType===operationTypes['upload-record']">
+          <div [class.error]="!myForm.get('visitTime').valid && myForm.get('visitTime').touched">
+            <div class="field-box">
+              <label for=""><span>*</span>拜访时间</label>
+              <tui-datepicker-input
+                [datepicker]="visitTimePicker"
+                placeholder="   "
+                [formControl]="myForm.controls['visitTime']"
+                [min]="minDate"
+                required
+              ></tui-datepicker-input>
+              <tui-datepicker #visitTimePicker></tui-datepicker>
+            </div>
+            <div *ngIf="myForm.controls['visitTime'].hasError('required') && myForm.controls['visitTime'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div>
+            <div class="field-box">
+              <label for="fellowStaffId">随行人员</label>
+              <input class="field" type="text" placeholder="" id="fellowStaffId" autocomplete="off " [formControl]="myForm.controls['fellowStaff']" />
+            </div>
+          </div>
+          <div [class.error]="!myForm.get('respondent').valid && myForm.get('respondent').touched">
+            <div class="field-box">
+              <label for="respondentId"><span>*</span>受访人</label>
+              <input class="field" type="text" placeholder="" id="respondentId" autocomplete="off " [formControl]="myForm.controls['respondent']" />
+            </div>
+            <div *ngIf="myForm.controls['respondent'].hasError('required') && myForm.controls['respondent'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('subject').valid && myForm.get('subject').touched">
+            <div class="field-box">
+              <label for="subjectId"><span>*</span>事由</label>
+              <textarea class="textarea" id="subjectId" autocomplete="off" [formControl]="myForm.controls['subject']"></textarea>
+            </div>
+            <div *ngIf="myForm.controls['subject'].hasError('required') && myForm.controls['subject'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('feedback').valid && myForm.get('feedback').touched">
+            <div class="field-box">
+              <label for="feedbackId"><span>*</span>对方反馈</label>
+              <input class="field" type="text" placeholder="" id="feedbackId" autocomplete="off " [formControl]="myForm.controls['feedback']" />
+            </div>
+            <div *ngIf="myForm.controls['feedback'].hasError('required') && myForm.controls['feedback'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div>
+            <div class="field-box">
+              <label for="progressId">进展情况</label>
+              <input class="field" type="text" placeholder="" id="progressId" autocomplete="off " [formControl]="myForm.controls['progress']" />
+            </div>
+          </div>
+          <div [class.error]="!myForm.get('plan').valid && myForm.get('plan').touched">
+            <div class="field-box">
+              <label for="planId"><span>*</span>下一步工作计划</label>
+              <textarea class="textarea" id="planId" autocomplete="off" [formControl]="myForm.controls['plan']"></textarea>
+            </div>
+            <div *ngIf="myForm.controls['plan'].hasError('required') && myForm.controls['plan'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div [class.error]="!myForm.get('estimatedTime').valid && myForm.get('estimatedTime').touched">
+            <div class="field-box">
+              <label for=""><span>*</span>预计时间</label>
+              <tui-datepicker-input
+                [datepicker]="estimatedTimePicker"
+                placeholder="   "
+                [formControl]="myForm.controls['estimatedTime']"
+                [min]="minDate"
+                required
+              ></tui-datepicker-input>
+              <tui-datepicker #estimatedTimePicker></tui-datepicker>
+            </div>
+            <div *ngIf="myForm.controls['estimatedTime'].hasError('required') && myForm.controls['estimatedTime'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+        </li>
+        <li *ngIf="operationType===operationTypes['upload-meetingMinutes']">
+          <div [class.error]="!myForm.get('participants').valid && myForm.get('participants').touched">
+            <div class="field-box">
+              <label for="participantsId"><span>*</span>参与人</label>
+              <input class="field" type="text" placeholder="" id="participantsId" autocomplete="off " [formControl]="myForm.controls['participants']" />
+            </div>
+            <div *ngIf="myForm.controls['participants'].hasError('required') && myForm.controls['participants'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div>
+            <div class="field-box">
+              <label for="statusId">当前状态</label>
+              <tui-select
+                id="statusId"
+                placeholder="Please select"
+                [formControl]="myForm.controls['status']"
+              >
+                <tui-select-option *ngFor="let option of statusEnum" [value]="option.key" [label]="option.value">
+                  {{option.value}}
+                </tui-select-option>
+              </tui-select>
+            </div>
+          </div>
+          <div [class.error]="!myForm.get('info').valid && myForm.get('info').touched">
+            <div class="field-box">
+              <label for="infoId"><span>*</span>项目关键信息</label>
+              <textarea class="textarea" id="infoId" autocomplete="off" [formControl]="myForm.controls['info']"></textarea>
+            </div>
+            <div *ngIf="myForm.controls['info'].hasError('required') && myForm.controls['info'].touched" class="message ">{{'form.required' | translate}}</div>
+          </div>
+          <div>
+            <div class="field-box">
+              <label for="orientationId">客户倾向性</label>
+              <textarea class="textarea" id="orientationId" autocomplete="off" [formControl]="myForm.controls['orientation']"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="field-box">
+              <label for="planId">后续计划</label>
+              <textarea class="textarea" id="planId" autocomplete="off" [formControl]="myForm.controls['plan']"></textarea>
+            </div>
+          </div>
+        </li>
+        </ul>
+  
+      <div class="buttons ">
+        <button class="tui-btn-md tui-btn-primary tui-btn " type="submit" [disabled]="!myForm.valid ? 'disabled' : null">确定</button>
+        <button class="tui-btn-md tui-btn-default tui-btn " type="reset">取消</button>
+      </div>
+    </form>
+  </div>

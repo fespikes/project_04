@@ -1,0 +1,59 @@
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
+    <ul>
+      <li *ngIf="editType===editTypes['reEnable']">
+        <p class="paragrapy">
+          {{'form.sure_sentence' | translate}}
+          <span>{{business.name}}</span>
+          吗？
+        </p>
+      </li>
+      <li *ngIf="editType===editTypes['voided']">
+        <div [class.error]="!myForm.get('status').valid && myForm.get('status').touched">
+          <div class="field-box columns">
+            <label for="statusId">商机状态</label>
+            <tui-select
+              id="statusId"
+              placeholder="Please select"
+              [formControl]="myForm.controls['status']"
+            >
+              <tui-select-option *ngFor="let option of businessStatus" [value]="option.key" [label]="option.value">
+                {{option.value}}
+              </tui-select-option>
+            </tui-select>
+          </div>
+        </div>
+
+        <div [class.error]="!myForm.get('reason').valid && myForm.get('reason').touched">
+          <div class="field-box">
+            <label for="reasonId"><span>*</span>关闭原因</label>
+            <textarea class="textarea" type="text" placeholder="" id="reasonId" autocomplete="off " [formControl]="myForm.controls['reason']">
+            </textarea>
+          </div>
+          <div *ngIf="myForm.controls['reason'].hasError('required') && myForm.controls['reason'].touched" class="message ">{{'form.required' | translate}}</div>
+        </div>
+
+        <div>
+          <div class="field-box">
+            <label for="nextContactTimeId">关联竞争厂商</label>
+            <tui-select
+              id="statusId"
+              placeholder="Please select"
+              [formControl]="myForm.controls['rival']"
+            >
+              <tui-select-option *ngFor="let option of rivals" [value]="option.id" [label]="option.name">
+                {{option.name}}
+              </tui-select-option>
+            </tui-select>
+          </div>
+        </div>
+        
+      </li>
+    </ul>
+
+    <div class="buttons ">
+      <button class="tui-btn-md tui-btn-primary tui-btn " type="submit" [disabled]="!myForm.valid ? 'disabled' : null">确定</button>
+      <button class="tui-btn-md tui-btn-default tui-btn " type="reset">取消</button>
+    </div>
+  </form>
+</div>

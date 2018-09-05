@@ -18,7 +18,10 @@
               placeholder="Please select"
               [formControl]="myForm.controls['customerId']"
             >
-              <tui-select-option *ngFor="let option of customers" [value]="option.id" [label]="option.name">
+              <tui-select-option *ngFor="let option of customers"
+                [value]="option.id" 
+                [label]="option.name"
+              >
                 {{option.name}}
               </tui-select-option>
             </tui-select>
@@ -54,17 +57,21 @@
               placeholder="Please select"
               [formControl]="myForm.controls['preSignedContractType']"
             >
-              <tui-select-option *ngFor="let option of contractTypes" [value]="option">
-                {{option | tuiDefault }}
+              <tui-select-option 
+                *ngFor="let option of contractTypes"
+                [value]="option.key"
+                [label]="option.value"
+              >
+                {{option.value | tuiDefault }}
               </tui-select-option>
             </tui-select>
           </div>
         </div>
-        
+
         <div>
           <div class="field-box">
             <label for="contractAmountId">预计签约合同金额</label>
-            <input class="field" type="text" placeholder="" id="nameId" autocomplete="off " [formControl]="myForm.controls['name']" />
+            <input class="field" type="text" placeholder="" id="contractAmountId" autocomplete="off " [formControl]="myForm.controls['contractAmount']" />
           </div>
         </div>
         

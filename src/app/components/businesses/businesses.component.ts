@@ -4,8 +4,9 @@ import { TuiModalService, Pagination } from 'tdc-ui';
 
 import { BusinessesService } from './businesses.service';
 import { TranslateService } from '../../i18n';
-import { BusinessDetails, BusinessFilter, statusEnum } from './businesses.model';
+import { BusinessDetails, BusinessFilter, editTypes, statusEnum } from './businesses.model';
 import { AddComponent } from './add/add.component';
+import { EditComponent } from './edit/edit.component';
 import { ActivateComponent } from './activate/activate.component';
 
 @Component({
@@ -60,20 +61,24 @@ export class BusinessesComponent implements OnInit {
       });
   }
 
+  close(business) {
+    this.service.closeBusiness(business, EditComponent)
+      .subscribe((word: string) => {
+        this.fetchData();
+      });
+  }
+
   toDetails(item?) {
     this.router.navigate([`/businesses/details/${item.id}`], { queryParams: {} });
   }
 
-  remove(item?) {
-    console.log(item);
-  }
-
   reactivate(business: BusinessDetails) {
-    return this.modalService.open(ActivateComponent, {
+    return this.modalService.open(EditComponent, {
       title: this.translateService.translateKey('重新启用'),
       size: 'lg',
       data: {
-        customer: business
+        editType: editTypes['reEnable'],
+        business: business
       }
     }).subscribe((word: string) => {
       this.fetchData();

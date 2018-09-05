@@ -38,9 +38,41 @@ form.form-specific
     display: flex
     flex-direction: row
     padding-bottom: 30px
+
     &.columns
       .tui-select
         width: 310px
+      .upload
+        display: flex
+        flex-direction: column
+
+    &.files-wrapper
+      padding-bottom: 0
+      .upload
+        display: flex
+        flex-direction: column
+        p
+          @extend .border-radius-15px
+          border: none
+          width: 420px
+          line-height: 32px
+          flex-basis: 32px
+          padding-left: 12px
+          margin: 10px 0
+          background: #f7f7f7
+
+        .btn
+          display: inline-block
+          @extend .border-radius-15px
+          width: 100px
+          line-height: 32px
+          flex-basis: 32px
+          border: 1px #d3dceb solid
+          background: #fff
+          text-align: center
+          color: $font-color
+          cursor: pointer
+      
     span
       line-height: 32px
 

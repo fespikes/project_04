@@ -31,5 +31,6 @@ export enum storageKeys {
   customerLevel = 'erp:customer:level',
   customerCity = 'erp:customer:city',
   customerCountry = 'erp:customer:country',
-  businessesContractTypes = 'erp:busi:contract:types' // 预签合同类型
+
+  business = 'erp:business'
 }

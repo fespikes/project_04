@@ -48,11 +48,6 @@
           </div>
           <div *ngIf="myForm.controls['category'].hasError('required') && myForm.controls['category'].touched" class="message ">{{'form.required' | translate}}</div>
         </div>
-
-        <div class="buttons ">
-          <button class="tui-btn-md tui-btn-primary tui-btn " type="submit" [disabled]="!myForm.valid ? 'disabled' : null">确定</button>
-          <button class="tui-btn-md tui-btn-default tui-btn " type="reset">取消</button>
-        </div>
       </li>
       <li *ngIf="editType===editTypes['contact']">
         <div [class.error]="!myForm.get('name').valid && myForm.get('name').touched">
