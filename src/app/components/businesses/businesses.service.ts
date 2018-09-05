@@ -97,9 +97,9 @@ export class BusinessesService {
     });
   }
 
-  getProgressInformation(businessId, type): Observable<any> {
+  getProgress(businessId, type?: string): Observable<any> {
     console.log('getProgressInformation:', businessId);
-    return this.api.get('');
+    return this.api.get(`business/${businessId}/process${type ? '/' + type : ''}`);
   }
 
   // 根据商机获取竞争对手

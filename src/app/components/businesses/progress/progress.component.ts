@@ -8,7 +8,7 @@ import { BusinessesService } from '../businesses.service';
 import { TuiModalService, TuiMessageService } from 'tdc-ui';
 import { TranslateService } from '../../../i18n';
 import { operations, progressTypes } from '../businesses.model';
-
+let objectOptions;
 @Component({
   selector: 'erp-progress',
   templateUrl: './progress.component.html',
@@ -21,35 +21,7 @@ export class ProgressComponent implements OnInit {
   dropdownDirection = 'bottomCenter';
   progressTypes = progressTypes;
   operations: any[];
-  objectOptions = [
-    // TODO: i18n
-    // TODO: icon
-    {
-      label: '全部记录',
-      icon: '',
-      value: progressTypes['all']
-    },
-    {
-      label: 'POC',
-      icon: '',
-      value: progressTypes['poc']
-    },
-    {
-      label: '架构师',
-      icon: '',
-      value: progressTypes['architect']
-    },
-    {
-      label: '拜访记录',
-      icon: '',
-      value: progressTypes['visits']
-    },
-    {
-      label: '会议纪要',
-      icon: '',
-      value: progressTypes['records']
-    }
-  ];
+  objectOptions = objectOptions;
 
 //   this.router.navigate(['/heroes', { id: heroId, foo: 'foo' }]);
   constructor(
@@ -96,7 +68,7 @@ export class ProgressComponent implements OnInit {
   }
 
   getProgressList() {
-    this.service.getProgressInformation(this.id, this.type)
+    this.service.getProgress(this.id, this.type)
       .subscribe(res => {
 
       });
@@ -108,3 +80,33 @@ export class ProgressComponent implements OnInit {
   }
 
 }
+
+objectOptions = [
+  // TODO: i18n
+  // TODO: icon
+  {
+    label: '全部记录',
+    icon: '',
+    value: progressTypes['all']
+  },
+  {
+    label: 'POC',
+    icon: '',
+    value: progressTypes['poc']
+  },
+  {
+    label: '架构师',
+    icon: '',
+    value: progressTypes['architect']
+  },
+  {
+    label: '拜访记录',
+    icon: '',
+    value: progressTypes['visits']
+  },
+  {
+    label: '会议纪要',
+    icon: '',
+    value: progressTypes['records']
+  }
+];

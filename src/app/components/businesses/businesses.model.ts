@@ -255,7 +255,7 @@ export const operations = [
 
 export enum progressTypes {
   // TODO: match the types in api
-  all = 'all',
+  all = '',
   poc = 'poc',
   architect = 'architect',
   visits = 'visit-resords',
