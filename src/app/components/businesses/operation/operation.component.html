@@ -10,7 +10,7 @@
                 placeholder="Please select"
                 [formControl]="myForm.controls['userId']"
               >
-                <tui-select-option *ngFor="let option of users"
+                <tui-select-option *ngFor="let option of preSale"
                   [value]="option.id" 
                   [label]="option.name"
                 >
@@ -87,21 +87,24 @@
           </div>
         </li>
         <li *ngIf="operationType===operationTypes['apply-architect']">
-
-          <!-- <div [class.error]="!myForm.get('explain').valid && myForm.get('explain').touched">
+          <div [class.error]="!myForm.get('demand').valid && myForm.get('demand').touched">
             <div class="field-box">
-              <label for="explainId">客户诉求</label>
-              <textarea class="textarea" id="explainId" autocomplete="off" [formControl]="myForm.controls['explain']"></textarea>
+              <label for="demandId"><span>*</span>客户诉求</label>
+              <textarea class="textarea" id="demandId" autocomplete="off" [formControl]="myForm.controls['demand']"></textarea>
             </div>
-            <div *ngIf="myForm.controls['explain'].hasError('required') && myForm.controls['explain'].touched" class="message ">{{'form.required' | translate}}</div>
+            <div *ngIf="myForm.controls['demand'].hasError('required') && myForm.controls['demand'].touched" class="message ">
+              {{'form.required' | translate}}
+            </div>
           </div>
-          <div [class.error]="!myForm.get('explain').valid && myForm.get('explain').touched">
+          <div [class.error]="!myForm.get('purpose').valid && myForm.get('purpose').touched">
             <div class="field-box">
-              <label for="explainId">交流目的</label>
-              <textarea class="textarea" id="explainId" autocomplete="off" [formControl]="myForm.controls['explain']"></textarea>
+              <label for="purposeId"><span>*</span>交流目的</label>
+              <textarea class="textarea" id="purposeId" autocomplete="off" [formControl]="myForm.controls['purpose']"></textarea>
             </div>
-            <div *ngIf="myForm.controls['explain'].hasError('required') && myForm.controls['explain'].touched" class="message ">{{'form.required' | translate}}</div>
-          </div> -->
+            <div *ngIf="myForm.controls['purpose'].hasError('required') && myForm.controls['purpose'].touched" class="message ">
+              {{'form.required' | translate}}
+            </div>
+          </div>
           <div [class.error]="!myForm.get('estimateTime').valid && myForm.get('estimateTime').touched">
             <div class="field-box">
               <label for="estimateTimeId"><span>*</span>预计交流时间</label>
@@ -121,7 +124,9 @@
               <label for="placeId"><span>*</span>交流地点</label>
               <input class="field" type="text" placeholder="" id="placeId" autocomplete="off " [formControl]="myForm.controls['place']" />
             </div>
-            <div *ngIf="myForm.controls['place'].hasError('required') && myForm.controls['place'].touched" class="message ">{{'form.required' | translate}}</div>
+            <div *ngIf="myForm.controls['place'].hasError('required') && myForm.controls['place'].touched" class="message ">
+              {{'form.required' | translate}}
+            </div>
           </div>
         </li>
         <li *ngIf="operationType===operationTypes['apply-poc']">
@@ -150,9 +155,19 @@
             <div class="field-box files-wrapper">
               <label for="demandReportIdId">需求收集文档</label>
               <div class="upload">
-                <a class="btn" (click)="uploadDemandFiles()">上传</a>
-                <p>text1.txt</p>
-                <p>text2.txt</p>
+                <a
+                  class="btn" 
+                  erpUploader
+                  (fileChanged)="uploadDemandFiles($event)"
+                >上传</a>
+                <p *ngFor="let item of demandFiles.names">{{item}}</p>
+<!--                 <input
+                  multiple="multiple"
+                  class="btn"
+                  type="file" id="xFile"
+                  (change)="uploadDemandFiles($event)"
+                  #demandFiles
+                /> -->
               </div>
             </div>
           </div>
@@ -160,9 +175,11 @@
             <div class="field-box files-wrapper">
               <label for="testCaseIdId">测试案例文档</label>
               <div class="upload">
-                <a class="btn" (click)="uploadDemandFiles()">上传</a>
-                <p>text1.txt</p>
-                <p>text2.txt</p>
+                <a class="btn" 
+                  erpUploader
+                  (fileChanged)="uploadTestcaseFiles($event)"
+                >上传</a>
+                <p *ngFor="let item of testcaseFiles.names">{{item}}</p>
               </div>
             </div>
           </div>

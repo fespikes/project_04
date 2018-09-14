@@ -67,6 +67,10 @@ export class BusinessesService {
     return business[name] || '';
   }
 
+  getCloseBusinessEnum() {
+    return this.enumValueOf('status').filter(item => item.key !== 'NORMAL');
+  }
+
   getCustomers(filter: any = {}): Observable<any> {
     return this.api.get(`customer`, filter);
   }
@@ -85,14 +89,15 @@ export class BusinessesService {
     return this.api.put(url, {...instance});
   }
 
-  closeBusiness(business, comp): Observable<any> {
+  closeBusiness(business, comp, fromOperate?): Observable<any> {
     const size = 'lg';
     return this.modalService.open(comp, {
       title: this.translateService.translateKey('关闭商机'),
       size,
       data: {
         editType: editTypes['voided'],
-        business: business
+        business: business,
+        fromOperate: fromOperate ? true : false
       }
     });
   }
@@ -112,10 +117,11 @@ export class BusinessesService {
    * S: project operations
    */
   getPreSale(businessId): Observable<any> {
-    return this.api.get(`business/${businessId}/pre-sale`);
+    return this.api.get(`permission/pre-sale`);
+    // return this.api.get(`business/${businessId}/pre-sale`);
   }
   AuthPreSale(businessId, userId): Observable<any> {
-    return this.api.post(`business/${businessId}/pre-sale`, {userId: userId});
+    return this.api.post(`business/${businessId}/pre-sale?userId=${userId}`);
   }
   // 项目报备
   filing(project): Observable<any> {
@@ -123,6 +129,19 @@ export class BusinessesService {
     return this.api.post(`business-project-filing`, {...project});
   }
   // apply for architect
+  applyArchitect(form): Observable<any> {
+    return this.api.post('business-architect-request', {...form});
+  }
+
+  // apply POC
+  uploadFile(file): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.api.uploadSingle('file', formData);
+  }
+  applyPoc(form): Observable<any> {
+    return this.api.post('business-poc', {...form});
+  }
 
   // upload visit-record
   uploadVisitRecord(businessId, form): Observable<any> {

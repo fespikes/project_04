@@ -153,7 +153,7 @@ export class DetailsComponent implements OnInit {
     }
 
     if (operationTypes['close-business'] === operation.operationType) {
-      this.service.closeBusiness(this.business, EditComponent);
+      this.service.closeBusiness(this.business, EditComponent, true);
     } else {
       return this.modalService.open(OperationComponent, {
         title: title,

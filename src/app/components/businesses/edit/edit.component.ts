@@ -36,7 +36,8 @@ export class EditComponent implements OnInit {
     this.business = data.business;
     this.editType = data.editType;
     this.myForm = fb.group(BusinessDetails.getEditControlGroup(this.editType));
-    this.businessStatus = this.service.enumValueOf('status');
+    this.businessStatus = data.fromOperate ?
+      this.service.getCloseBusinessEnum() : this.service.enumValueOf('status');
   }
 
   ngOnInit() {

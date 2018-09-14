@@ -9,7 +9,8 @@ import { I18nModule } from '../i18n';
 import { HttpErrorHandler, ReqService } from './services';
 import {
   ImgSrcDirective,
-} from './components';
+  UploaderDirective,
+} from './directives';
 import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.component';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
   ],
   declarations: [
     ImgSrcDirective,
-    BreadCrumbsComponent
+    BreadCrumbsComponent,
+    UploaderDirective
     // ......
   ],
   providers: [
@@ -40,7 +42,7 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
     ImgSrcDirective,
     BreadCrumbsComponent,
     ReactiveFormsModule,
-
+    UploaderDirective
   ],
   entryComponents: [
     // ...

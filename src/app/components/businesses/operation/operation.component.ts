@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -17,16 +17,23 @@ import { operationTypes, BusinessDetails, Rival } from '../businesses.model';
   styleUrls: ['./operation.component.sass']
 })
 export class OperationComponent implements OnInit {
-  loading: false; // TODO
+  loading = false; // TODO
   myForm: FormGroup;
   business: BusinessDetails;
   operationType: any = false;
   operationTypes = operationTypes;
   minDate = new Date();
   preSale: any[];
-  
   contractTypeEnum: any[];
   statusEnum: any;
+  demandFiles: any = {
+    names: [],
+    ids: []
+  };
+  testcaseFiles: any = {
+    names: [],
+    ids: []
+  };
 
   constructor(
     @Inject(TUI_MODAL_DATA) data,
@@ -49,7 +56,6 @@ export class OperationComponent implements OnInit {
         this.service.getPreSale(this.business.id)
           .subscribe(res => {
             this.preSale = res;
-            console.log(res); // TODO:
           });
         break;
       case operationTypes['project-filing']:
@@ -83,6 +89,22 @@ export class OperationComponent implements OnInit {
         };
         this.service.filing(val).subscribe(cb);
         break;
+      case operationTypes['apply-architect']:
+        val = {
+          ...val,
+          businessId: this.business.id
+        };
+        this.service.applyArchitect(val).subscribe(cb);
+        break;
+      case operationTypes['apply-poc']:
+        val = {
+          ...val,
+          businessId: this.business.id,
+          demandReportId: this.demandFiles.ids,
+          testCaseId: this.testcaseFiles.ids
+        };
+        this.service.applyPoc(val).subscribe(cb);
+        break;
       case operationTypes['upload-record']:
         this.service.uploadVisitRecord(this.business.id, val).subscribe(cb);
         break;
@@ -94,12 +116,23 @@ export class OperationComponent implements OnInit {
     }
   }
 
-  uploadDemandFiles() {
-    console.log('uploadDemandFiles');
+  uploadDemandFiles(file) {
+    this.loading = true;
+    // TODO: upload multiple files
+
+    return this.service.uploadFile(file)
+      .subscribe(res => {
+        this.demandFiles.ids.push(res.id);
+        this.demandFiles.names.push(file.name);
+      });
   }
 
-  uploadTestcaseFiles() {
-    console.log('uploadTestcaseFiles');
+  uploadTestcaseFiles(file) {
+    return this.service.uploadFile(file)
+      .subscribe(res => {
+        this.testcaseFiles.ids.push(res.id);
+        this.testcaseFiles.names.push(file.name);
+      });
   }
 
 }

@@ -41,11 +41,11 @@
         </li>
         <li>
           <h4>本年新老客户</h4>
-          <p>{{customer.newOrOld}}</p>
+          <p>{{customer.newOrOldAlias}}</p>
         </li>
         <li>
           <h4>城市</h4>
-          <p>{{customer.city}}</p>
+          <p>{{customer.cityAlias}}</p>
         </li>
         <li>
           <h4>省份</h4>
@@ -180,15 +180,15 @@
       <ul>
         <li>
           <h4>客户类别</h4>
-          <p>{{customer.category}}</p>
+          <p>{{customer.categoryAlias}}</p>
         </li>
         <li>
           <h4>客户级别</h4>
-          <p>{{customer.level}}</p>
+          <p>{{customer.levelAlias}}</p>
         </li>
         <li>
           <h4>客户状态</h4>
-          <p>{{customer.status}}</p>
+          <p>{{customer.statusAlias}}</p>
         </li>
       </ul>
       <h4 *ngIf="customer.status==='INVALID'">作废原因</h4>

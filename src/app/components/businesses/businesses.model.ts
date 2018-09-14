@@ -118,20 +118,20 @@ export class BusinessDetails {
         break;
       case operationTypes['apply-architect']:
         modelObj = {
-          // businessId: ['', Validators.required]
-          demandReportId: [ [], Validators.required],
+          businessId: [''],
+          demand: [ [], Validators.required],
           estimateTime: ['', Validators.required],
           place: ['', Validators.required],
-          testCaseId: ['', Validators.required]
+          purpose: ['', Validators.required]
         };
         break;
       case operationTypes['apply-poc']:
         modelObj = {
-          // "businessId": 0,
-          demandReportId: ['', Validators.required],
+          businessId: [''],
+          demandReportId: [],
           estimateTime: [ '', Validators.required],
           place: [ '', Validators.required],
-          testCaseId: [  [], Validators.required]
+          testCaseId: []
         };
         break;
       case operationTypes['upload-record']:

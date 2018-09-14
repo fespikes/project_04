@@ -29,7 +29,7 @@ export class ErpApiService {
   private get headers(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'my-auth-token'
+      // 'Authorization': 'my-auth-token'
     });
     // httpOptions.headers = httpOptions.headers.set('Authorization', 'my-new-auth-token');
   }
@@ -107,7 +107,7 @@ export class ErpApiService {
 
     return this.http.post(
       this.makeUrl(url),
-      JSON.stringify(body),
+      body,
       this.httpOptions,
     ).pipe(
       catchError(this.handleError<any>('put', []))
@@ -123,4 +123,24 @@ export class ErpApiService {
     );
   }
 
+  uploadSingle(url: string, formData: FormData, observe = true): Observable<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        /**
+         * add it will cause exception:
+         *  org.apache.tomcat.util.http.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+         *  'Content-Type': 'multipart/form-data',
+         * see: https://stackoverflow.com/questions/36005436/the-request-was-rejected-because-no-multipart-boundary-was-found-in-springboot
+         */
+        'Accept': 'application/json'
+      })
+    };
+    return this.http.post(
+      this.makeUrl(url),
+      formData,
+      httpOptions
+    ).pipe(
+      catchError(this.handleError<any>('put', []))
+    );
+  }
 }

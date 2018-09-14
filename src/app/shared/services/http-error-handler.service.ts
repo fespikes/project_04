@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { TuiMessageService } from 'tdc-ui';
-import { storageKeys } from 'src/app/shared/models';
+import { storageKeys } from '../models';
 
 /** Type of the handleError function returned by HttpErrorHandler.createHandleError */
 export type HandleError =
