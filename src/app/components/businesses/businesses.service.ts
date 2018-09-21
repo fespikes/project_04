@@ -104,7 +104,8 @@ export class BusinessesService {
 
   getProgress(businessId, type?: string): Observable<any> {
     console.log('getProgressInformation:', businessId);
-    return this.api.get(`business/${businessId}/process${type ? '/' + type : ''}`);
+    const typeString = type ? '/' + type : '';
+    return this.api.get(`business/${businessId}/process${typeString}`);
   }
 
   // 根据商机获取竞争对手

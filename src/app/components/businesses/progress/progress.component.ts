@@ -22,6 +22,7 @@ export class ProgressComponent implements OnInit {
   progressTypes = progressTypes;
   operations: any[];
   objectOptions = objectOptions;
+  content: any[];
 
 //   this.router.navigate(['/heroes', { id: heroId, foo: 'foo' }]);
   constructor(
@@ -43,7 +44,6 @@ export class ProgressComponent implements OnInit {
     combineLatest(promises)
       .subscribe(([pathParams, queryParams]) => {
         this.id = pathParams['id'];
-        this.type = queryParams['type'];
 
         if (!!this.id) {
           this.getProgressList();
@@ -56,7 +56,7 @@ export class ProgressComponent implements OnInit {
           },
           {
             text: queryParams['name'],
-            href: `/businesses/details/${this.id}?status=${queryParams['type']}`
+            href: `/businesses/details/${this.id}/`
           },
           {
             text: '项目进度',
@@ -70,7 +70,7 @@ export class ProgressComponent implements OnInit {
   getProgressList() {
     this.service.getProgress(this.id, this.type)
       .subscribe(res => {
-
+        this.content = res.content;
       });
   }
 
@@ -107,6 +107,6 @@ objectOptions = [
   {
     label: '会议纪要',
     icon: '',
-    value: progressTypes['records']
+    value: progressTypes['meeting']
   }
 ];

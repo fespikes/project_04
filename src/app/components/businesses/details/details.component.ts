@@ -8,7 +8,8 @@ import { BusinessesService } from '../businesses.service';
 import { BusinessDetails, BusinessFilter,
   statusEnum, Rival,
   operations, progressTypes,
-  operationTypes
+  operationTypes,
+  editTypes
 } from '../businesses.model';
 import { OperationComponent } from '../operation/operation.component';
 import { BusinessesComponent } from '../businesses.component';
@@ -29,6 +30,7 @@ export class DetailsComponent implements OnInit {
   rivalList: Rival[];
   operations: any[];
   dropdownDirection = 'bottomCenter';
+  editTypes: any = editTypes;
   progressTypes: object = progressTypes;
   /**
    * intro: if lenght>0, forbidden the two options:
@@ -111,11 +113,22 @@ export class DetailsComponent implements OnInit {
     }
   }
 
-  edit() {
+  edit(editType) {
+    console.log(editType);
   }
 
-  addRival() {
-
+  addRival(editType, size = 'lg') {
+    const title = this.translateService.translateKey('新增竞争厂商');
+    return this.modalService.open(OperationComponent, {
+      title: title,
+      size,
+      data: {
+        editType: editType,
+        business: this.business
+      }
+    }).subscribe((word: string) => {
+        this.fetchBusinessDetails();
+      });
   }
 
   operation(operation, size = 'lg') {
@@ -172,7 +185,7 @@ export class DetailsComponent implements OnInit {
     const business = {...this.business};
 
     this.router.navigate([`/businesses/progress/${this.id}` ], { queryParams: {
-      name: business.name || 'test',  // TODO: remove
+      name: business.name,
       type: type,
       status: this.status
     } });

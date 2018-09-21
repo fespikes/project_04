@@ -1,9 +1,6 @@
 <section class="bread-crumb">
   <div class="left">
-    <!-- <span>我的客户</span>
-    <span class="arrow"></span>
-    <span class="last">中石化大数据项目</span> -->
-    <!-- <erp-bread-crumbs [data]="breadCrumbs"></erp-bread-crumbs> -->
+    <erp-bread-crumbs [data]="breadCrumbs"></erp-bread-crumbs>
   </div>
   <div class="right">
     <!-- placeholder="all" -->
@@ -53,70 +50,124 @@
     <button class="state-btn margin-left-16px">已报备</button>
   </h3>
   <ol>
-    <li>
-      <div class="icon-wrapper">
-        <!-- <svg class="icon" tuiIcon="operate-apply-architect"></svg> -->
-        <img class="meetings icon" erpImgSrc="meetings.svg" />
-      </div>
-      <div class="content meeting-minutes">
-        <h4>
-          <span class="date">2018/04/23</span>会议纪要
-          <span class="by">by 张三</span>
-        </h4>
-        <ul>
-          <li class="flex-3-1">
-            <p>参与人</p>
-            <div class="txt">张三、李四</div>
-          </li>
-          <li class="flex-3-2">
-            <p>当前状态</p>
-            <div class="txt">状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本状态文本</div>
-          </li>
-          <li class="flex-3-1">
-            <p>项目关键信息</p>
-            <div class="txt">关键信息文本关键信息文本关键信息文本</div>
-          </li>
-          <li class="flex-3-1">
-            <p>客户倾向性</p>
-            <div class="txt">客户倾向性客户倾向性客户倾向性客户倾向性客户倾向性</div>
-          </li>
-          <li class="flex-3-1">
-            <p>后续计划</p>
-            <div class="txt">后续计划文本后续计划文本后续计划文本后续计划文本</div>
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li>
-      <div class="icon-wrapper">
-        <img class="poc icon" erpImgSrc="poc.svg" />
-      </div>
-      <div class="content meeting-minutes">
-        <h4>
-          <span class="date">2018/04/23</span>POC 申请
-          <button class="start-btn margin-left-16px">开始</button>
-          <span class="by">by 张三</span>
-        </h4>
-        <ul>
-          <li class="flex-2-1">
-            <p>交流时间</p>
-            <div class="txt">2018/04/20 10:30</div>
-          </li>
-          <li class="flex-2-1">
-            <p>交流地点</p>
-            <div class="txt">虹漕路192号</div>
-          </li>
-          <li class="flex-2-1">
-            <p>客户诉求</p>
-            <div class="txt">投诉往往涉及广大客户切身利益，处理客户投诉时要学会换位思考，要切实贯彻“你用电、我用心”服务理念，要以客户利益为重、以客户期盼为念，坚持思想上尊重群众、感情上贴近群众、工作上依靠群众，着力解决好人民最关心最直接最现实的利益问题。把客户的投诉做为提升工作的原动力，妥善圆满解决客户投诉。</div>
-          </li>
-          <li class="flex-2-1">
-            <p>交流目的</p>
-            <div class="txt">人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。 人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。</div>
-          </li>
-        </ul>
-      </div>
-    </li>
+    <ng-container *ngFor="let item of content; let idx of index;">
+      <li *ngIf="item.type === progressTypes['meeting']">
+        <div class="icon-wrapper">
+          <!-- <svg class="icon" tuiIcon="operate-apply-architect"></svg> -->
+          <img class="meetings icon" erpImgSrc="meetings.svg" />
+        </div>
+        <div class="content meeting-minutes">
+          <h4>
+            <span class="date">{{item.value.time | date:'yyyy / MM / dd'}}</span>会议纪要
+            <span class="by">by {{item.value.creator}}</span>
+          </h4>
+          <ul>
+            <li class="flex-3-1">
+              <p>参与人</p>
+              <div class="txt">{{item.value.participants}}</div>
+            </li>
+            <li class="flex-3-2">
+              <p>当前状态</p>
+              <div class="txt">{{item.value.statusAlias}}</div>
+            </li>
+            <li class="flex-3-1">
+              <p>项目关键信息</p>
+              <div class="txt">{{item.value.info}}</div>
+            </li>
+            <li class="flex-3-1">
+              <p>客户倾向性</p>
+              <div class="txt">{{item.value.orientation}}</div>
+            </li>
+            <li class="flex-3-1">
+              <p>后续计划</p>
+              <div class="txt">{{item.value.plan}}</div>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <!--TODO: blocked here, 
+        1.to determine "开始";
+        2. start-btn;
+        3. 
+      -->
+      <li *ngIf="item.type === progressTypes['poc']">
+        <div class="icon-wrapper">
+          <img class="poc icon" erpImgSrc="poc.svg" />
+        </div>
+        <div class="content meeting-minutes">
+          <h4>
+            <span class="date">{{item.value.time | date:'yyyy / MM / dd'}}</span>POC 申请
+            <button class="start-btn margin-left-16px">{{item.stageAlias || '开始'}}</button>
+            <span class="by">by {{item.value.user}}</span>
+          </h4>
+          <ul>
+            <li class="flex-2-1">
+              <p>交流时间</p>
+
+
+
+              <!--TODO-->
+              <div class="txt">{{item.value.time | date:'yyyy / MM / dd'}}</div>
+            </li>
+            <li class="flex-2-1">
+              <p>交流地点</p>
+              <div class="txt">{{item.value.data.place}}</div>
+            </li>
+            <li class="flex-2-1">
+              <p>客户诉求</p>
+              <div class="txt"></div>
+            </li>
+            <li class="flex-2-1">
+              <p>交流目的</p>
+              <div class="txt">人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。 人类文明交流的目的，不在取消各自文明的传统性和独立性，而在于更好地促进各文明发展的自足性。</div>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li *ngIf="item.type === progressTypes['architect']">
+        <div class="icon-wrapper">
+          <img class="architect icon" erpImgSrc="architect.svg" />
+        </div>
+        <div class="content meeting-minutes">
+          <h4>
+            <span class="date">2018/04/23</span>申请架构师
+            <span class="by">by {{item.value.user}}</span>
+          </h4>
+          <ul>
+            <li class="flex-2-1">
+              <p>交流时间</p>
+              <div class="txt">{{item.value.time | date:'yyyy / MM / dd'}}</div>
+            </li>
+            <li class="flex-2-1">
+              <p>交流地点</p>
+              <div class="txt">{{item.value.data.apply.place}}</div>
+            </li>
+            <li class="flex-2-1">
+              <p>客户诉求</p>
+              <div class="txt">{{item.value.data.apply.demand}}</div>
+            </li>
+            <li class="flex-2-1">
+              <p>交流目的</p>
+              <div class="txt">{{item.value.data.apply.purpose}}</div>
+            </li>
+          </ul>
+          <div class="result">
+            处理结果：
+            <button class="agree-btn margin-left-16px posi">{{item.value.data.applyResult}}</button>
+            {{item.value.data.architectVisitRecord}}
+            
+            <!--TBD-->
+            <!-- <span>赵云</span> -->
+            <span class="date">{{item.value.data.apply.createTime | date:'yyyy / MM / dd'}}</span>
+            <!--TODO:-->
+            <span class="approver">审批人：李四</span>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+
     <li>
       <div class="icon-wrapper">
         <img class="poc icon" erpImgSrc="poc.svg" />
@@ -251,43 +302,7 @@
         </div>
       </div>
     </li>
-    <li>
-      <div class="icon-wrapper">
-        <img class="architect icon" erpImgSrc="architect.svg" />
-      </div>
-      <div class="content meeting-minutes">
-        <h4>
-          <span class="date">2018/04/23</span>申请架构师
-          <span class="by">by 张三</span>
-        </h4>
-        <ul>
-          <li class="flex-2-1">
-            <p>交流时间</p>
-            <div class="txt">2018/04/20 10:30</div>
-          </li>
-          <li class="flex-2-1">
-            <p>交流地点</p>
-            <div class="txt">虹漕路192号</div>
-          </li>
-          <li class="flex-2-1">
-            <p>客户诉求</p>
-            <div class="txt">POC</div>
-          </li>
-          <li class="flex-2-1">
-            <p>交流目的</p>
-            <div class="txt">POC</div>
-          </li>
-        </ul>
-        <div class="result">
-          处理结果：
-          <button class="agree-btn margin-left-16px posi">同意</button>
-          已指派架构师
-          <span>赵云</span>
-          <span class="date">2018/07/21</span>
-          <span class="approver">审批人：李四</span>
-        </div>
-      </div>
-    </li>
+    
 <!--     <li>
       <div class="icon-wrapper">
         <img class="poc icon" erpImgSrc="poc.svg" />

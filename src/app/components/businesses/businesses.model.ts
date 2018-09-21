@@ -69,7 +69,10 @@ export class BusinessDetails {
     switch (editType) {
       case editTypes['rival']:
         modelObj = {
-          // TODO:
+          'name': ['', Validators.required],
+          'quote': ['', Validators.required],
+          'reason': ['', Validators.required],
+          'info': ['', Validators.required]
         };
         break;
       default:
@@ -256,10 +259,11 @@ export const operations = [
 export enum progressTypes {
   // TODO: match the types in api
   all = '',
-  poc = 'poc',
-  architect = 'architect',
-  visits = 'visit-resords',
-  records = 'meeting-minutes'
+  poc = 'POC',
+  architect = 'ARCHITECT',
+  visits = 'VISIT',
+  meeting = 'MEETING',
+  filing = 'PROJECT_FILING'
 }
 
 // presales

@@ -48,7 +48,10 @@
           *ngIf="!!business.fillingStatus"
         >{{business.fillingStatus || '已报备'}}</button><!--TODO-->
       </h3>
-      <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
+      <svg 
+        class="icon-md pencil" tuiIcon="pencil" size="md"
+        (click)="edit(editTypes['basic'])"
+      ></svg>
       <ul class="info">
         <li>
           <h4>状态</h4>
@@ -147,7 +150,7 @@
         </dd>
         <dd>
           <div
-            (click)="toProgresses(progressTypes['records'])"
+            (click)="toProgresses(progressTypes['meeting'])"
             class="pointer"
           >
             <img class="meetings" erpImgSrc="meetings.svg" />
@@ -161,7 +164,10 @@
     </div>
     <div class="white-bg-items no-padding">
       <h3 class="special ">应用信息</h3>
-      <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
+      <svg
+        class="icon-md pencil" tuiIcon="pencil" size="md"
+        (click)="edit(editTypes['application'])"
+      ></svg>
       <ul>
         <li>
           <h4>客户应用</h4>
@@ -191,7 +197,10 @@
     </div>
     <div class="white-bg-items">
       <h3 class="special ">其他</h3>
-      <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
+      <svg
+        class="icon-md pencil" tuiIcon="pencil" size="md"
+        (click)="edit(editTypes['other'])"
+      ></svg>
       <ul>
         <li>
           <h4>下次联系日期</h4>
@@ -226,7 +235,10 @@
   <div class="right">
     <div class="white-bg-items no-padding">
       <h3 class="special ">客户信息</h3>
-      <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
+      <svg
+        class="icon-md pencil" tuiIcon="pencil" size="md"
+        (click)="edit(editTypes['customer'])"
+      ></svg>
       <ul>
         <li>
           <h4>最终用户</h4>
@@ -255,7 +267,10 @@
       *ngIf="true"
     >
       <h3 class="special">合作伙伴信息</h3>
-      <svg class="icon-md pencil" tuiIcon="pencil" size="md"></svg>
+      <svg
+        class="icon-md pencil" tuiIcon="pencil" size="md"
+        (click)="edit(editTypes['partner'])"
+      ></svg>
       <ul>
         <li>
           <h4>合作伙伴</h4>
@@ -289,7 +304,10 @@
     </div>
     <div class="white-bg-items ">
       <h3 class="special">竞争厂商</h3>
-      <svg class="icon-md" tuiIcon="plus-thin" size="md"></svg>
+      <svg
+        class="icon-md" tuiIcon="plus-thin" size="md"
+        (click)="addRival(editTypes['rival'])"
+      ></svg>
       <ol>
         <li
           class="padding-top"

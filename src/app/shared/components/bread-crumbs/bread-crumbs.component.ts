@@ -19,14 +19,14 @@ const breadCrumbs = [
 export class BreadCrumbsComponent implements OnInit {
 
   @Input()
-  data: any;
+  data: any = [];
 
   constructor() {
     // <erp-bread-crumbs [data]="breadCrumbs"></erp-bread-crumbs>
-    this.data = this.data || breadCrumbs;
   }
 
   ngOnInit() {
+    console.log(this.data);
   }
 
 }

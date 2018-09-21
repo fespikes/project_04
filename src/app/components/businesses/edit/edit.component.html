@@ -1,6 +1,12 @@
 <div class="container">
   <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form-specific">
     <ul>
+      <li *ngIf="editType===editTypes['basic']"></li>
+      <li *ngIf="editType===editTypes['application']"></li>
+      <li *ngIf="editType===editTypes['customer']"></li>
+      <li *ngIf="editType===editTypes['partner']"></li>
+      <li *ngIf="editType===editTypes['rival']"></li>
+      <li *ngIf="editType===editTypes['other']"></li>
       <li *ngIf="editType===editTypes['reEnable']">
         <p class="paragrapy">
           {{'form.sure_sentence' | translate}}
